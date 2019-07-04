@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 100%;
+  width: ${props => (props.drawerIsVisible ? 'calc(100% - 300px)' : '100%')};
   height: 100%;
-  background-color: #efefef;
+  background-color: #ffffff;
   transform: translateX(${props => (props.drawerIsVisible ? 300 : 0)}px);
-  transition: all 100ms linear;
+  transition: transform 150ms linear;
 `;

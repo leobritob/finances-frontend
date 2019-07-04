@@ -14,7 +14,7 @@ export const DrawerTypes = Types;
 export default Creators;
 
 const INITIAL_STATE = {
-  is_visible: false
+  is_visible: true
 };
 
 const setIsVisible = (state = INITIAL_STATE, { is_visible }) => ({

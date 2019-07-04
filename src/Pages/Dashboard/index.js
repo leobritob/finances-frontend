@@ -14,7 +14,7 @@ function Dashboard() {
       label: 'Receita',
       value: 10000,
       styles: {
-        boxBackgroundColor: 'green',
+        boxBackgroundColor: '#0CE896',
         valueTextColor: '#ffffff',
         labelTextColor: '#ffffff'
       }
@@ -23,7 +23,7 @@ function Dashboard() {
       label: 'Despesas',
       value: 3500,
       styles: {
-        boxBackgroundColor: 'red',
+        boxBackgroundColor: '#E66D67',
         valueTextColor: '#ffffff',
         labelTextColor: '#ffffff'
       }
@@ -32,7 +32,7 @@ function Dashboard() {
       label: 'Líquido',
       value: 6500,
       styles: {
-        boxBackgroundColor: 'dodgerblue',
+        boxBackgroundColor: '#65ADFF',
         valueTextColor: '#ffffff',
         labelTextColor: '#ffffff'
       }
@@ -41,7 +41,7 @@ function Dashboard() {
       label: 'Investimento',
       value: 150000,
       styles: {
-        boxBackgroundColor: 'coral',
+        boxBackgroundColor: '#8BCFE8',
         valueTextColor: '#ffffff',
         labelTextColor: '#ffffff'
       }

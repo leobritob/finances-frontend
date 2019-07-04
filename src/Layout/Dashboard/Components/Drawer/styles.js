@@ -9,7 +9,7 @@ export const Container = styled.div`
   position: fixed;
   top: 0;
   transform: translateX(${props => (props.isVisible ? 0 : -300)}px);
-  transition: all 100ms linear;
+  transition: transform 150ms linear;
   z-index: 1;
   background-color: #ffffff;
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);

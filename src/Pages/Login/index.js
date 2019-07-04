@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { SEO } from 'Utils';
-import { Container, LoginForm, Input, Button } from './styles';
+import {
+  Container,
+  LoadingContainer,
+  LoginForm,
+  Input,
+  Button
+} from './styles';
 import { history } from 'Config/Store';
 import Title from 'Components/Title';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
-function Login() {
+export default function Login() {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
@@ -30,13 +38,16 @@ function Login() {
           </>
         )}
         {isConnected && (
-          <>
-            <p>Conectando...</p>
-          </>
+          <LoadingContainer>
+            <FontAwesomeIcon
+              icon={faCircleNotch}
+              pulse
+              size="lg"
+              color="#000000"
+            />
+          </LoadingContainer>
         )}
       </LoginForm>
     </Container>
   );
 }
-
-export default Login;

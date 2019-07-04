@@ -42,3 +42,9 @@ export const Button = styled.button`
     background-color: #3a9eff;
   }
 `;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

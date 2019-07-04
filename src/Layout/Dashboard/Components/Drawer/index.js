@@ -11,11 +11,11 @@ function Drawer() {
       <List>
         <ListItem>
           {' '}
-          <ListItemLink> Receita </ListItemLink>{' '}
+          <ListItemLink to="/revenue"> Receita </ListItemLink>{' '}
         </ListItem>
         <ListItem>
           {' '}
-          <ListItemLink> Despesas </ListItemLink>{' '}
+          <ListItemLink to="/expenses"> Despesas </ListItemLink>{' '}
         </ListItem>
         <ListItem>
           {' '}

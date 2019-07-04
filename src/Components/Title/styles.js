@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const H1 = styled.h1`
   font-size: 1.2rem;
-  color: #666666;
+  color: #333333;
   margin-bottom: 10px;
 
   &::after {

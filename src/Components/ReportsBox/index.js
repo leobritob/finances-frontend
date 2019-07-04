@@ -4,7 +4,7 @@ import { Container, Box, Value, Label } from './styles';
 
 function ReportsBox({ data }) {
   return (
-    <Container>
+    <Container dataLength={data.length}>
       {data.map((item, index) => {
         const styles = item.styles || {};
 
