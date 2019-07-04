@@ -3,6 +3,7 @@ import { SEO } from 'Utils';
 import { Container } from './styles';
 import Title from 'Components/Title';
 import ReportsBox from 'Components/ReportsBox';
+import { COLORS } from 'Themes';
 
 function Dashboard() {
   useEffect(() => {
@@ -14,7 +15,7 @@ function Dashboard() {
       label: 'Receita',
       value: 10000,
       styles: {
-        boxBackgroundColor: '#0CE896',
+        boxBackgroundColor: COLORS.revenue,
         valueTextColor: '#ffffff',
         labelTextColor: '#ffffff'
       }
@@ -23,7 +24,7 @@ function Dashboard() {
       label: 'Despesas',
       value: 3500,
       styles: {
-        boxBackgroundColor: '#E66D67',
+        boxBackgroundColor: COLORS.expenses,
         valueTextColor: '#ffffff',
         labelTextColor: '#ffffff'
       }
@@ -32,7 +33,7 @@ function Dashboard() {
       label: 'Líquido',
       value: 6500,
       styles: {
-        boxBackgroundColor: '#65ADFF',
+        boxBackgroundColor: COLORS.net,
         valueTextColor: '#ffffff',
         labelTextColor: '#ffffff'
       }
@@ -41,7 +42,7 @@ function Dashboard() {
       label: 'Investimento',
       value: 150000,
       styles: {
-        boxBackgroundColor: '#8BCFE8',
+        boxBackgroundColor: COLORS.investment,
         valueTextColor: '#ffffff',
         labelTextColor: '#ffffff'
       }

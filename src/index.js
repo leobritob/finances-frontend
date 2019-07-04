@@ -7,6 +7,14 @@ import Routes from 'Config/Routes';
 import { persistor, store, history } from 'Config/Store';
 import { PersistGate } from 'redux-persist/integration/react';
 import './styles.css';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faArrowRight,
+  faArrowLeft,
+  faBars,
+  faCircleNotch
+} from '@fortawesome/free-solid-svg-icons';
+library.add(faArrowRight, faArrowLeft, faBars, faCircleNotch);
 
 ReactDOM.render(
   <Provider store={store}>

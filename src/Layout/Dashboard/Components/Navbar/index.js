@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, MenuButton, List, ListItem, ListItemLink } from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
 import DrawerActions from 'Redux/DrawerRedux';
 
 function Navbar() {
@@ -15,7 +14,7 @@ function Navbar() {
   return (
     <Container drawerIsVisible={drawerIsVisible}>
       <MenuButton onClick={drawerToggle}>
-        <FontAwesomeIcon icon={faBars} color="#ffffff" />
+        <FontAwesomeIcon icon="bars" color="#ffffff" />
       </MenuButton>
       <List>
         <ListItem>

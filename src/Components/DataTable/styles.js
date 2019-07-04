@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-export const Container = styled.table`
+export const Container = styled.div`
+  width: 100%;
+  padding: 5px;
+`;
+
+export const Table = styled.table`
   width: 100%;
   background-color: #ffffff;
   border: 1px solid #f0f0f0;

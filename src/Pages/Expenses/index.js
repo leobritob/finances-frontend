@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Title from 'Components/Title';
 import { Container } from './styles';
 import ReportsBox from 'Components/ReportsBox';
 import DataTable from 'Components/DataTable';
 import { format } from 'date-fns';
+import { COLORS } from 'Themes';
 
 export default function Expenses() {
-  const data = [
+  const [page, setPage] = useState(1);
+
+  const reportsData = [
     {
       label: 'Hoje',
       value: 28.9,
       styles: {
-        boxBackgroundColor: '#E66D67',
+        boxBackgroundColor: COLORS.expenses,
         valueTextColor: '#ffffff',
         labelTextColor: '#ffffff'
       }
@@ -20,7 +23,7 @@ export default function Expenses() {
       label: 'Mês Atual',
       value: 29.9,
       styles: {
-        boxBackgroundColor: '#E66D67',
+        boxBackgroundColor: COLORS.expenses,
         valueTextColor: '#ffffff',
         labelTextColor: '#ffffff'
       }
@@ -29,11 +32,19 @@ export default function Expenses() {
       label: 'Mês Passado',
       value: 2400,
       styles: {
-        boxBackgroundColor: '#E66D67',
+        boxBackgroundColor: COLORS.expenses,
         valueTextColor: '#ffffff',
         labelTextColor: '#ffffff'
       }
     }
+  ];
+
+  const expenses = require('./expenses.json');
+
+  const dataTableColumns = [
+    { id: 'description', label: 'Descricão' },
+    { id: 'date', label: 'Data', width: 250 },
+    { id: 'value', label: 'Valor', width: 200 }
   ];
 
   const renderItem = (column, item) => {
@@ -53,33 +64,17 @@ export default function Expenses() {
   return (
     <Container>
       <Title>Despesas</Title>
-      <ReportsBox data={data} />
+      <ReportsBox data={reportsData} />
 
       <Title>Extrato</Title>
       <DataTable
         renderItem={renderItem}
-        columns={[
-          { id: 'description', label: 'Descricão' },
-          { id: 'date', label: 'Data', width: 250 },
-          { id: 'value', label: 'Valor', width: 200 }
-        ]}
-        data={[
-          {
-            description: 'Faculdade',
-            date: '2019-07-02T09:00:00Z',
-            value: 550
-          },
-          {
-            description: 'Curso de Inglês',
-            date: '2019-07-02T09:05:00Z',
-            value: 400
-          },
-          {
-            description: 'Academia',
-            date: '2019-07-02T12:00:00Z',
-            value: 90
-          }
-        ]}
+        columns={dataTableColumns}
+        data={expenses.data}
+        page={page}
+        perPage={expenses.perPage}
+        total={expenses.total}
+        paginationOnChange={setPage}
       />
     </Container>
   );

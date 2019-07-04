@@ -10,7 +10,6 @@ import {
 import { history } from 'Config/Store';
 import Title from 'Components/Title';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 export default function Login() {
   const [isConnected, setIsConnected] = useState(false);
@@ -40,7 +39,7 @@ export default function Login() {
         {isConnected && (
           <LoadingContainer>
             <FontAwesomeIcon
-              icon={faCircleNotch}
+              icon="circle-notch"
               pulse
               size="lg"
               color="#000000"
