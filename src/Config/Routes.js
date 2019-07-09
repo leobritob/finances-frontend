@@ -6,6 +6,7 @@ import DashboardLayout from 'Layout/Dashboard';
 import Revenue from 'Pages/Revenue';
 import Expenses from 'Pages/Expenses';
 import Investment from 'Pages/Investment';
+import RevenueAdd from 'Pages/Revenue/Add';
 
 const PrivateRoute = ({
   component: Component,
@@ -42,6 +43,12 @@ const Routes = (
       exact
       path="/revenue"
       component={Revenue}
+      layout={DashboardLayout}
+    />
+    <PrivateRoute
+      exact
+      path="/revenue/add"
+      component={RevenueAdd}
       layout={DashboardLayout}
     />
     <PrivateRoute

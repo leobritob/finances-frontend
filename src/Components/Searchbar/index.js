@@ -1,23 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Input, Button } from './styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { COLORS } from 'Themes';
 
-function Searchbar({ value, onSearch, addButton, addButtonOnClick }) {
+function Searchbar({ value, buttonIsVisible, onChange, onClick }) {
   return (
     <Container>
-      <Input value={value} placeholder="Pesquise pela descricão" />
-      <Button onClick={onSearch}>Pesquisar</Button>
-      {addButton && (
-        <Button
-          noBorder
-          color="#ffffff"
-          backgroundColor={COLORS.primary}
-          onClick={addButtonOnClick}
-        >
-          <FontAwesomeIcon icon="plus" color="white" />
-        </Button>
+      <Input
+        value={value}
+        placeholder="Pesquise pela descricão"
+        onChange={onChange}
+      />
+      {buttonIsVisible && (
+        <Button onClick={() => onClick(value)}>Pesquisar</Button>
       )}
     </Container>
   );
@@ -25,16 +19,16 @@ function Searchbar({ value, onSearch, addButton, addButtonOnClick }) {
 
 Searchbar.propTypes = {
   value: PropTypes.string,
-  onSearch: PropTypes.func.isRequired,
-  addButton: PropTypes.bool,
-  addButtonOnClick: PropTypes.func
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+  buttonIsVisible: PropTypes.bool
 };
 
 Searchbar.defaultProps = {
   value: '',
-  onSearch: () => {},
-  addButton: false,
-  addButtonOnClick: () => {}
+  onChange: () => {},
+  onClick: () => {},
+  buttonIsVisible: true
 };
 
 export default Searchbar;

@@ -6,6 +6,7 @@ import DataTable from 'Components/DataTable';
 import { format } from 'date-fns';
 import { COLORS } from 'Themes';
 import Breadcrumbs from 'Components/Breadcrumbs';
+import { history } from 'Config/Store';
 
 function Revenue() {
   const data = [
@@ -39,6 +40,7 @@ function Revenue() {
   ];
 
   const [page, setPage] = useState(1);
+  const [searchBarValue, setSearchBarValue] = useState('');
   const revenue = require('./revenue.json');
 
   const renderItem = (column, item) => {
@@ -79,6 +81,16 @@ function Revenue() {
         perPage={revenue.perPage}
         total={revenue.total}
         paginationOnChange={setPage}
+        addButtonIsVisible={true}
+        addButtonOnClick={() => history.push('/revenue/add')}
+        searchBarIsVisible={true}
+        searchBarValue={searchBarValue}
+        searchBarOnChange={e => {
+          setSearchBarValue(e.target.value);
+        }}
+        searchBarOnClick={search => {
+          alert(search);
+        }}
       />
     </Container>
   );

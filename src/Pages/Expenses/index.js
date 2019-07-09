@@ -83,6 +83,8 @@ export default function Expenses() {
         perPage={expenses.perPage}
         total={expenses.total}
         paginationOnChange={setPage}
+        addButtonIsVisible={true}
+        searchBarIsVisible={true}
       />
     </Container>
   );

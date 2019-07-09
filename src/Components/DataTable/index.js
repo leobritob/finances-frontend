@@ -3,15 +3,18 @@ import { Container, Table, THead, TH, TBody, TRow, TColumn } from './styles';
 import Searchbar from 'Components/Searchbar';
 import Pagination from 'Components/Pagination';
 import PropTypes from 'prop-types';
+import Button from 'Components/Button';
 
 export default function DataTable({
-  addButton,
+  searchBarIsVisible,
+  addButtonIsVisible,
   addButtonOnClick,
   columns,
   data,
   renderItem,
-  textSearch,
-  onSearch,
+  searchBarValue,
+  searchBarOnChange,
+  searchBarOnClick,
   paginationOnChange,
   page,
   perPage,
@@ -19,12 +22,16 @@ export default function DataTable({
 }) {
   return (
     <Container>
-      <Searchbar
-        value={textSearch}
-        onSearch={onSearch}
-        addButton={addButton}
-        addButtonOnClick={addButtonOnClick}
-      />
+      {addButtonIsVisible && (
+        <Button label="Novo" icon="plus" onClick={addButtonOnClick} />
+      )}
+      {searchBarIsVisible && (
+        <Searchbar
+          value={searchBarValue}
+          onChange={searchBarOnChange}
+          onClick={searchBarOnClick}
+        />
+      )}
       <Table border={0} cellSpacing={0} cellPadding={0}>
         <THead>
           <TRow>
@@ -61,19 +68,25 @@ DataTable.prototype = {
   columns: PropTypes.array,
   data: PropTypes.array,
   renderItem: PropTypes.func,
-  textSearch: PropTypes.string,
-  onSearch: PropTypes.func,
+  searchBarValue: PropTypes.string,
+  searchBarOnChange: PropTypes.func,
+  searchBarOnClick: PropTypes.func,
   paginationOnChange: PropTypes.func,
   page: PropTypes.number,
   perPage: PropTypes.number,
   total: PropTypes.number,
-  addButton: PropTypes.bool,
-  addButtonOnClick: PropTypes.func
+  addButtonIsVisible: PropTypes.bool,
+  addButtonOnClick: PropTypes.func,
+  searchBarIsVisible: PropTypes.bool
 };
 
 DataTable.defaultProps = {
   columns: [],
   data: [],
-  addButton: false,
-  addButtonOnClick: () => {}
+  addButtonIsVisible: false,
+  addButtonOnClick: () => {},
+  searchBarIsVisible: false,
+  searchBarValue: '',
+  searchBarOnClick: () => {},
+  searchBarOnChange: () => {}
 };

@@ -35,6 +35,6 @@ export const ListItemLink = styled(Link)`
   color: #ffffff;
 
   &:hover {
-    background-color: #3f3f3f;
+    background-color: #000000;
   }
 `;

@@ -81,6 +81,8 @@ export default function Investment() {
         perPage={revenue.perPage}
         total={revenue.total}
         paginationOnChange={setPage}
+        addButtonIsVisible={true}
+        searchBarIsVisible={true}
       />
     </Container>
   );
