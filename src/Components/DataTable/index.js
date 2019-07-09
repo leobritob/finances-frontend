@@ -5,6 +5,8 @@ import Pagination from 'Components/Pagination';
 import PropTypes from 'prop-types';
 
 export default function DataTable({
+  addButton,
+  addButtonOnClick,
   columns,
   data,
   renderItem,
@@ -17,7 +19,12 @@ export default function DataTable({
 }) {
   return (
     <Container>
-      <Searchbar value={textSearch} onSearch={onSearch} />
+      <Searchbar
+        value={textSearch}
+        onSearch={onSearch}
+        addButton={addButton}
+        addButtonOnClick={addButtonOnClick}
+      />
       <Table border={0} cellSpacing={0} cellPadding={0}>
         <THead>
           <TRow>
@@ -59,5 +66,14 @@ DataTable.prototype = {
   paginationOnChange: PropTypes.func,
   page: PropTypes.number,
   perPage: PropTypes.number,
-  total: PropTypes.number
+  total: PropTypes.number,
+  addButton: PropTypes.bool,
+  addButtonOnClick: PropTypes.func
+};
+
+DataTable.defaultProps = {
+  columns: [],
+  data: [],
+  addButton: false,
+  addButtonOnClick: () => {}
 };

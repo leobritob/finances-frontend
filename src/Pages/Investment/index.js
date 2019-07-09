@@ -7,11 +7,11 @@ import { format } from 'date-fns';
 import { COLORS } from 'Themes';
 import Breadcrumbs from 'Components/Breadcrumbs';
 
-function Revenue() {
+export default function Investment() {
   const data = [
     {
-      label: 'Hoje',
-      value: 0,
+      label: 'Patrimônio Total',
+      value: 26500,
       styles: {
         boxBackgroundColor: COLORS.revenue,
         valueTextColor: '#ffffff',
@@ -20,7 +20,7 @@ function Revenue() {
     },
     {
       label: 'Mês Atual',
-      value: 10000,
+      value: 22000,
       styles: {
         boxBackgroundColor: COLORS.revenue,
         valueTextColor: '#ffffff',
@@ -29,7 +29,7 @@ function Revenue() {
     },
     {
       label: 'Mês Passado',
-      value: 17000,
+      value: 19000,
       styles: {
         boxBackgroundColor: COLORS.revenue,
         valueTextColor: '#ffffff',
@@ -39,7 +39,7 @@ function Revenue() {
   ];
 
   const [page, setPage] = useState(1);
-  const revenue = require('./revenue.json');
+  const revenue = require('./data.json');
 
   const renderItem = (column, item) => {
     switch (column) {
@@ -60,14 +60,16 @@ function Revenue() {
       <Breadcrumbs
         data={[
           { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Receitas' }
+          { label: 'Investimentos' }
         ]}
       />
-      <Title>Receitas</Title>
+      <Title>Investimentos</Title>
       <ReportsBox data={data} />
 
       <Title>Extrato</Title>
       <DataTable
+        addButton={true}
+        addButtonOnClick={() => {}}
         renderItem={renderItem}
         columns={[
           { id: 'description', label: 'Descricão' },
@@ -83,5 +85,3 @@ function Revenue() {
     </Container>
   );
 }
-
-export default Revenue;

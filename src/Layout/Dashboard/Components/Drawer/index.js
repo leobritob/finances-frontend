@@ -19,7 +19,7 @@ function Drawer() {
         </ListItem>
         <ListItem>
           {' '}
-          <ListItemLink> Investimentos </ListItemLink>{' '}
+          <ListItemLink to="/investments"> Investimentos </ListItemLink>{' '}
         </ListItem>
       </List>
     </Container>

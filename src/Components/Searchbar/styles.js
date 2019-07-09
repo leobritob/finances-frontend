@@ -14,14 +14,21 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
+  background-color: ${props => props.backgroundColor || '#ffffff'};
   padding: 10px 25px;
-  color: #333333;
   font-size: 1rem;
   border: none;
   cursor: pointer;
-  border-top: 1px solid #eaeaea;
-  border-right: 1px solid #eaeaea;
-  border-bottom: 1px solid #eaeaea;
+  ${props =>
+    props.noBorder
+      ? null
+      : `
+    border-top: 1px solid #eaeaea;
+    border-right: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+  `};
+
+  color: ${props => props.textColor || '#333333'};
 
   &:hover {
     background-color: #eaeaea;

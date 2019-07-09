@@ -12,9 +12,10 @@ import {
   faArrowRight,
   faArrowLeft,
   faBars,
-  faCircleNotch
+  faCircleNotch,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons';
-library.add(faArrowRight, faArrowLeft, faBars, faCircleNotch);
+library.add(faArrowRight, faArrowLeft, faBars, faCircleNotch, faPlus);
 
 ReactDOM.render(
   <Provider store={store}>

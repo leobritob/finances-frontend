@@ -4,6 +4,7 @@ import { Container } from './styles';
 import Title from 'Components/Title';
 import ReportsBox from 'Components/ReportsBox';
 import { COLORS } from 'Themes';
+import Breadcrumbs from 'Components/Breadcrumbs';
 
 function Dashboard() {
   useEffect(() => {
@@ -51,6 +52,7 @@ function Dashboard() {
 
   return (
     <Container>
+      <Breadcrumbs data={[{ label: 'Dashboard' }]} />
       <Title>Dashboard</Title>
       <ReportsBox data={data} />
     </Container>

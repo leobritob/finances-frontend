@@ -5,6 +5,7 @@ import Login from 'Pages/Login';
 import DashboardLayout from 'Layout/Dashboard';
 import Revenue from 'Pages/Revenue';
 import Expenses from 'Pages/Expenses';
+import Investment from 'Pages/Investment';
 
 const PrivateRoute = ({
   component: Component,
@@ -47,6 +48,12 @@ const Routes = (
       exact
       path="/expenses"
       component={Expenses}
+      layout={DashboardLayout}
+    />
+    <PrivateRoute
+      exact
+      path="/investments"
+      component={Investment}
       layout={DashboardLayout}
     />
   </Switch>

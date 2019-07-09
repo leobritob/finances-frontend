@@ -5,6 +5,7 @@ import ReportsBox from 'Components/ReportsBox';
 import DataTable from 'Components/DataTable';
 import { format } from 'date-fns';
 import { COLORS } from 'Themes';
+import Breadcrumbs from 'Components/Breadcrumbs';
 
 export default function Expenses() {
   const [page, setPage] = useState(1);
@@ -39,7 +40,7 @@ export default function Expenses() {
     }
   ];
 
-  const expenses = require('./expenses.json');
+  const expenses = require('./data.json');
 
   const dataTableColumns = [
     { id: 'description', label: 'Descricão' },
@@ -63,6 +64,13 @@ export default function Expenses() {
 
   return (
     <Container>
+      <Breadcrumbs
+        data={[
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Despesas' }
+        ]}
+      />
+
       <Title>Despesas</Title>
       <ReportsBox data={reportsData} />
 
