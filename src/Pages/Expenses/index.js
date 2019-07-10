@@ -6,6 +6,7 @@ import DataTable from 'Components/DataTable';
 import { format } from 'date-fns';
 import { COLORS } from 'Themes';
 import Breadcrumbs from 'Components/Breadcrumbs';
+import { history } from 'Config/Store';
 
 export default function Expenses() {
   const [page, setPage] = useState(1);
@@ -84,6 +85,7 @@ export default function Expenses() {
         total={expenses.total}
         paginationOnChange={setPage}
         addButtonIsVisible={true}
+        addButtonOnClick={() => history.push('/expenses/add')}
         searchBarIsVisible={true}
       />
     </Container>

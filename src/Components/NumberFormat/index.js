@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import NumberFormat from 'react-number-format';
 import { COLORS } from 'Themes';
 
-export default styled.input`
+export default styled(NumberFormat)`
   width: 100%;
   height: 45px;
   padding: 0 10px;

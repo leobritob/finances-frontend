@@ -7,6 +7,7 @@ import Revenue from 'Pages/Revenue';
 import Expenses from 'Pages/Expenses';
 import Investment from 'Pages/Investment';
 import RevenueAdd from 'Pages/Revenue/Add';
+import ExpensesAdd from 'Pages/Expenses/Add';
 
 const PrivateRoute = ({
   component: Component,
@@ -39,6 +40,8 @@ const Routes = (
       component={Dashboard}
       layout={DashboardLayout}
     />
+
+    {/* REVENUE */}
     <PrivateRoute
       exact
       path="/revenue"
@@ -51,12 +54,22 @@ const Routes = (
       component={RevenueAdd}
       layout={DashboardLayout}
     />
+
+    {/* EXPENSES */}
     <PrivateRoute
       exact
       path="/expenses"
       component={Expenses}
       layout={DashboardLayout}
     />
+    <PrivateRoute
+      exact
+      path="/expenses/add"
+      component={ExpensesAdd}
+      layout={DashboardLayout}
+    />
+
+    {/* INVESTMENTS */}
     <PrivateRoute
       exact
       path="/investments"
