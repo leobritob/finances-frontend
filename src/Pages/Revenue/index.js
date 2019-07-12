@@ -85,12 +85,10 @@ function Revenue() {
         addButtonOnClick={() => history.push('/revenue/add')}
         searchBarIsVisible={true}
         searchBarValue={searchBarValue}
-        searchBarOnChange={e => {
-          setSearchBarValue(e.target.value);
-        }}
-        searchBarOnClick={search => {
-          alert(search);
-        }}
+        searchBarOnChange={e => setSearchBarValue(e.target.value)}
+        searchBarOnClick={search => {}}
+        fromIsVisible={true}
+        toIsVisible={true}
       />
     </Container>
   );

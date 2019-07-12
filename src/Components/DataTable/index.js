@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { Container, Table, THead, TH, TBody, TRow, TColumn } from './styles';
+import {
+  Container,
+  Table,
+  THead,
+  TH,
+  TBody,
+  TRow,
+  TColumn,
+  Input,
+  FilterContainer
+} from './styles';
 import Searchbar from 'Components/Searchbar';
 import Pagination from 'Components/Pagination';
 import PropTypes from 'prop-types';
@@ -18,7 +28,13 @@ export default function DataTable({
   paginationOnChange,
   page,
   perPage,
-  total
+  total,
+  fromIsVisible,
+  fromValue,
+  fromOnChange,
+  toIsVisible,
+  toValue,
+  toOnChange
 }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
 
@@ -31,27 +47,35 @@ export default function DataTable({
       {addButtonIsVisible && (
         <Button label="Novo" icon="plus" onClick={addButtonOnClick} />
       )}
-      {searchBarIsVisible && (
-        <Searchbar
-          value={searchBarValue}
-          onChange={searchBarOnChange}
-          onClick={searchBarOnClick}
-        />
-      )}
+
+      <FilterContainer>
+        {fromIsVisible && (
+          <Input type="date" value={fromValue} onChange={fromOnChange} />
+        )}
+        {toIsVisible && (
+          <Input type="date" value={toValue} onChange={toOnChange} />
+        )}
+        {searchBarIsVisible && (
+          <Searchbar
+            value={searchBarValue}
+            placeholder="Pesquisar pela descricão"
+            onChange={searchBarOnChange}
+            onClick={searchBarOnClick}
+          />
+        )}
+      </FilterContainer>
       <Table border={0} cellSpacing={0} cellPadding={0}>
         {isMobile && (
-          <>
-            <TBody>
-              {data.map((data, dataIndex) => {
-                return columns.map((column, columnIndex) => (
-                  <TRow key={columnIndex}>
-                    <TH>{column.label}</TH>
-                    <TColumn>{renderItem(column.id, data)}</TColumn>
-                  </TRow>
-                ));
-              })}
-            </TBody>
-          </>
+          <TBody>
+            {data.map((data, dataIndex) => {
+              return columns.map((column, columnIndex) => (
+                <TRow key={columnIndex}>
+                  <TH>{column.label}</TH>
+                  <TColumn>{renderItem(column.id, data)}</TColumn>
+                </TRow>
+              ));
+            })}
+          </TBody>
         )}
 
         {!isMobile && (
@@ -102,7 +126,13 @@ DataTable.prototype = {
   total: PropTypes.number,
   addButtonIsVisible: PropTypes.bool,
   addButtonOnClick: PropTypes.func,
-  searchBarIsVisible: PropTypes.bool
+  searchBarIsVisible: PropTypes.bool,
+  fromIsVisible: PropTypes.bool,
+  fromValue: PropTypes.text,
+  fromOnChange: PropTypes.func,
+  toIsVisible: PropTypes.bool,
+  toValue: PropTypes.text,
+  toOnChange: PropTypes.func
 };
 
 DataTable.defaultProps = {
@@ -113,5 +143,11 @@ DataTable.defaultProps = {
   searchBarIsVisible: false,
   searchBarValue: '',
   searchBarOnClick: () => {},
-  searchBarOnChange: () => {}
+  searchBarOnChange: () => {},
+  fromIsVisible: false,
+  fromValue: new Date(),
+  fromOnChange: () => {},
+  toIsVisible: false,
+  toValue: new Date(),
+  toOnChange: () => {}
 };

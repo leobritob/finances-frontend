@@ -29,7 +29,7 @@ export const TBody = styled.tbody``;
 export const TRow = styled.tr`
   @media (max-width: 575px) {
     &:nth-child(3n + 1) {
-      background: #f0f0f0;
+      background: #f5f5f5;
     }
   }
 `;
@@ -37,4 +37,35 @@ export const TRow = styled.tr`
 export const TColumn = styled.td`
   padding: 10px;
   color: #666666;
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #efefef;
+  font-size: 0.9rem;
+  color: #333333;
+`;
+
+export const FilterContainer = styled.div`
+  display: grid;
+  grid-template-columns: ${props => {
+    const arr = props.children.filter(c => c).map(c => c);
+    let fr = [];
+    arr.forEach((c, i) =>
+      i === arr.length - 1 ? fr.push('3fr') : fr.push('1fr')
+    );
+
+    return fr.join(' ');
+  }};
+  grid-gap: 10px;
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 575px) {
+    grid-gap: 10px;
+    grid-template-columns: 1fr;
+  }
 `;

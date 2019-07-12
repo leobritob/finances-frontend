@@ -87,6 +87,8 @@ export default function Expenses() {
         addButtonIsVisible={true}
         addButtonOnClick={() => history.push('/expenses/add')}
         searchBarIsVisible={true}
+        fromIsVisible={true}
+        toIsVisible={true}
       />
     </Container>
   );

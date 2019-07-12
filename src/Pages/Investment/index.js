@@ -83,6 +83,8 @@ export default function Investment() {
         paginationOnChange={setPage}
         addButtonIsVisible={true}
         searchBarIsVisible={true}
+        fromIsVisible={true}
+        toIsVisible={true}
       />
     </Container>
   );
