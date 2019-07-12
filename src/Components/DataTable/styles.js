@@ -27,7 +27,11 @@ export const TH = styled.th`
 export const TBody = styled.tbody``;
 
 export const TRow = styled.tr`
-  border-bottom: 1px solid #f0f0f0;
+  @media (max-width: 572px) {
+    &:nth-child(3n + 1) {
+      background: #f0f0f0;
+    }
+  }
 `;
 
 export const TColumn = styled.td`

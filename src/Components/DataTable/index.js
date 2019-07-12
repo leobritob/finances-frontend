@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Table, THead, TH, TBody, TRow, TColumn } from './styles';
 import Searchbar from 'Components/Searchbar';
 import Pagination from 'Components/Pagination';
 import PropTypes from 'prop-types';
 import Button from 'Components/Button';
+import debounce from 'lodash.debounce';
 
 export default function DataTable({
   searchBarIsVisible,
@@ -20,6 +21,14 @@ export default function DataTable({
   perPage,
   total
 }) {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  const setWidthDelayed = debounce(setWidth, 100);
+
+  window.addEventListener('resize', e => {
+    setWidthDelayed(e.target.innerWidth);
+  });
+
   return (
     <Container>
       {addButtonIsVisible && (
@@ -33,26 +42,45 @@ export default function DataTable({
         />
       )}
       <Table border={0} cellSpacing={0} cellPadding={0}>
-        <THead>
-          <TRow>
-            {columns.map((column, columnIndex) => (
-              <TH key={columnIndex} width={column.width}>
-                {column.label}
-              </TH>
-            ))}
-          </TRow>
-        </THead>
-        <TBody>
-          {data.map((item, dataIndex) => (
-            <TRow key={dataIndex}>
-              {columns.map((column, columnIndex) => (
-                <TColumn key={columnIndex}>
-                  {renderItem(column.id, item)}
-                </TColumn>
+        {width <= 575 && (
+          <>
+            <TBody>
+              {data.map((data, dataIndex) => {
+                return columns.map((column, columnIndex) => (
+                  <TRow key={columnIndex}>
+                    <TH>{column.label}</TH>
+                    <TColumn>{renderItem(column.id, data)}</TColumn>
+                  </TRow>
+                ));
+              })}
+            </TBody>
+          </>
+        )}
+
+        {width > 575 && (
+          <>
+            <THead>
+              <TRow>
+                {columns.map((column, columnIndex) => (
+                  <TH key={columnIndex} width={column.width}>
+                    {column.label}
+                  </TH>
+                ))}
+              </TRow>
+            </THead>
+            <TBody>
+              {data.map((item, dataIndex) => (
+                <TRow key={dataIndex}>
+                  {columns.map((column, columnIndex) => (
+                    <TColumn key={columnIndex}>
+                      {renderItem(column.id, item)}
+                    </TColumn>
+                  ))}
+                </TRow>
               ))}
-            </TRow>
-          ))}
-        </TBody>
+            </TBody>
+          </>
+        )}
       </Table>
       <Pagination
         page={page}
