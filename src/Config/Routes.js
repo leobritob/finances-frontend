@@ -9,6 +9,7 @@ import Investments from 'Pages/Investments';
 import RevenueAdd from 'Pages/Revenue/Add';
 import ExpensesAdd from 'Pages/Expenses/Add';
 import InvestmentsAdd from 'Pages/Investments/Add';
+import ForgotPassword from 'Pages/ForgotPassword';
 
 const PrivateRoute = ({
   component: Component,
@@ -35,6 +36,8 @@ const Routes = (
   <Switch>
     <Route exact path="/" component={Login} />
     <Route exact path="/login" component={Login} />
+    <Route exact path="/forgot-password" component={ForgotPassword} />
+
     <PrivateRoute
       exact
       path="/dashboard"

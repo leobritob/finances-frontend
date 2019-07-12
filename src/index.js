@@ -21,8 +21,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ptBR } from 'date-fns/locale';
 import { registerLocale, setDefaultLocale } from 'react-datepicker';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 registerLocale('pt-BR', ptBR);
 setDefaultLocale('pt-BR');
+
+toast.configure({
+  autoClose: 8000
+});
 
 library.add(
   faArrowRight,
@@ -38,6 +45,7 @@ library.add(
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
+      <ToastContainer />
       <ConnectedRouter history={history}>{Routes}</ConnectedRouter>
     </PersistGate>
   </Provider>,
