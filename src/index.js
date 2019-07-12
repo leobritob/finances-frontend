@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import Routes from 'Config/Routes';
 import { persistor, store, history } from 'Config/Store';
 import { PersistGate } from 'redux-persist/integration/react';
+import 'react-datepicker/dist/react-datepicker.css';
 import './styles.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -13,10 +14,26 @@ import {
   faArrowLeft,
   faBars,
   faCircleNotch,
+  faSpinner,
   faPlus,
-  faSearch
+  faSearch,
+  faCheck
 } from '@fortawesome/free-solid-svg-icons';
-library.add(faArrowRight, faArrowLeft, faBars, faCircleNotch, faPlus, faSearch);
+import { ptBR } from 'date-fns/locale';
+import { registerLocale, setDefaultLocale } from 'react-datepicker';
+registerLocale('pt-BR', ptBR);
+setDefaultLocale('pt-BR');
+
+library.add(
+  faArrowRight,
+  faArrowLeft,
+  faBars,
+  faCircleNotch,
+  faSpinner,
+  faPlus,
+  faSearch,
+  faCheck
+);
 
 ReactDOM.render(
   <Provider store={store}>

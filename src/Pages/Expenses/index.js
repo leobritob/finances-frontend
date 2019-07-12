@@ -52,7 +52,7 @@ export default function Expenses() {
   const renderItem = (column, item) => {
     switch (column) {
       case 'date':
-        return format(item[column], 'DD/MM/YYYY [às] HH:mm');
+        return format(new Date(item[column]), "dd/MM/yyyy 'às' HH:mm");
       case 'value':
         return Intl.NumberFormat('pt-BR', {
           style: 'currency',

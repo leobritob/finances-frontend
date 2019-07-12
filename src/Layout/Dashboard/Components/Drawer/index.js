@@ -24,34 +24,36 @@ function Drawer() {
 
         <List>
           <ListItem>
-            {' '}
             <ListItemLink
               to="/revenue"
               onClick={() => dispatch(DrawerActions.isVisibleToggle())}
             >
-              {' '}
-              Receita{' '}
-            </ListItemLink>{' '}
+              Receita
+            </ListItemLink>
           </ListItem>
           <ListItem>
-            {' '}
             <ListItemLink
               to="/expenses"
               onClick={() => dispatch(DrawerActions.isVisibleToggle())}
             >
-              {' '}
-              Despesas{' '}
-            </ListItemLink>{' '}
+              Despesas
+            </ListItemLink>
           </ListItem>
           <ListItem>
-            {' '}
             <ListItemLink
               to="/investments"
               onClick={() => dispatch(DrawerActions.isVisibleToggle())}
             >
-              {' '}
-              Investimentos{' '}
-            </ListItemLink>{' '}
+              Investimentos
+            </ListItemLink>
+          </ListItem>
+          <ListItem>
+            <ListItemLink
+              to="/login"
+              onClick={() => dispatch(DrawerActions.isVisibleToggle())}
+            >
+              Sair
+            </ListItemLink>
           </ListItem>
         </List>
       </Container>

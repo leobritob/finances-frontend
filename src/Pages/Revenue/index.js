@@ -41,12 +41,15 @@ function Revenue() {
 
   const [page, setPage] = useState(1);
   const [searchBarValue, setSearchBarValue] = useState('');
-  const revenue = require('./revenue.json');
+  const [fromDate, setFromDate] = useState(new Date());
+  const [toDate, setToDate] = useState(new Date());
+
+  const revenue = require('./data.json');
 
   const renderItem = (column, item) => {
     switch (column) {
       case 'date':
-        return format(item[column], 'DD/MM/YYYY [às] HH:mm');
+        return format(new Date(item[column]), "dd/MM/yyyy 'às' HH:mm");
       case 'value':
         return Intl.NumberFormat('pt-BR', {
           style: 'currency',
@@ -88,7 +91,11 @@ function Revenue() {
         searchBarOnChange={e => setSearchBarValue(e.target.value)}
         searchBarOnClick={search => {}}
         fromIsVisible={true}
+        fromOnChange={setFromDate}
+        fromValue={fromDate}
         toIsVisible={true}
+        toOnChange={setToDate}
+        toValue={toDate}
       />
     </Container>
   );

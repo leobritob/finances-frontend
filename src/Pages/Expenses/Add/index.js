@@ -5,10 +5,11 @@ import Title from 'Components/Title';
 import Input from 'Components/Input';
 import NumberFormat from 'Components/NumberFormat';
 import Button from 'Components/Button';
+import DatePicker from 'Components/DatePicker';
 
 export default function ExpensesAdd() {
   const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date());
   const [amount, setAmount] = useState(0);
 
   return (
@@ -28,12 +29,7 @@ export default function ExpensesAdd() {
         placeholder="Descricão"
         autoComplete="off"
       />
-      <Input
-        value={date}
-        onChange={e => setDate(e.target.value)}
-        type="date"
-        placeholder="Data"
-      />
+      <DatePicker selected={date} onChange={setDate} />
       <NumberFormat
         value={amount}
         onChange={e => setAmount(e.target.value)}
@@ -44,6 +40,8 @@ export default function ExpensesAdd() {
       />
       <Button
         label="Salvar"
+        icon="check"
+        allowSpinnerLoading={true}
         onClick={() => alert(JSON.stringify({ description, date, amount }))}
       />
     </Container>

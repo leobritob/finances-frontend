@@ -14,6 +14,8 @@ import Searchbar from 'Components/Searchbar';
 import Pagination from 'Components/Pagination';
 import PropTypes from 'prop-types';
 import Button from 'Components/Button';
+import DatePicker from 'Components/DatePicker';
+import { compareAsc } from 'date-fns';
 
 export default function DataTable({
   searchBarIsVisible,
@@ -42,6 +44,11 @@ export default function DataTable({
     setIsMobile(e.target.innerWidth <= 575);
   });
 
+  const compareDates = compareAsc(fromValue, toValue);
+  if (compareDates === 1) {
+    toOnChange(fromValue);
+  }
+
   return (
     <Container>
       {addButtonIsVisible && (
@@ -50,10 +57,18 @@ export default function DataTable({
 
       <FilterContainer>
         {fromIsVisible && (
-          <Input type="date" value={fromValue} onChange={fromOnChange} />
+          <DatePicker
+            selected={fromValue}
+            onChange={fromOnChange}
+            customInput={<Input />}
+          />
         )}
         {toIsVisible && (
-          <Input type="date" value={toValue} onChange={toOnChange} />
+          <DatePicker
+            selected={toValue}
+            onChange={toOnChange}
+            customInput={<Input />}
+          />
         )}
         {searchBarIsVisible && (
           <Searchbar
