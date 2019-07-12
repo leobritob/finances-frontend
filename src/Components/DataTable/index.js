@@ -4,7 +4,6 @@ import Searchbar from 'Components/Searchbar';
 import Pagination from 'Components/Pagination';
 import PropTypes from 'prop-types';
 import Button from 'Components/Button';
-import debounce from 'lodash.debounce';
 
 export default function DataTable({
   searchBarIsVisible,
@@ -21,12 +20,10 @@ export default function DataTable({
   perPage,
   total
 }) {
-  const [width, setWidth] = useState(window.innerWidth);
-
-  const setWidthDelayed = debounce(setWidth, 100);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
 
   window.addEventListener('resize', e => {
-    setWidthDelayed(e.target.innerWidth);
+    setIsMobile(e.target.innerWidth <= 575);
   });
 
   return (
@@ -42,7 +39,7 @@ export default function DataTable({
         />
       )}
       <Table border={0} cellSpacing={0} cellPadding={0}>
-        {width <= 575 && (
+        {isMobile && (
           <>
             <TBody>
               {data.map((data, dataIndex) => {
@@ -57,7 +54,7 @@ export default function DataTable({
           </>
         )}
 
-        {width > 575 && (
+        {!isMobile && (
           <>
             <THead>
               <TRow>

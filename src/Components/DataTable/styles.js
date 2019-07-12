@@ -27,7 +27,7 @@ export const TH = styled.th`
 export const TBody = styled.tbody``;
 
 export const TRow = styled.tr`
-  @media (max-width: 572px) {
+  @media (max-width: 575px) {
     &:nth-child(3n + 1) {
       background: #f0f0f0;
     }
