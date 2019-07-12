@@ -11,6 +11,7 @@ const persistConfig = {
   timeout: 15000,
   key: 'react_app_persist',
   storage,
+  blacklist: ['router', 'drawer']
 };
 
 /**
@@ -39,7 +40,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer(history));
 /**
  * CONFIGURE REDUX STORE
  */
-const store = createStore(persistedReducer, composeEnhancer(applyMiddleware(...middlewareArgs)));
+const store = createStore(
+  persistedReducer,
+  composeEnhancer(applyMiddleware(...middlewareArgs))
+);
 const persistor = persistStore(store);
 
 sagaMiddleware.run(rootSaga);

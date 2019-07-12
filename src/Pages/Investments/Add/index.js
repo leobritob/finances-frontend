@@ -6,9 +6,9 @@ import Input from 'Components/Input';
 import NumberFormat from 'Components/NumberFormat';
 import Button from 'Components/Button';
 
-export default function ExpensesAdd() {
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
+export default function InvestmentsAdd() {
+  const [description, setDescription] = useState(null);
+  const [date, setDate] = useState(null);
   const [amount, setAmount] = useState(0);
 
   return (
@@ -16,11 +16,11 @@ export default function ExpensesAdd() {
       <Breadcrumbs
         data={[
           { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Despesas', href: '/expenses' },
+          { label: 'Investimentos', href: '/investments' },
           { label: 'Adicionar' }
         ]}
       />
-      <Title>Nova Despesa</Title>
+      <Title>Novo Investimento</Title>
 
       <Input
         value={description}

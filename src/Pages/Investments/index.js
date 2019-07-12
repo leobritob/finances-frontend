@@ -6,8 +6,9 @@ import DataTable from 'Components/DataTable';
 import { format } from 'date-fns';
 import { COLORS } from 'Themes';
 import Breadcrumbs from 'Components/Breadcrumbs';
+import { history } from 'Config/Store';
 
-export default function Investment() {
+export default function Investments() {
   const data = [
     {
       label: 'Patrimônio Total',
@@ -69,7 +70,7 @@ export default function Investment() {
       <Title>Extrato</Title>
       <DataTable
         addButton={true}
-        addButtonOnClick={() => {}}
+        addButtonOnClick={() => history.push('/investments/add')}
         renderItem={renderItem}
         columns={[
           { id: 'description', label: 'Descricão' },
