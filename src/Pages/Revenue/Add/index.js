@@ -35,6 +35,7 @@ export default function RevenueAdd() {
         placeholder="Data"
       />
       <NumberFormat
+        type="tel"
         value={amount}
         onChange={e => setAmount(e.target.value)}
         decimalScale={2}
