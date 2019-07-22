@@ -1,17 +1,17 @@
-import { applyMiddleware, compose, createStore } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import { routerMiddleware } from 'connected-react-router';
-import { createBrowserHistory } from 'history';
-import rootSaga from 'Sagas';
-import rootReducer from 'Redux/index';
+import { applyMiddleware, compose, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { routerMiddleware } from "connected-react-router";
+import { createBrowserHistory } from "history";
+import rootSaga from "Sagas";
+import rootReducer from "Redux/index";
 
 const persistConfig = {
   timeout: 15000,
-  key: 'react_app_persist',
+  key: "FinancesApp",
   storage,
-  blacklist: ['router', 'drawer']
+  blacklist: ["router", "drawer"]
 };
 
 /**

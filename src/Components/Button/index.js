@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Container, Span } from './styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Container, Span } from "./styles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Button({ label, icon, allowSpinnerLoading, onClick }) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (isLoading) {
-      setTimeout(() => setIsLoading(false), 5000);
+      setTimeout(() => setIsLoading(false), 3500);
     }
   }, [isLoading]);
 
-  const onClickModified = () => {
+  const onClickModified = e => {
     if (!isLoading) {
-      onClick();
+      onClick(e);
       if (allowSpinnerLoading) {
         setIsLoading(true);
       }
@@ -23,8 +23,8 @@ export default function Button({ label, icon, allowSpinnerLoading, onClick }) {
 
   return (
     <Container
-      onClick={() => onClickModified()}
-      disabled={typeof onClick === 'undefined'}
+      onClick={onClickModified}
+      disabled={typeof onClick === "undefined"}
     >
       {isLoading && (
         <>

@@ -1,15 +1,16 @@
-import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import Dashboard from 'Pages/Dashboard';
-import Login from 'Pages/Login';
-import DashboardLayout from 'Layout/Dashboard';
-import Revenue from 'Pages/Revenue';
-import Expenses from 'Pages/Expenses';
-import Investments from 'Pages/Investments';
-import RevenueAdd from 'Pages/Revenue/Add';
-import ExpensesAdd from 'Pages/Expenses/Add';
-import InvestmentsAdd from 'Pages/Investments/Add';
-import ForgotPassword from 'Pages/ForgotPassword';
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import Dashboard from "Pages/Dashboard";
+import Login from "Pages/Login";
+import DashboardLayout from "Layout/Dashboard";
+import Revenue from "Pages/Revenue";
+import Expenses from "Pages/Expenses";
+import Investments from "Pages/Investments";
+import RevenueAdd from "Pages/Revenue/Add";
+import ExpensesAdd from "Pages/Expenses/Add";
+import InvestmentsAdd from "Pages/Investments/Add";
+import ForgotPassword from "Pages/ForgotPassword";
+import { Auth } from "Utils";
 
 const PrivateRoute = ({
   component: Component,
@@ -20,7 +21,7 @@ const PrivateRoute = ({
   <Route
     {...rest}
     render={props => {
-      if (true) {
+      if (Auth.isAuthenticated()) {
         return (
           <Layout>
             <Component {...props} />

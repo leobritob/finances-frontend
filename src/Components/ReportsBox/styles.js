@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
@@ -25,17 +25,17 @@ export const Box = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${props => props.backgroundColor || '#f0f0f0'};
+  background-color: ${props => props.backgroundColor || "#f0f0f0"};
 `;
 
 export const Value = styled.p`
   font-weight: bold;
   font-size: 1.8rem;
-  color: ${props => props.textColor || '#666666'};
+  color: ${props => props.textColor || "#666666"};
   margin: 0 0 10px 0;
 `;
 
 export const Label = styled.p`
   font-size: 0.9rem;
-  color: ${props => props.textColor || '#666666'};
+  color: ${props => props.textColor || "#666666"};
 `;
