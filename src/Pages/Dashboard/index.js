@@ -70,7 +70,7 @@ export default function Dashboard() {
   const reportsData = [
     {
       label: "Receita",
-      value: 10000,
+      value: 0,
       styles: {
         boxBackgroundColor: COLORS.revenue,
         valueTextColor: "#ffffff",
@@ -79,7 +79,7 @@ export default function Dashboard() {
     },
     {
       label: "Despesas",
-      value: 3500,
+      value: 0,
       styles: {
         boxBackgroundColor: COLORS.expenses,
         valueTextColor: "#ffffff",
@@ -88,7 +88,7 @@ export default function Dashboard() {
     },
     {
       label: "Líquido",
-      value: 6500,
+      value: 0,
       styles: {
         boxBackgroundColor: COLORS.net,
         valueTextColor: "#ffffff",
@@ -97,7 +97,7 @@ export default function Dashboard() {
     },
     {
       label: "Investimento",
-      value: 150000,
+      value: 0,
       styles: {
         boxBackgroundColor: COLORS.investment,
         valueTextColor: "#ffffff",

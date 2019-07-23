@@ -3,6 +3,7 @@ import UsersServices from "./UsersServices";
 import AuthServices from "./AuthServices";
 import { toast } from "react-toastify";
 import HandleErrors from "Exceptions/Handler";
+import BillingCyclesServices from "./BillingCyclesServices";
 
 export const commonMonitor = (response: ApiResponse): void => {
   if (![200, 201, 204].includes(response.status)) {
@@ -21,7 +22,8 @@ export const commonMonitor = (response: ApiResponse): void => {
 
 const Services = {
   user: UsersServices.create(),
-  auth: AuthServices.create()
+  auth: AuthServices.create(),
+  billingCycles: BillingCyclesServices.create()
 };
 
 export const updateHeaderAuthToken = (token: string): void => {
