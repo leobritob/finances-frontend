@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS } from 'Themes';
+import styled from "styled-components";
+import { COLORS } from "Themes";
 
 export default styled.input`
   width: 100%;
@@ -7,11 +7,17 @@ export default styled.input`
   padding: 0 10px;
   margin: 5px 0;
   background-color: #ffffff;
-  border: none;
-  border-bottom: 2px solid #cccccc;
+  border-left-width: 0;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 2px;
+  border-bottom-color: #cccccc;
   font-size: 0.9rem;
 
   &:focus {
+    border-left-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
     border-color: ${COLORS.primary};
   }
 `;

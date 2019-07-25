@@ -16,13 +16,20 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  let _emailText = null;
+  let _passwordText = null;
+
   const token = useSelector(state => state.user.token);
 
   useEffect(() => {
     SEO.changeDocumentTitle("Login");
 
+    if (_emailText) {
+      _emailText.focus();
+    }
+
     if (token) history.push("/dashboard");
-  });
+  }, [_emailText, token]);
 
   const _login = async () => {
     try {
@@ -39,19 +46,37 @@ export default function Login() {
     }
   };
 
+  function _onKeyPress(context, e) {
+    if (context === "email") {
+      if (e.key === "Enter") {
+        _passwordText.focus();
+      }
+    }
+
+    if (context === "password") {
+      if (e.key === "Enter") {
+        _login();
+      }
+    }
+  }
+
   return (
     <Container>
       <LoginForm>
         <Title>Painel de Autenticação</Title>
         <Input
+          ref={ref => (_emailText = ref)}
           type="email"
           placeholder="Digite seu e-mail"
           onChange={e => setEmail(e.target.value)}
+          onKeyPress={e => _onKeyPress("email", e)}
         />
         <Input
+          ref={ref => (_passwordText = ref)}
           type="password"
           placeholder="Digite sua senha"
           onChange={e => setPassword(e.target.value)}
+          onKeyPress={e => _onKeyPress("password", e)}
         />
         <FlatButton label="Esqueci minha senha" href="/forgot-password" />
         <Button label="Conectar" allowSpinnerLoading={true} onClick={_login} />
