@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Container,
   Table,
@@ -9,13 +9,13 @@ import {
   TColumn,
   Input,
   FilterContainer
-} from './styles';
-import Searchbar from 'Components/Searchbar';
-import Pagination from 'Components/Pagination';
-import PropTypes from 'prop-types';
-import Button from 'Components/Button';
-import DatePicker from 'Components/DatePicker';
-import { compareAsc } from 'date-fns';
+} from "./styles";
+import Searchbar from "Components/Searchbar";
+import Pagination from "Components/Pagination";
+import PropTypes from "prop-types";
+import Button from "Components/Button";
+import DatePicker from "Components/DatePicker";
+import { compareAsc } from "date-fns";
 
 export default function DataTable({
   searchBarIsVisible,
@@ -40,7 +40,7 @@ export default function DataTable({
 }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
 
-  window.addEventListener('resize', e => {
+  window.addEventListener("resize", e => {
     setIsMobile(e.target.innerWidth <= 575);
   });
 
@@ -108,7 +108,10 @@ export default function DataTable({
               {data.map((item, dataIndex) => (
                 <TRow key={dataIndex}>
                   {columns.map((column, columnIndex) => (
-                    <TColumn key={columnIndex}>
+                    <TColumn
+                      key={columnIndex}
+                      noPadding={column.noPadding || false}
+                    >
                       {renderItem(column.id, item)}
                     </TColumn>
                   ))}
@@ -156,7 +159,7 @@ DataTable.defaultProps = {
   addButtonIsVisible: false,
   addButtonOnClick: () => {},
   searchBarIsVisible: false,
-  searchBarValue: '',
+  searchBarValue: "",
   searchBarOnClick: () => {},
   searchBarOnChange: () => {},
   fromIsVisible: false,

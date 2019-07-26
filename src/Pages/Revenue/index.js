@@ -9,24 +9,40 @@ import Breadcrumbs from "Components/Breadcrumbs";
 import { history } from "Config/Store";
 import Services from "Services";
 import { useDebounce } from "use-debounce";
+import Button from "Components/Button";
+import Colors from "Themes/Colors";
+import { toast } from "react-toastify";
+
+const fromDateValue = new Date(format(new Date(), "yyyy-MM-01 00:00:00"));
+const toDateValue = new Date(format(new Date(), "yyyy-MM-dd 00:00:00"));
 
 function Revenue() {
-  const [page, setPage] = useState(1);
   const [searchBarValue, setSearchBarValue] = useState("");
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
-  const [filter, setFilter] = useState({ billing_cycles_type: 1, search: "" });
+  const [fromDate, setFromDate] = useState(fromDateValue);
+  const [toDate, setToDate] = useState(toDateValue);
+  const [filter, setFilter] = useState({
+    date__gte: fromDateValue,
+    date__lte: toDateValue,
+    billing_cycles_type_id: 1,
+    search: ""
+  });
   const [revenue, setRevenue] = useState({
     total: 0,
     page: 0,
     perPage: 20,
     data: []
   });
+  const [reports, setReports] = useState({
+    today: 0,
+    current_month: 0,
+    last_month: 0
+  });
 
   const [filterDebounce] = useDebounce(filter, 300);
 
   useEffect(() => {
     _getAllRevenues(filterDebounce);
+    _getRevenuesReports(filterDebounce);
   }, [filterDebounce]);
 
   function renderItem(column, item) {
@@ -38,6 +54,18 @@ function Revenue() {
           style: "currency",
           currency: "BRL"
         }).format(item[column]);
+      case "-":
+        return (
+          <Button
+            onClick={() => _removeItem(item.id)}
+            backgroundColor={Colors.expenses}
+            height={25}
+            icon="trash"
+            iconSize="xs"
+            noMargin
+            noPadding
+          />
+        );
       default:
         return item[column];
     }
@@ -54,6 +82,34 @@ function Revenue() {
     }
   }
 
+  async function _getRevenuesReports(params = {}) {
+    try {
+      const response = await Services.billingCycles.getBillingCyclesReports(
+        params
+      );
+      if (response.status === 200) {
+        setReports(response.data);
+      }
+    } catch (e) {
+      console.log("_getRevenuesReports/ERROR", e.message);
+    }
+  }
+
+  async function _deleteRevenue(id) {
+    try {
+      if (!id) return false;
+
+      const response = await Services.billingCycles.destroyBillingCycles(id);
+      if (response.status === 204) {
+        toast.success("Receita removida com sucesso");
+
+        _getAllRevenues(filterDebounce);
+      }
+    } catch (e) {
+      console.log("_deleteRevenue/ERROR", e.message);
+    }
+  }
+
   function _searchBarHandler(e) {
     const search = e.target.value;
 
@@ -65,14 +121,35 @@ function Revenue() {
     setFromDate(from);
     from = format(new Date(from), "yyyy-MM-dd");
 
-    setFilter({ ...filter, created_at__gte: from });
+    setFilter({ ...filter, date__gte: from });
   }
 
   function _toHandler(to) {
     setToDate(to);
     to = format(new Date(to), "yyyy-MM-dd");
 
-    setFilter({ ...filter, created_at__lte: to });
+    setFilter({ ...filter, date__lte: to });
+  }
+
+  function _removeItem(id) {
+    const isDelete = window.confirm(
+      "Você tem certeza que deseja remover este item ?"
+    );
+    if (isDelete) {
+      _deleteRevenue(id);
+    }
+  }
+
+  function _handlePagination(page) {
+    setFilter({ ...filter, page });
+  }
+
+  function _searchBarOnClick(search) {
+    setFilter({ ...filter, search });
+  }
+
+  function _addButtonOnClick() {
+    history.push("/revenue/add");
   }
 
   return (
@@ -88,7 +165,7 @@ function Revenue() {
         data={[
           {
             label: "Hoje",
-            value: 0,
+            value: reports.today,
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: "#ffffff",
@@ -97,7 +174,7 @@ function Revenue() {
           },
           {
             label: "Mês Atual",
-            value: 0,
+            value: reports.current_month,
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: "#ffffff",
@@ -106,7 +183,7 @@ function Revenue() {
           },
           {
             label: "Mês Passado",
-            value: 0,
+            value: reports.last_month,
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: "#ffffff",
@@ -121,20 +198,21 @@ function Revenue() {
         renderItem={renderItem}
         columns={[
           { id: "description", label: "Descricão" },
-          { id: "date", label: "Data", width: 250 },
-          { id: "value", label: "Valor", width: 200 }
+          { id: "date", label: "Data", width: 100 },
+          { id: "value", label: "Valor", width: 200 },
+          { id: "-", label: "-", width: 80, noPadding: true }
         ]}
         data={revenue.data}
-        page={page}
+        page={revenue.page}
         perPage={revenue.perPage}
         total={revenue.total}
-        paginationOnChange={setPage}
+        paginationOnChange={_handlePagination}
         addButtonIsVisible={true}
-        addButtonOnClick={() => history.push("/revenue/add")}
+        addButtonOnClick={_addButtonOnClick}
         searchBarIsVisible={true}
         searchBarValue={searchBarValue}
         searchBarOnChange={_searchBarHandler}
-        searchBarOnClick={search => setFilter({ ...filter, search })}
+        searchBarOnClick={_searchBarOnClick}
         fromIsVisible={true}
         fromOnChange={_fromHandler}
         fromValue={fromDate}

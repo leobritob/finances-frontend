@@ -9,6 +9,7 @@ import DatePicker from "Components/DatePicker";
 import Services from "Services";
 import { toast } from "react-toastify";
 import Select from "Components/Select";
+import { history } from "Config/Store";
 
 export default function RevenueAdd() {
   const [description, setDescription] = useState("");
@@ -50,10 +51,7 @@ export default function RevenueAdd() {
       if (response.status === 200) {
         toast.success("Nova receita cadastrada com sucesso");
 
-        setCategory("");
-        setValue(0);
-        setDate(new Date());
-        setDescription("");
+        history.push("/revenue");
       }
     } catch (e) {
       console.log("_save/ERROR", e.message);

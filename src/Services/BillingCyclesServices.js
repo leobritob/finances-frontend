@@ -52,13 +52,21 @@ const create = (baseURL = Config.API_BASE_URL) => {
   const destroyBillingCycles = (id: number): Promise =>
     api.delete(`/v1/billing-cycles/${id}/`);
 
+  /**
+   * Endpoint responsável por buscar o relatório dos ciclos de faturamentos
+   * @param {Object} params - Query string para pesquisa
+   */
+  const getBillingCyclesReports = (params: Object = {}): Promise =>
+    api.get("/v1/billing-cycles-reports/", params);
+
   return {
     config: api,
     getAllBillingCycles,
     getBillingCyclesById,
     storeBillingCycles,
     updateBillingCycles,
-    destroyBillingCycles
+    destroyBillingCycles,
+    getBillingCyclesReports
   };
 };
 

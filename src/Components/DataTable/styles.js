@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
@@ -35,7 +35,7 @@ export const TRow = styled.tr`
 `;
 
 export const TColumn = styled.td`
-  padding: 10px;
+  padding: ${props => (props.noPadding ? 0 : 10)}px;
   color: #666666;
 `;
 
@@ -53,10 +53,10 @@ export const FilterContainer = styled.div`
     const arr = props.children.filter(c => c).map(c => c);
     let fr = [];
     arr.forEach((c, i) =>
-      i === arr.length - 1 ? fr.push('3fr') : fr.push('1fr')
+      i === arr.length - 1 ? fr.push("3fr") : fr.push("1fr")
     );
 
-    return fr.join(' ');
+    return fr.join(" ");
   }};
   grid-gap: 10px;
 

@@ -3,7 +3,16 @@ import PropTypes from "prop-types";
 import { Container, Span } from "./styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function Button({ label, icon, allowSpinnerLoading, onClick }) {
+export default function Button({
+  height,
+  label,
+  icon,
+  iconColor,
+  iconSize,
+  allowSpinnerLoading,
+  onClick,
+  backgroundColor
+}) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -23,7 +32,9 @@ export default function Button({ label, icon, allowSpinnerLoading, onClick }) {
 
   return (
     <Container
+      height={height}
       onClick={onClickModified}
+      backgroundColor={backgroundColor}
       disabled={typeof onClick === "undefined"}
     >
       {isLoading && (
@@ -39,13 +50,13 @@ export default function Button({ label, icon, allowSpinnerLoading, onClick }) {
       )}
       {!isLoading && (
         <>
-          <Span>{label}</Span>
+          {label && <Span>{label}</Span>}
           {icon && (
             <FontAwesomeIcon
               icon={icon}
-              color="white"
-              size="sm"
-              style={{ marginLeft: 8 }}
+              color={iconColor || "white"}
+              size={iconSize || "sm"}
+              style={{ marginLeft: label ? 8 : 0 }}
             />
           )}
         </>
@@ -55,8 +66,11 @@ export default function Button({ label, icon, allowSpinnerLoading, onClick }) {
 }
 
 Button.propTypes = {
+  height: PropTypes.number,
   label: PropTypes.string,
   icon: PropTypes.any,
+  iconColor: PropTypes.string,
+  iconSize: PropTypes.string,
   allowSpinnerLoading: PropTypes.bool,
   onClick: PropTypes.func
 };
