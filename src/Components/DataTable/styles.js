@@ -52,9 +52,7 @@ export const FilterContainer = styled.div`
   grid-template-columns: ${props => {
     const arr = props.children.filter(c => c).map(c => c);
     let fr = [];
-    arr.forEach((c, i) =>
-      i === arr.length - 1 ? fr.push("3fr") : fr.push("1fr")
-    );
+    arr.forEach((c, i) => (i === arr.length - 1 ? fr.push("3fr") : fr.push("1fr")));
 
     return fr.join(" ");
   }};

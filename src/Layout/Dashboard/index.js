@@ -1,7 +1,7 @@
-import React from 'react';
-import { Container } from './styles';
-import Navbar from './Components/Navbar';
-import Drawer from './Components/Drawer';
+import React from "react";
+import { Container } from "./styles";
+import Navbar from "./Components/Navbar";
+import Drawer from "./Components/Drawer";
 
 function DashboardLayout({ children }) {
   return (

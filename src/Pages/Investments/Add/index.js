@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Container } from './styles';
-import Breadcrumbs from 'Components/Breadcrumbs';
-import Title from 'Components/Title';
-import Input from 'Components/Input';
-import NumberFormat from 'Components/NumberFormat';
-import Button from 'Components/Button';
-import DatePicker from 'Components/DatePicker';
+import React, { useState } from "react";
+import { Container } from "./styles";
+import Breadcrumbs from "Components/Breadcrumbs";
+import Title from "Components/Title";
+import Input from "Components/Input";
+import NumberFormat from "Components/NumberFormat";
+import Button from "Components/Button";
+import DatePicker from "Components/DatePicker";
 
 export default function InvestmentsAdd() {
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
   const [date, setDate] = useState(new Date());
   const [amount, setAmount] = useState(0);
 
@@ -16,9 +16,9 @@ export default function InvestmentsAdd() {
     <Container>
       <Breadcrumbs
         data={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Investimentos', href: '/investments' },
-          { label: 'Adicionar' }
+          { label: "Dashboard", href: "/dashboard" },
+          { label: "Investimentos", href: "/investments" },
+          { label: "Adicionar" }
         ]}
       />
       <Title>Novo Investimento</Title>

@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import NumberFormat from 'react-number-format';
-import { COLORS } from 'Themes';
+import styled from "styled-components";
+import NumberFormat from "react-number-format";
+import { COLORS } from "Themes";
 
 export default styled(NumberFormat)`
   width: 100%;

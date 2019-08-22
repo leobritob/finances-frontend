@@ -27,13 +27,9 @@ export default function ExpenseAdd() {
       // Ciclo de pagamento do tipo despesa
       params.billing_cycles_type_id = 2;
 
-      const response = await Services.billingCyclesCategories.getAllBillingCyclesCategories(
-        params
-      );
+      const response = await Services.billingCyclesCategories.getAllBillingCyclesCategories(params);
       if (response.status === 200) {
-        setCategories(
-          response.data.data.map(item => ({ label: item.name, value: item.id }))
-        );
+        setCategories(response.data.data.map(item => ({ label: item.name, value: item.id })));
       }
     } catch (e) {
       console.log("_getAllBillingCyclesCategories/ERROR", e.message);
@@ -94,12 +90,7 @@ export default function ExpenseAdd() {
         thousandSeparator=""
         placeholder="1234.56"
       />
-      <Button
-        label="Salvar"
-        icon="check"
-        allowSpinnerLoading={true}
-        onClick={_save}
-      />
+      <Button label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
     </Container>
   );
 }

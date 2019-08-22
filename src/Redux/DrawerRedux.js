@@ -1,12 +1,12 @@
-import { createActions, createReducer } from 'reduxsauce';
+import { createActions, createReducer } from "reduxsauce";
 
 const { Types, Creators } = createActions(
   {
-    setIsVisible: ['is_visible'],
+    setIsVisible: ["is_visible"],
     isVisibleToggle: null
   },
   {
-    prefix: 'DRAWER/'
+    prefix: "DRAWER/"
   }
 );
 

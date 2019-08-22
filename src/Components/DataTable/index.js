@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-  Container,
-  Table,
-  THead,
-  TH,
-  TBody,
-  TRow,
-  TColumn,
-  Input,
-  FilterContainer
-} from "./styles";
+import { Container, Table, THead, TH, TBody, TRow, TColumn, Input, FilterContainer } from "./styles";
 import Searchbar from "Components/Searchbar";
 import Pagination from "Components/Pagination";
 import PropTypes from "prop-types";
@@ -51,25 +41,11 @@ export default function DataTable({
 
   return (
     <Container>
-      {addButtonIsVisible && (
-        <Button label="Novo" icon="plus" onClick={addButtonOnClick} />
-      )}
+      {addButtonIsVisible && <Button label="Novo" icon="plus" onClick={addButtonOnClick} />}
 
       <FilterContainer>
-        {fromIsVisible && (
-          <DatePicker
-            selected={fromValue}
-            onChange={fromOnChange}
-            customInput={<Input />}
-          />
-        )}
-        {toIsVisible && (
-          <DatePicker
-            selected={toValue}
-            onChange={toOnChange}
-            customInput={<Input />}
-          />
-        )}
+        {fromIsVisible && <DatePicker selected={fromValue} onChange={fromOnChange} customInput={<Input />} />}
+        {toIsVisible && <DatePicker selected={toValue} onChange={toOnChange} customInput={<Input />} />}
         {searchBarIsVisible && (
           <Searchbar
             value={searchBarValue}
@@ -108,10 +84,7 @@ export default function DataTable({
               {data.map((item, dataIndex) => (
                 <TRow key={dataIndex}>
                   {columns.map((column, columnIndex) => (
-                    <TColumn
-                      key={columnIndex}
-                      noPadding={column.noPadding || false}
-                    >
+                    <TColumn key={columnIndex} noPadding={column.noPadding || false}>
                       {renderItem(column.id, item)}
                     </TColumn>
                   ))}
@@ -121,12 +94,7 @@ export default function DataTable({
           </>
         )}
       </Table>
-      <Pagination
-        page={page}
-        total={total}
-        perPage={perPage}
-        paginationOnChange={paginationOnChange}
-      />
+      <Pagination page={page} total={total} perPage={perPage} paginationOnChange={paginationOnChange} />
     </Container>
   );
 }

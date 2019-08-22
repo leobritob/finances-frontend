@@ -79,7 +79,7 @@ export default function Login() {
           onKeyPress={e => _onKeyPress("password", e)}
         />
         <FlatButton label="Esqueci minha senha" href="/forgot-password" />
-        <Button label="Conectar" allowSpinnerLoading={true} onClick={_login} />
+        <Button label="Conectar" allowSpinnerLoading={true} onClick={() => _login()} />
       </LoginForm>
     </Container>
   );

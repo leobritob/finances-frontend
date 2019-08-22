@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link as RouterLink } from 'react-router-dom';
+import styled from "styled-components";
+import { Link as RouterLink } from "react-router-dom";
 
 export const Container = styled.div`
   width: 100%;
@@ -15,7 +15,7 @@ export const List = styled.ul`
 
 export const Item = styled.li`
   &::after {
-    content: '/';
+    content: "/";
     display: inline;
     margin: 0 10px 0 5px;
     font-size: 0.7rem;

@@ -1,9 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export default styled.div`
   display: grid;
-  grid-template-columns: ${props =>
-    `repeat(${props.children.length}, 1fr)` || '1fr'};
+  grid-template-columns: ${props => `repeat(${props.children.length}, 1fr)` || "1fr"};
   grid-gap: 20px;
   flex-direction: row;
 

@@ -4,5 +4,5 @@ export type IUser = {
   last_name: string,
   email: string,
   password: string,
-  is_active: bool
+  is_active: boolean
 };

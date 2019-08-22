@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Logo,
-  List,
-  ListItem,
-  ListItemLink,
-  DrawerOverlay
-} from "./styles";
+import { Container, Logo, List, ListItem, ListItemLink, DrawerOverlay } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import DrawerActions from "Redux/DrawerRedux";
 import UserActions from "Redux/UserRedux";
@@ -39,6 +32,16 @@ function Drawer() {
           <ListItem>
             <ListItemLink to="/investments" onClick={drawerClose}>
               Investimentos
+            </ListItemLink>
+          </ListItem>
+          <ListItem>
+            <ListItemLink to="/billing-cycles-categories" onClick={drawerClose}>
+              Categorias de Faturamento
+            </ListItemLink>
+          </ListItem>
+          <ListItem>
+            <ListItemLink to="/billing-cycles-types" onClick={drawerClose}>
+              Tipos de Faturamento
             </ListItemLink>
           </ListItem>
           <ListItem>

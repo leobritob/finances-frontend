@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  background-color: ${props => props.backgroundColor || '#ffffff'};
+  background-color: ${props => props.backgroundColor || "#ffffff"};
   padding: 10px 25px;
   font-size: 0.9rem;
   border: none;
@@ -27,7 +27,7 @@ export const Button = styled.button`
     border-bottom: 1px solid #eaeaea;
   `};
 
-  color: ${props => props.textColor || '#333333'};
+  color: ${props => props.textColor || "#333333"};
 
   &:hover {
     background-color: #eaeaea;

@@ -1,4 +1,4 @@
-import { history } from "Config/Store";
+import { history, store } from "Config/Store";
 import UsersServices from "./UsersServices";
 import AuthServices from "./AuthServices";
 import { toast } from "react-toastify";
@@ -6,6 +6,7 @@ import HandleErrors from "Exceptions/Handler";
 import BillingCyclesServices from "./BillingCyclesServices";
 import BillingCyclesTypesServices from "./BillingCyclesTypesServices";
 import BillingCyclesCategoriesServices from "./BillingCyclesCategoriesServices";
+import UserActions from "Redux/UserRedux";
 
 export const commonMonitor = (response: ApiResponse): void => {
   if (![200, 201, 204].includes(response.status)) {
@@ -16,6 +17,7 @@ export const commonMonitor = (response: ApiResponse): void => {
 
   if (response.status === 401) {
     history.push("/login");
+    store.dispatch(UserActions.logout());
   }
 
   if (response.status === 500) {

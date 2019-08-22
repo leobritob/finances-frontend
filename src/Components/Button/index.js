@@ -39,12 +39,7 @@ export default function Button({
     >
       {isLoading && (
         <>
-          <FontAwesomeIcon
-            pulse
-            icon="spinner"
-            color="rgba(255, 255, 255, 0.5)"
-            style={{ marginRight: 5 }}
-          />
+          <FontAwesomeIcon pulse icon="spinner" color="rgba(255, 255, 255, 0.5)" style={{ marginRight: 5 }} />
           <Span color="rgba(255, 255, 255, 0.5)">Aguarde...</Span>
         </>
       )}

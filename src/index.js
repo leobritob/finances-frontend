@@ -32,17 +32,7 @@ toast.configure({
   autoClose: 8000
 });
 
-library.add(
-  faArrowRight,
-  faArrowLeft,
-  faBars,
-  faCircleNotch,
-  faSpinner,
-  faPlus,
-  faSearch,
-  faCheck,
-  faTrash
-);
+library.add(faArrowRight, faArrowLeft, faBars, faCircleNotch, faSpinner, faPlus, faSearch, faCheck, faTrash);
 
 ReactDOM.render(
   <Provider store={store}>

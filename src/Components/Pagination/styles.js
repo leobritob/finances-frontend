@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
@@ -31,6 +31,5 @@ export const ItemLink = styled.a`
     background-color: #eaeaea;
   }
 
-  ${props =>
-    props.isCurrent && ` border-color: #eaeaea; background-color: #eaeaea; `}
+  ${props => props.isCurrent && ` border-color: #eaeaea; background-color: #eaeaea; `}
 `;

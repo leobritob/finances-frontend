@@ -41,9 +41,7 @@ const customStyles = {
 
       ":active": {
         ...styles[":active"],
-        backgroundColor:
-          !isDisabled &&
-          (isSelected ? color.alpha(0.4).css() : color.alpha(0.3).css())
+        backgroundColor: !isDisabled && (isSelected ? color.alpha(0.4).css() : color.alpha(0.3).css())
       }
     };
   },

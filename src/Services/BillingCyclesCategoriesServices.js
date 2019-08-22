@@ -25,17 +25,14 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * @param {number} id - Id da categoria de ciclo de faturamento
    * @returns {Promise<ApiResponse<any>>}
    */
-  const getBillingCyclesCategoriesById = (id: number): Promise =>
-    api.get(`/v1/billing-cycles-categories/${id}`);
+  const getBillingCyclesCategoriesById = (id: number): Promise => api.get(`/v1/billing-cycles-categories/${id}`);
 
   /**
    * Endpoint responsável por cadastrar uma nova categoria de faturamento
    * @param {IBillingCyclesCategories} billingCyclesCategories - Nova categoria de ciclo de faturamento a ser cadastrada
    * @returns {Promise<ApiResponse<any>>}
    */
-  const storeBillingCyclesCategories = (
-    billingCyclesCategories: IBillingCyclesCategories
-  ): Promise =>
+  const storeBillingCyclesCategories = (billingCyclesCategories: IBillingCyclesCategories): Promise =>
     api.post("/v1/billing-cycles-categories/", billingCyclesCategories);
 
   /**
@@ -44,10 +41,7 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * @param {IBillingCyclesCategories} billingCyclesCategories - Dados da categoria de ciclo de faturamento a ser atualizada
    * @returns {Promise<ApiResponse<any>>}
    */
-  const updateBillingCyclesCategories = (
-    id: number,
-    billingCyclesCategories: IBillingCyclesCategories
-  ): Promise =>
+  const updateBillingCyclesCategories = (id: number, billingCyclesCategories: IBillingCyclesCategories): Promise =>
     api.put(`/v1/billing-cycles-categories/${id}/`, billingCyclesCategories);
 
   /**
@@ -55,8 +49,7 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * @param {number} id - Id da categoria de ciclo de faturamento
    * @returns {Promise<ApiResponse<any>>}
    */
-  const destroyBillingCyclesCategories = (id: number): Promise =>
-    api.delete(`/v1/billing-cycles-categories/${id}/`);
+  const destroyBillingCyclesCategories = (id: number): Promise => api.delete(`/v1/billing-cycles-categories/${id}/`);
 
   return {
     config: api,

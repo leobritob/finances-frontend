@@ -11,15 +11,7 @@ import Column from "Components/Column";
 
 export default function Dashboard() {
   const revenueData = {
-    labels: [
-      "Janeiro",
-      "Fevereiro",
-      "Marco",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho"
-    ],
+    labels: ["Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho"],
     datasets: [
       {
         label: "Receitas",
@@ -34,15 +26,7 @@ export default function Dashboard() {
   };
 
   const expensesData = {
-    labels: [
-      "Janeiro",
-      "Fevereiro",
-      "Marco",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho"
-    ],
+    labels: ["Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho"],
     datasets: [
       {
         label: "Despesas",

@@ -84,9 +84,7 @@ function Revenue() {
 
   async function _getRevenuesReports(params = {}) {
     try {
-      const response = await Services.billingCycles.getBillingCyclesReports(
-        params
-      );
+      const response = await Services.billingCycles.getBillingCyclesReports(params);
       if (response.status === 200) {
         setReports(response.data);
       }
@@ -104,6 +102,7 @@ function Revenue() {
         toast.success("Receita removida com sucesso");
 
         _getAllRevenues(filterDebounce);
+        _getRevenuesReports(filterDebounce);
       }
     } catch (e) {
       console.log("_deleteRevenue/ERROR", e.message);
@@ -132,9 +131,7 @@ function Revenue() {
   }
 
   function _removeItem(id) {
-    const isDelete = window.confirm(
-      "Você tem certeza que deseja remover este item ?"
-    );
+    const isDelete = window.confirm("Você tem certeza que deseja remover este item ?");
     if (isDelete) {
       _deleteRevenue(id);
     }
@@ -154,18 +151,13 @@ function Revenue() {
 
   return (
     <Container>
-      <Breadcrumbs
-        data={[
-          { label: "Dashboard", href: "/dashboard" },
-          { label: "Receitas" }
-        ]}
-      />
+      <Breadcrumbs data={[{ label: "Dashboard", href: "/dashboard" }, { label: "Receitas" }]} />
       <Title>Receitas</Title>
       <ReportsBox
         data={[
           {
             label: "Hoje",
-            value: reports.today,
+            value: reports.today ? reports.today : 0,
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: "#ffffff",
@@ -174,7 +166,7 @@ function Revenue() {
           },
           {
             label: "Mês Atual",
-            value: reports.current_month,
+            value: reports.current_month ? reports.current_month : 0,
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: "#ffffff",
@@ -183,7 +175,7 @@ function Revenue() {
           },
           {
             label: "Mês Passado",
-            value: reports.last_month,
+            value: reports.last_month ? reports.last_month : 0,
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: "#ffffff",

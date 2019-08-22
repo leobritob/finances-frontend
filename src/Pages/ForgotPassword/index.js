@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
-import { SEO } from 'Utils';
-import { Container, LoginForm, Input } from './styles';
-import Title from 'Components/Title';
-import Button from 'Components/Button';
-import FlatButton from 'Components/FlatButton';
-import { toast } from 'react-toastify';
+import React, { useEffect } from "react";
+import { SEO } from "Utils";
+import { Container, LoginForm, Input } from "./styles";
+import Title from "Components/Title";
+import Button from "Components/Button";
+import FlatButton from "Components/FlatButton";
+import { toast } from "react-toastify";
 
 export default function ForgotPassword() {
   useEffect(() => {
-    SEO.changeDocumentTitle('Esqueci minha senha');
+    SEO.changeDocumentTitle("Esqueci minha senha");
   });
 
   const send = () => {
-    toast.success('Foi enviado uma mensagem para o seu e-mail');
+    toast.success("Foi enviado uma mensagem para o seu e-mail");
   };
 
   return (

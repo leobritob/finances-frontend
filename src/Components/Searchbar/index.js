@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Container, Input, Button } from './styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
+import PropTypes from "prop-types";
+import { Container, Input, Button } from "./styles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Searchbar({ value, buttonIsVisible, onChange, onClick, placeholder }) {
   return (
@@ -25,11 +25,11 @@ Searchbar.propTypes = {
 };
 
 Searchbar.defaultProps = {
-  value: '',
+  value: "",
   onChange: () => {},
   onClick: () => {},
   buttonIsVisible: true,
-  placeholder: 'Digite aqui para pesquisar'
+  placeholder: "Digite aqui para pesquisar"
 };
 
 export default Searchbar;

@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Container, List, Item, Link, Text } from './styles';
+import React from "react";
+import PropTypes from "prop-types";
+import { Container, List, Item, Link, Text } from "./styles";
 
 export default function Breadcrumbs({ data }) {
   return (

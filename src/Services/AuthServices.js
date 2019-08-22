@@ -17,16 +17,14 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * @param {String} password - Senha do usuário
    * @returns {Promise<ApiResponse<any>>}
    */
-  const token = (email: string, password: string): Promise =>
-    api.post("/auth/token", { email, password });
+  const token = (email: string, password: string): Promise => api.post("/auth/token", { email, password });
 
   /**
    * Método responsável por atualizar o token de autorização
    * @param {String} token - Token do usuário
    * @returns {Promise<ApiResponse<any>>}
    */
-  const refreshToken = (token: string): Promise =>
-    api.post("/auth/refresh-token", token);
+  const refreshToken = (token: string): Promise => api.post("/auth/refresh-token", token);
 
   /**
    * Método responsável por verificar se o usuário está autenticado
@@ -47,11 +45,7 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * @param {string} confirmNewPassword - Confirmação da nova senha do usuário
    * @returns {Promise<ApiResponse<any>>}
    */
-  const changePassword = (
-    hash: string,
-    newPassword: string,
-    confirmNewPassword: string
-  ): Promise =>
+  const changePassword = (hash: string, newPassword: string, confirmNewPassword: string): Promise =>
     api.post(`/auth/change-password/${hash}/`, {
       newPassword,
       confirmNewPassword
@@ -62,8 +56,7 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * @param {string} email - E-mail do usuário
    * @returns {Promise<ApiResponse<any>>}
    */
-  const resetPassword = (email: string): Promise =>
-    api.post("/auth/reset-password/", { email });
+  const resetPassword = (email: string): Promise => api.post("/auth/reset-password/", { email });
 
   return {
     config: api,

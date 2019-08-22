@@ -1,4 +1,4 @@
-import CONFIG from 'Config';
+import CONFIG from "Config";
 
 export default {
   changeDocumentTitle: (title: string): void => {

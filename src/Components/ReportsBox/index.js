@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Container, Box, Value, Label } from './styles';
+import React from "react";
+import PropTypes from "prop-types";
+import { Container, Box, Value, Label } from "./styles";
 
 function ReportsBox({ data }) {
   return (
@@ -11,10 +11,10 @@ function ReportsBox({ data }) {
         return (
           <Box key={index} backgroundColor={styles.boxBackgroundColor}>
             <Value textColor={styles.valueTextColor}>
-              {Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-              }).format(item.value)}
+              {Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+              }).format(item.value ? item.value : 0)}
             </Value>
             <Label textColor={styles.labelTextColor}>{item.label}</Label>
           </Box>
