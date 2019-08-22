@@ -63,7 +63,7 @@ export default function BillingCyclesCategoriesAdd() {
           { label: "Adicionar" }
         ]}
       />
-      <Title>Nova Receita</Title>
+      <Title>Nova Categoria de Faturamento</Title>
 
       <Select
         isSearchable

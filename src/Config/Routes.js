@@ -13,6 +13,8 @@ import ForgotPassword from "Pages/ForgotPassword";
 import { Auth } from "Utils";
 import BillingCyclesCategories from "Pages/BillingCyclesCategories";
 import BillingCyclesCategoriesAdd from "Pages/BillingCyclesCategories/Add";
+import BillingCyclesTypes from "Pages/BillingCyclesTypes";
+import BillingCyclesTypesAdd from "Pages/BillingCyclesTypes/Add";
 
 const PrivateRoute = ({ component: Component, layout: Layout, verifyRole, ...rest }) => (
   <Route
@@ -65,8 +67,8 @@ const Routes = (
     />
 
     {/* BILLING CYCLES TYPES */}
-    <PrivateRoute exact path="/billing-cycles-types" component={Investments} layout={DashboardLayout} />
-    <PrivateRoute exact path="/billing-cycles-types/add" component={InvestmentsAdd} layout={DashboardLayout} />
+    <PrivateRoute exact path="/billing-cycles-types" component={BillingCyclesTypes} layout={DashboardLayout} />
+    <PrivateRoute exact path="/billing-cycles-types/add" component={BillingCyclesTypesAdd} layout={DashboardLayout} />
   </Switch>
 );
 
