@@ -42,7 +42,7 @@ export default function Investments() {
 
   useEffect(() => {
     _getAllInvestments(filterDebounce);
-    // _getInvestmentsReports(filterDebounce);
+    _getInvestmentsReports(filterDebounce);
   }, [filterDebounce]);
 
   function renderItem(column, item) {
@@ -102,7 +102,7 @@ export default function Investments() {
         toast.success('Investimento removido com sucesso');
 
         _getAllInvestments(filterDebounce);
-        // _getInvestmentsReports(filterDebounce);
+        _getInvestmentsReports(filterDebounce);
       }
     } catch (e) {
       console.log('_deleteRevenue/ERROR', e.message);
