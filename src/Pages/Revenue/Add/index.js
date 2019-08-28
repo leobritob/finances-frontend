@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Container } from "./styles";
-import Breadcrumbs from "Components/Breadcrumbs";
-import Title from "Components/Title";
-import Input from "Components/Input";
-import NumberFormat from "Components/NumberFormat";
-import Button from "Components/Button";
-import DatePicker from "Components/DatePicker";
-import Services from "Services";
-import { toast } from "react-toastify";
-import Select from "Components/Select";
-import { history } from "Config/Store";
+import React, { useState, useEffect } from 'react';
+import { Container } from './styles';
+import Breadcrumbs from 'Components/Breadcrumbs';
+import Title from 'Components/Title';
+import Input from 'Components/Input';
+import NumberFormat from 'Components/NumberFormat';
+import Button from 'Components/Button';
+import DatePicker from 'Components/DatePicker';
+import Services from 'Services';
+import { toast } from 'react-toastify';
+import Select from 'Components/Select';
+import { history } from 'Config/Store';
 
 export default function RevenueAdd() {
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [value, setValue] = useState(0);
-  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState(null);
+  const [date, setDate] = useState(null);
+  const [value, setValue] = useState(null);
+  const [category, setCategory] = useState(null);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function RevenueAdd() {
         setCategories(response.data.data.map(item => ({ label: item.name, value: item.id })));
       }
     } catch (e) {
-      console.log("_getAllBillingCyclesCategories/ERROR", e.message);
+      console.log('_getAllBillingCyclesCategories/ERROR', e.message);
     }
   }
 
@@ -45,12 +45,12 @@ export default function RevenueAdd() {
         value
       });
       if (response.status === 200) {
-        toast.success("Nova receita cadastrada com sucesso");
+        toast.success('Nova receita cadastrada com sucesso');
 
-        history.push("/revenue");
+        history.push('/revenue');
       }
     } catch (e) {
-      console.log("_save/ERROR", e.message);
+      console.log('_save/ERROR', e.message);
     }
   }
 
@@ -58,9 +58,9 @@ export default function RevenueAdd() {
     <Container>
       <Breadcrumbs
         data={[
-          { label: "Dashboard", href: "/dashboard" },
-          { label: "Receitas", href: "/revenue" },
-          { label: "Adicionar" }
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Receitas', href: '/revenue' },
+          { label: 'Adicionar' }
         ]}
       />
       <Title>Nova Receita</Title>
@@ -79,7 +79,7 @@ export default function RevenueAdd() {
         placeholder="Descricão"
         autoComplete="off"
       />
-      <DatePicker selected={date} onChange={date => setDate(date)} />
+      <DatePicker placeholderText="Data" selected={date} onChange={date => setDate(date)} />
       <NumberFormat
         type="tel"
         value={value}
@@ -88,7 +88,7 @@ export default function RevenueAdd() {
         decimalScale={2}
         decimalSeparator="."
         thousandSeparator=""
-        placeholder="1234.56"
+        placeholder="Valor (R$)"
       />
       <Button label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
     </Container>

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Title from 'Components/Title';
 import { Container } from './styles';
-import ReportsBox from 'Components/ReportsBox';
 import DataTable from 'Components/DataTable';
 import { format } from 'date-fns';
-import { COLORS } from 'Themes';
 import Breadcrumbs from 'Components/Breadcrumbs';
 import { history } from 'Config/Store';
 import Services from 'Services';
@@ -16,33 +14,26 @@ import { toast } from 'react-toastify';
 const fromDateValue = new Date(format(new Date(), 'yyyy-MM-01 00:00:00'));
 const toDateValue = new Date(format(new Date(), 'yyyy-MM-dd 00:00:00'));
 
-function Revenue() {
+export default function InvestmentsTypes() {
   const [searchBarValue, setSearchBarValue] = useState('');
   const [fromDate, setFromDate] = useState(fromDateValue);
   const [toDate, setToDate] = useState(toDateValue);
   const [filter, setFilter] = useState({
     date__gte: fromDateValue,
     date__lte: toDateValue,
-    billing_cycles_type_id: 1,
+    billing_cycles_type_id: 3,
     search: ''
   });
-  const [revenue, setRevenue] = useState({
+  const [investmentsTypes, setInvestmentsTypes] = useState({
     total: 0,
     page: 0,
     perPage: 20,
     data: []
   });
-  const [reports, setReports] = useState({
-    today: 0,
-    current_month: 0,
-    last_month: 0
-  });
-
   const [filterDebounce] = useDebounce(filter, 300);
 
   useEffect(() => {
-    _getAllRevenues(filterDebounce);
-    _getRevenuesReports(filterDebounce);
+    _getAllInvestmentsTypes(filterDebounce);
   }, [filterDebounce]);
 
   function renderItem(column, item) {
@@ -54,8 +45,6 @@ function Revenue() {
           style: 'currency',
           currency: 'BRL'
         }).format(item[column]);
-      case 'billing_cycles_type_id':
-        return item.billingCyclesCategory.name;
       case '-':
         return (
           <Button
@@ -73,41 +62,29 @@ function Revenue() {
     }
   }
 
-  async function _getAllRevenues(params = {}) {
+  async function _getAllInvestmentsTypes(params = {}) {
     try {
-      const response = await Services.billingCycles.getAllBillingCycles(params);
+      const response = await Services.investmentsTypes.getAllInvestmentsTypes(params);
       if (response.status === 200) {
-        setRevenue(response.data);
+        setInvestmentsTypes(response.data);
       }
     } catch (e) {
-      console.log('_getAllRevenues/ERROR', e.message);
+      console.log('_getAllInvestmentsTypes/ERROR', e.message);
     }
   }
 
-  async function _getRevenuesReports(params = {}) {
-    try {
-      const response = await Services.billingCycles.getBillingCyclesReports(params);
-      if (response.status === 200) {
-        setReports(response.data);
-      }
-    } catch (e) {
-      console.log('_getRevenuesReports/ERROR', e.message);
-    }
-  }
-
-  async function _deleteRevenue(id) {
+  async function _deleteInvestmentsTypesById(id) {
     try {
       if (!id) return false;
 
-      const response = await Services.billingCycles.destroyBillingCycles(id);
+      const response = await Services.investmentsTypes.destroyInvestmentsTypes(id);
       if (response.status === 204) {
-        toast.success('Receita removida com sucesso');
+        toast.success('Tipo de Investimento removido com sucesso');
 
-        _getAllRevenues(filterDebounce);
-        _getRevenuesReports(filterDebounce);
+        _getAllInvestmentsTypes(filterDebounce);
       }
     } catch (e) {
-      console.log('_deleteRevenue/ERROR', e.message);
+      console.log('_deleteInvestmentsTypesById/ERROR', e.message);
     }
   }
 
@@ -135,7 +112,7 @@ function Revenue() {
   function _removeItem(id) {
     const isDelete = window.confirm('Você tem certeza que deseja remover este item ?');
     if (isDelete) {
-      _deleteRevenue(id);
+      _deleteInvestmentsTypesById(id);
     }
   }
 
@@ -148,59 +125,26 @@ function Revenue() {
   }
 
   function _addButtonOnClick() {
-    history.push('/revenue/add');
+    history.push('/investments-types/add');
   }
 
   return (
     <Container>
-      <Breadcrumbs data={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Receitas' }]} />
-      <Title>Receitas</Title>
-      <ReportsBox
-        data={[
-          {
-            label: 'Hoje',
-            value: reports.today ? reports.today : 0,
-            styles: {
-              boxBackgroundColor: COLORS.revenue,
-              valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
-          },
-          {
-            label: 'Mês Atual',
-            value: reports.current_month ? reports.current_month : 0,
-            styles: {
-              boxBackgroundColor: COLORS.revenue,
-              valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
-          },
-          {
-            label: 'Mês Passado',
-            value: reports.last_month ? reports.last_month : 0,
-            styles: {
-              boxBackgroundColor: COLORS.revenue,
-              valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
-          }
-        ]}
-      />
+      <Breadcrumbs data={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Tipos de Investimentos' }]} />
+      <Title>Tipos de Investimentos</Title>
 
-      <Title>Extrato</Title>
       <DataTable
         renderItem={renderItem}
         columns={[
-          { id: 'description', label: 'Descricão' },
-          { id: 'date', label: 'Data', width: 100 },
-          { id: 'value', label: 'Valor', width: 200 },
-          { id: 'billing_cycles_type_id', label: 'Categoria', width: 200 },
+          { id: 'name', label: 'Nome' },
+          { id: 'description', label: 'Descrição' },
+          { id: 'risk_label', label: 'Risco' },
           { id: '-', label: '-', width: 80, noPadding: true }
         ]}
-        data={revenue.data}
-        page={revenue.page}
-        perPage={revenue.perPage}
-        total={revenue.total}
+        data={investmentsTypes.data}
+        page={investmentsTypes.page}
+        perPage={investmentsTypes.perPage}
+        total={investmentsTypes.total}
         paginationOnChange={_handlePagination}
         addButtonIsVisible={true}
         addButtonOnClick={_addButtonOnClick}
@@ -218,5 +162,3 @@ function Revenue() {
     </Container>
   );
 }
-
-export default Revenue;

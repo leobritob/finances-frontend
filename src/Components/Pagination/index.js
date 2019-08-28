@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Container, List, Item, ItemLink } from "./styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Container, List, Item, ItemLink } from './styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function doPagination(current, total) {
   var list = [];
@@ -30,7 +30,8 @@ function doPagination(current, total) {
 }
 
 export default function Pagination({ page, perPage, total, paginationOnChange }) {
-  const pagesComponentsList = doPagination(page, Math.ceil(total / perPage)).map((item, index) => (
+  const numberOfPages = Math.ceil(total / perPage);
+  const pagesComponentsList = doPagination(page, numberOfPages).map((item, index) => (
     <Item key={index}>
       <ItemLink isCurrent={item.isCurrent} onClick={() => paginationOnChange(item.number)}>
         {item.number}
@@ -48,7 +49,7 @@ export default function Pagination({ page, perPage, total, paginationOnChange })
         </Item>
         {pagesComponentsList}
         <Item>
-          <ItemLink href="#" onClick={() => paginationOnChange(page < total ? page + 1 : page)}>
+          <ItemLink href="#" onClick={() => paginationOnChange(page < numberOfPages ? page + 1 : page)}>
             <FontAwesomeIcon icon="arrow-right" color="#333333" />
           </ItemLink>
         </Item>

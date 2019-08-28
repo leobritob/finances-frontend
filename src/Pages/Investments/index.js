@@ -93,7 +93,7 @@ export default function Investments() {
     }
   }
 
-  async function _deleteRevenue(id) {
+  async function _deleteInvestments(id) {
     try {
       if (!id) return false;
 
@@ -105,7 +105,7 @@ export default function Investments() {
         _getInvestmentsReports(filterDebounce);
       }
     } catch (e) {
-      console.log('_deleteRevenue/ERROR', e.message);
+      console.log('_deleteInvestments/ERROR', e.message);
     }
   }
 
@@ -133,7 +133,7 @@ export default function Investments() {
   function _removeItem(id) {
     const isDelete = window.confirm('Você tem certeza que deseja remover este item ?');
     if (isDelete) {
-      _deleteRevenue(id);
+      _deleteInvestments(id);
     }
   }
 
@@ -190,7 +190,8 @@ export default function Investments() {
       <DataTable
         renderItem={renderItem}
         columns={[
-          { id: 'description', label: 'Descricão' },
+          { id: 'name', label: 'Nome' },
+          { id: 'description', label: 'Descrição' },
           { id: 'date', label: 'Data', width: 100 },
           { id: 'value', label: 'Valor', width: 200 },
           { id: '-', label: '-', width: 80, noPadding: true }
