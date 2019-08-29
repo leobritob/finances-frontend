@@ -16,6 +16,7 @@ export default function InvestmentsTypesEdit({ match }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [risk, setRisk] = useState('');
+  const [color, setColor] = useState('#000000');
 
   useEffect(() => {
     _getInvestmentTypeById(investmentTypeId);
@@ -25,9 +26,10 @@ export default function InvestmentsTypesEdit({ match }) {
     try {
       const response = await Services.investmentsTypes.getInvestmentsTypesById(id);
       if (response.status === 200) {
-        const { name, description, risk, risk_label } = response.data;
+        const { name, description, color, risk, risk_label } = response.data;
         setName(name);
         setDescription(description);
+        setColor(color);
         setRisk({ label: risk_label, value: risk });
       }
     } catch (e) {
@@ -40,6 +42,7 @@ export default function InvestmentsTypesEdit({ match }) {
       const response = await Services.investmentsTypes.updateInvestmentsTypes(investmentTypeId, {
         name,
         description,
+        color,
         risk: risk.value
       });
       if (response.status === 200) {
@@ -70,6 +73,7 @@ export default function InvestmentsTypesEdit({ match }) {
         placeholder="Descrição"
         autoComplete="off"
       />
+      <Input value={color} onChange={e => setColor(e.target.value)} placeholder="Cor" autoComplete="off" />
       <Select
         isSearchable
         label="Risco"

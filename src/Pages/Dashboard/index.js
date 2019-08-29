@@ -9,8 +9,37 @@ import { Bar, Doughnut } from 'react-chartjs-2';
 import Row from 'Components/Row';
 import Column from 'Components/Column';
 import Services from 'Services';
+import Select from 'Components/Select';
+import { format, subMonths, lastDayOfMonth } from 'date-fns';
+
+const today = new Date();
+
+const filterOptions = [
+  {
+    label: 'Ano',
+    value: {
+      start_date: format(today, 'yyyy-01-01'),
+      end_date: format(today, 'yyyy-12-31')
+    }
+  },
+  {
+    label: 'Mês Passado',
+    value: {
+      start_date: format(subMonths(today, 1), 'yyyy-MM-01'),
+      end_date: format(subMonths(lastDayOfMonth(today), 1), 'yyyy-MM-dd')
+    }
+  },
+  {
+    label: 'Mês Atual',
+    value: {
+      start_date: format(today, 'yyyy-MM-01'),
+      end_date: format(today, 'yyyy-MM-dd')
+    }
+  }
+];
 
 export default function Dashboard() {
+  const [filter, setFilter] = useState(filterOptions[2]);
   const [dashboardGeneral, setDashboardGeneral] = useState({
     revenue: 0,
     expenses: 0,
@@ -20,7 +49,7 @@ export default function Dashboard() {
   const [dashboardGeneralWithMonths, setDashboardGeneralWithMonths] = useState([]);
   const [dashboardGeneralInvestments, setDashboardGeneralInvestments] = useState([]);
   const revenueData = {
-    labels: dashboardGeneralWithMonths.map(dashboard => `${dashboard.short_month}/${dashboard.short_year}`),
+    labels: dashboardGeneralWithMonths.map(dashboard => dashboard.month_label),
     datasets: [
       {
         label: 'Receitas',
@@ -35,7 +64,7 @@ export default function Dashboard() {
   };
 
   const expensesData = {
-    labels: dashboardGeneralWithMonths.map(dashboard => `${dashboard.short_month}/${dashboard.short_year}`),
+    labels: dashboardGeneralWithMonths.map(dashboard => dashboard.month_label),
     datasets: [
       {
         label: 'Despesas',
@@ -54,8 +83,8 @@ export default function Dashboard() {
     datasets: [
       {
         data: dashboardGeneralInvestments.map(investment => investment.value),
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+        backgroundColor: dashboardGeneralInvestments.map(investment => investment.color),
+        hoverBackgroundColor: dashboardGeneralInvestments.map(investment => investment.color)
       }
     ]
   };
@@ -101,10 +130,13 @@ export default function Dashboard() {
 
   useEffect(() => {
     SEO.changeDocumentTitle('Dashboard');
-    _getDashboardGeneral();
-    _getDashboardGeneralWithMonths();
-    _getDashboardGeneralInvestments();
   }, []);
+
+  useEffect(() => {
+    _getDashboardGeneral(filter.value);
+    _getDashboardGeneralWithMonths();
+    _getDashboardGeneralInvestments(filter.value);
+  }, [filter]);
 
   async function _getDashboardGeneral(params: Object = {}) {
     try {
@@ -142,7 +174,25 @@ export default function Dashboard() {
   return (
     <Container>
       <Breadcrumbs data={[{ label: 'Dashboard' }]} />
+
       <Title>Dashboard</Title>
+
+      <Row>
+        <Column>
+          <Select
+            isSearchable
+            label="Categoria"
+            placeholder="Selecione uma categoria"
+            options={filterOptions}
+            value={filter}
+            onChange={option => setFilter(option)}
+          />
+        </Column>
+        <Column />
+        <Column />
+        <Column />
+      </Row>
+
       <ReportsBox data={reportsData} />
 
       <Row>
@@ -161,7 +211,7 @@ export default function Dashboard() {
         <Column>
           <Title>Investimentos</Title>
           <div>
-            <Doughnut data={doughnutData} height={200} />
+            <Doughnut data={doughnutData} height={200} options={{ responsive: true }} />
           </div>
         </Column>
       </Row>

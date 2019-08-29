@@ -15,12 +15,14 @@ export default function InvestmentsTypesAdd() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [risk, setRisk] = useState('');
+  const [color, setColor] = useState('#000000');
 
   async function _save() {
     try {
       const response = await Services.investmentsTypes.storeInvestmentsTypes({
         name,
         description,
+        color,
         risk
       });
       if (response.status === 200) {
@@ -51,6 +53,7 @@ export default function InvestmentsTypesAdd() {
         placeholder="Descrição"
         autoComplete="off"
       />
+      <Input value={color} onChange={e => setColor(e.target.value)} placeholder="Cor" autoComplete="off" />
       <Select
         isSearchable
         label="Risco"

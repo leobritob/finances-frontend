@@ -16,8 +16,6 @@ const toDateValue = new Date(format(new Date(), 'yyyy-MM-dd 00:00:00'));
 
 export default function InvestmentsTypes() {
   const [searchBarValue, setSearchBarValue] = useState('');
-  const [fromDate, setFromDate] = useState(fromDateValue);
-  const [toDate, setToDate] = useState(toDateValue);
   const [filter, setFilter] = useState({
     date__gte: fromDateValue,
     date__lte: toDateValue,
@@ -93,20 +91,6 @@ export default function InvestmentsTypes() {
 
     setSearchBarValue(search);
     setFilter({ ...filter, search });
-  }
-
-  function _fromHandler(from) {
-    setFromDate(from);
-    from = format(new Date(from), 'yyyy-MM-dd');
-
-    setFilter({ ...filter, date__gte: from });
-  }
-
-  function _toHandler(to) {
-    setToDate(to);
-    to = format(new Date(to), 'yyyy-MM-dd');
-
-    setFilter({ ...filter, date__lte: to });
   }
 
   function _removeItem(id) {
