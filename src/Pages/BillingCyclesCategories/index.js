@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import Title from "Components/Title";
-import { Container } from "./styles";
-import DataTable from "Components/DataTable";
-import Breadcrumbs from "Components/Breadcrumbs";
-import { history } from "Config/Store";
-import Services from "Services";
-import { useDebounce } from "use-debounce";
-import Button from "Components/Button";
-import Colors from "Themes/Colors";
-import { toast } from "react-toastify";
+import React, { useState, useEffect } from 'react';
+import Title from 'Components/Title';
+import { Container } from './styles';
+import DataTable from 'Components/DataTable';
+import Breadcrumbs from 'Components/Breadcrumbs';
+import { history } from 'Config/Store';
+import Services from 'Services';
+import { useDebounce } from 'use-debounce';
+import Button from 'Components/Button';
+import Colors from 'Themes/Colors';
+import { toast } from 'react-toastify';
 
 export default function BillingCyclesCategories() {
-  const [searchBarValue, setSearchBarValue] = useState("");
+  const [searchBarValue, setSearchBarValue] = useState('');
   const [filter, setFilter] = useState({
-    search: ""
+    search: ''
   });
   const [billingCyclesCategories, setBillingCyclesCategories] = useState({
     total: 0,
@@ -30,9 +30,9 @@ export default function BillingCyclesCategories() {
 
   function renderItem(column, item) {
     switch (column) {
-      case "billing_cycles_type_id":
+      case 'billing_cycles_type_id':
         return item.billingCyclesType.name;
-      case "-":
+      case '-':
         return (
           <Button
             onClick={() => _removeItem(item.id)}
@@ -56,22 +56,22 @@ export default function BillingCyclesCategories() {
         setBillingCyclesCategories(response.data);
       }
     } catch (e) {
-      console.log("_getAllBillingCyclesCategories/ERROR", e.message);
+      console.log('_getAllBillingCyclesCategories/ERROR', e.message);
     }
   }
 
   async function _deleteBillingCyclesCategory(id) {
     try {
-      if (typeof id === "undefined" || !id) return false;
+      if (typeof id === 'undefined' || !id) return false;
 
       const response = await Services.billingCyclesCategories.destroyBillingCyclesCategories(id);
       if (response.status === 204) {
-        toast.success("Categoria removida com sucesso");
+        toast.success('Categoria removida com sucesso');
 
         _getAllBillingCyclesCategories(filterDebounce);
       }
     } catch (e) {
-      console.log("_deleteBillingCyclesCategory/ERROR", e.message);
+      console.log('_deleteBillingCyclesCategory/ERROR', e.message);
     }
   }
 
@@ -83,7 +83,7 @@ export default function BillingCyclesCategories() {
   }
 
   function _removeItem(id) {
-    const isDelete = window.confirm("Você tem certeza que deseja remover este item ?");
+    const isDelete = window.confirm('Você tem certeza que deseja remover este item ?');
     if (isDelete) {
       _deleteBillingCyclesCategory(id);
     }
@@ -98,20 +98,25 @@ export default function BillingCyclesCategories() {
   }
 
   function _addButtonOnClick() {
-    history.push("/billing-cycles-categories/add");
+    history.push('/billing-cycles-categories/add');
+  }
+
+  function _itemOnClick(item) {
+    history.push(`/billing-cycles-categories/edit/${item.id}`);
   }
 
   return (
     <Container>
-      <Breadcrumbs data={[{ label: "Dashboard", href: "/dashboard" }, { label: "Categorias de Faturamento" }]} />
+      <Breadcrumbs data={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Categorias de Faturamento' }]} />
       <Title>Categorias de Faturamento</Title>
 
       <DataTable
+        itemOnClick={_itemOnClick}
         renderItem={renderItem}
         columns={[
-          { id: "name", label: "Descrição" },
-          { id: "billing_cycles_type_id", label: "Tipo", width: 200 },
-          { id: "-", label: "-", width: 80, noPadding: true }
+          { id: 'name', label: 'Descrição' },
+          { id: 'billing_cycles_type_id', label: 'Tipo', width: 200 },
+          { id: '-', label: '-', width: 80, noPadding: true }
         ]}
         data={billingCyclesCategories.data}
         page={billingCyclesCategories.page}

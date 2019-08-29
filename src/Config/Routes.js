@@ -17,6 +17,7 @@ import ForgotPassword from 'Pages/ForgotPassword';
 import { Auth } from 'Utils';
 import BillingCyclesCategories from 'Pages/BillingCyclesCategories';
 import BillingCyclesCategoriesAdd from 'Pages/BillingCyclesCategories/Add';
+import BillingCyclesCategoriesEdit from 'Pages/BillingCyclesCategories/Edit';
 import BillingCyclesTypes from 'Pages/BillingCyclesTypes';
 import BillingCyclesTypesAdd from 'Pages/BillingCyclesTypes/Add';
 import RevenueEdit from 'Pages/Revenue/Edit';
@@ -77,6 +78,12 @@ const Routes = (
       exact
       path="/billing-cycles-categories/add"
       component={BillingCyclesCategoriesAdd}
+      layout={DashboardLayout}
+    />
+    <PrivateRoute
+      exact
+      path="/billing-cycles-categories/edit/:id"
+      component={BillingCyclesCategoriesEdit}
       layout={DashboardLayout}
     />
 
