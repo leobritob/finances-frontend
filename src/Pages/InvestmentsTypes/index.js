@@ -128,12 +128,17 @@ export default function InvestmentsTypes() {
     history.push('/investments-types/add');
   }
 
+  function _itemOnClick(item) {
+    history.push(`/investments-types/edit/${item.id}`);
+  }
+
   return (
     <Container>
       <Breadcrumbs data={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Tipos de Investimentos' }]} />
       <Title>Tipos de Investimentos</Title>
 
       <DataTable
+        itemOnClick={_itemOnClick}
         renderItem={renderItem}
         columns={[
           { id: 'name', label: 'Nome' },
@@ -152,12 +157,6 @@ export default function InvestmentsTypes() {
         searchBarValue={searchBarValue}
         searchBarOnChange={_searchBarHandler}
         searchBarOnClick={_searchBarOnClick}
-        fromIsVisible={true}
-        fromOnChange={_fromHandler}
-        fromValue={fromDate}
-        toIsVisible={true}
-        toOnChange={_toHandler}
-        toValue={toDate}
       />
     </Container>
   );

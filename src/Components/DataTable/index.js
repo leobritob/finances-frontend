@@ -70,7 +70,7 @@ export default function DataTable({
           <TBody>
             {data.map((data, dataIndex) => {
               return columns.map((column, columnIndex) => (
-                <TRow key={columnIndex} onClick={() => itemOnClick(data)}>
+                <TRow key={columnIndex} onClick={() => (columnIndex === columns.length - 1 ? {} : itemOnClick(data))}>
                   <TH>{column.label}</TH>
                   <TColumn>{renderItem(column.id, data)}</TColumn>
                 </TRow>
@@ -94,7 +94,11 @@ export default function DataTable({
               {data.map((item, dataIndex) => (
                 <TRow key={dataIndex}>
                   {columns.map((column, columnIndex) => (
-                    <TColumn key={columnIndex} noPadding={column.noPadding || false} onClick={() => itemOnClick(item)}>
+                    <TColumn
+                      key={columnIndex}
+                      noPadding={column.noPadding || false}
+                      onClick={() => (columnIndex === columns.length - 1 ? {} : itemOnClick(item))}
+                    >
                       {renderItem(column.id, item)}
                     </TColumn>
                   ))}
