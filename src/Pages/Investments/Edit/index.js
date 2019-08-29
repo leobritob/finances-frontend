@@ -11,7 +11,8 @@ import { toast } from 'react-toastify';
 import Select from 'Components/Select';
 import { history } from 'Config/Store';
 
-export default function InvestmentsAdd() {
+export default function InvestmentsEdit({ match }) {
+  const investmentId = Number(match.params.id);
   const [investmentTypes, setInvestmentTypes] = useState({
     total: 0,
     page: 1,
@@ -19,7 +20,7 @@ export default function InvestmentsAdd() {
     lastPage: 0,
     data: []
   });
-  const [investments_type_id, setInvestmentTypeId] = useState('');
+  const [investmentType, setInvestmentType] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
@@ -27,8 +28,26 @@ export default function InvestmentsAdd() {
   const [due_date, setDueDate] = useState('');
 
   useEffect(() => {
+    _getInvestmentById(investmentId);
     _getAllInvestmentsTypes();
-  }, []);
+  }, [investmentId]);
+
+  async function _getInvestmentById(id: number) {
+    try {
+      const response = await Services.investments.getInvestmentsById(id);
+      if (response.status === 200) {
+        const { name, description, value, date, due_date, investmentsType } = response.data;
+        setInvestmentType({ label: investmentsType.name, value: investmentsType.id });
+        setName(name);
+        setDescription(description);
+        setValue(value);
+        setDate(new Date(date));
+        setDueDate(new Date(due_date));
+      }
+    } catch (e) {
+      console.error('_getInvestmentById/ERROR', e.message);
+    }
+  }
 
   async function _getAllInvestmentsTypes(params: Object = {}) {
     try {
@@ -43,8 +62,8 @@ export default function InvestmentsAdd() {
 
   async function _save() {
     try {
-      const response = await Services.investments.storeInvestments({
-        investments_type_id,
+      const response = await Services.investments.updateInvestments(investmentId, {
+        investments_type_id: investmentType.value,
         name,
         description,
         value,
@@ -67,17 +86,18 @@ export default function InvestmentsAdd() {
         data={[
           { label: 'Dashboard', href: '/dashboard' },
           { label: 'Investimentos', href: '/investments' },
-          { label: 'Adicionar' }
+          { label: 'Alterar' }
         ]}
       />
-      <Title>Novo Investimento</Title>
+      <Title>Alterar Investimento</Title>
 
       <Select
         isSearchable
         label="Tipo de Investimento"
         placeholder="Selecione o tipo do investimento"
         options={investmentTypes}
-        onChange={option => setInvestmentTypeId(option.value)}
+        value={investmentType}
+        onChange={option => setInvestmentType(option)}
       />
       <Input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" autoComplete="off" />
       <Input

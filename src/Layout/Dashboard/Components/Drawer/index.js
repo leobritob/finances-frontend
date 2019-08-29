@@ -35,6 +35,11 @@ function Drawer() {
             </ListItemLink>
           </ListItem>
           <ListItem>
+            <ListItemLink to="/investments-types" onClick={drawerClose}>
+              Tipos de Investimentos
+            </ListItemLink>
+          </ListItem>
+          <ListItem>
             <ListItemLink to="/billing-cycles-categories" onClick={drawerClose}>
               Categorias de Faturamento
             </ListItemLink>

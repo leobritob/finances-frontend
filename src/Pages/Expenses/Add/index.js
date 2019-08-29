@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Container } from "./styles";
-import Breadcrumbs from "Components/Breadcrumbs";
-import Title from "Components/Title";
-import Input from "Components/Input";
-import NumberFormat from "Components/NumberFormat";
-import Button from "Components/Button";
-import DatePicker from "Components/DatePicker";
-import Services from "Services";
-import { toast } from "react-toastify";
-import Select from "Components/Select";
-import { history } from "Config/Store";
+import React, { useState, useEffect } from 'react';
+import { Container } from './styles';
+import Breadcrumbs from 'Components/Breadcrumbs';
+import Title from 'Components/Title';
+import Input from 'Components/Input';
+import NumberFormat from 'Components/NumberFormat';
+import Button from 'Components/Button';
+import DatePicker from 'Components/DatePicker';
+import Services from 'Services';
+import { toast } from 'react-toastify';
+import Select from 'Components/Select';
+import { history } from 'Config/Store';
 
-export default function ExpenseAdd() {
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [value, setValue] = useState(0);
-  const [category, setCategory] = useState("");
+export default function ExpensesAdd() {
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+  const [value, setValue] = useState('');
+  const [billing_cycles_category_id, setBillingCyclesCategoryId] = useState('');
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -32,25 +32,25 @@ export default function ExpenseAdd() {
         setCategories(response.data.data.map(item => ({ label: item.name, value: item.id })));
       }
     } catch (e) {
-      console.log("_getAllBillingCyclesCategories/ERROR", e.message);
+      console.log('_getAllBillingCyclesCategories/ERROR', e.message);
     }
   }
 
   async function _save() {
     try {
       const response = await Services.billingCycles.storeBillingCycles({
-        billing_cycles_category_id: category,
+        billing_cycles_category_id,
         description,
         date,
         value
       });
       if (response.status === 200) {
-        toast.success("Nova despesa cadastrada com sucesso");
+        toast.success('Nova despesa cadastrada com sucesso');
 
-        history.push("/expenses");
+        history.push('/expenses');
       }
     } catch (e) {
-      console.log("_save/ERROR", e.message);
+      console.log('_save/ERROR', e.message);
     }
   }
 
@@ -58,9 +58,9 @@ export default function ExpenseAdd() {
     <Container>
       <Breadcrumbs
         data={[
-          { label: "Dashboard", href: "/dashboard" },
-          { label: "Despesas", href: "/expenses" },
-          { label: "Adicionar" }
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Despesas', href: '/expenses' },
+          { label: 'Adicionar' }
         ]}
       />
       <Title>Nova Despesa</Title>
@@ -70,7 +70,7 @@ export default function ExpenseAdd() {
         label="Categoria"
         placeholder="Selecione uma categoria"
         options={categories}
-        onChange={option => setCategory(option.value)}
+        onChange={option => setBillingCyclesCategoryId(option.value)}
       />
 
       <Input
@@ -79,7 +79,7 @@ export default function ExpenseAdd() {
         placeholder="Descricão"
         autoComplete="off"
       />
-      <DatePicker selected={date} onChange={date => setDate(date)} />
+      <DatePicker placeholderText="Data" selected={date} onChange={date => setDate(date)} />
       <NumberFormat
         type="tel"
         value={value}
@@ -88,7 +88,7 @@ export default function ExpenseAdd() {
         decimalScale={2}
         decimalSeparator="."
         thousandSeparator=""
-        placeholder="1234.56"
+        placeholder="Valor (R$)"
       />
       <Button label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
     </Container>

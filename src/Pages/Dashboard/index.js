@@ -1,102 +1,147 @@
-import React, { useEffect } from "react";
-import { SEO } from "Utils";
-import { Container } from "./styles";
-import Title from "Components/Title";
-import ReportsBox from "Components/ReportsBox";
-import { COLORS } from "Themes";
-import Breadcrumbs from "Components/Breadcrumbs";
-import { Bar, Doughnut } from "react-chartjs-2";
-import Row from "Components/Row";
-import Column from "Components/Column";
+import React, { useState, useEffect } from 'react';
+import { SEO } from 'Utils';
+import { Container } from './styles';
+import Title from 'Components/Title';
+import ReportsBox from 'Components/ReportsBox';
+import { COLORS } from 'Themes';
+import Breadcrumbs from 'Components/Breadcrumbs';
+import { Bar, Doughnut } from 'react-chartjs-2';
+import Row from 'Components/Row';
+import Column from 'Components/Column';
+import Services from 'Services';
 
 export default function Dashboard() {
+  const [dashboardGeneral, setDashboardGeneral] = useState({
+    revenue: 0,
+    expenses: 0,
+    net_revenue: 0,
+    investments: 0
+  });
+  const [dashboardGeneralWithMonths, setDashboardGeneralWithMonths] = useState([]);
+  const [dashboardGeneralInvestments, setDashboardGeneralInvestments] = useState([]);
   const revenueData = {
-    labels: ["Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho"],
+    labels: dashboardGeneralWithMonths.map(dashboard => `${dashboard.short_month}/${dashboard.short_year}`),
     datasets: [
       {
-        label: "Receitas",
+        label: 'Receitas',
         backgroundColor: COLORS.revenue,
         borderColor: COLORS.revenue,
         borderWidth: 1,
         hoverBackgroundColor: COLORS.revenue,
         hoverBorderColor: COLORS.revenue,
-        data: [65, 59, 80, 81, 56, 55, 40]
+        data: dashboardGeneralWithMonths.map(month => month.revenue)
       }
     ]
   };
 
   const expensesData = {
-    labels: ["Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho"],
+    labels: dashboardGeneralWithMonths.map(dashboard => `${dashboard.short_month}/${dashboard.short_year}`),
     datasets: [
       {
-        label: "Despesas",
+        label: 'Despesas',
         backgroundColor: COLORS.expenses,
         borderColor: COLORS.expenses,
         borderWidth: 1,
         hoverBackgroundColor: COLORS.expenses,
         hoverBorderColor: COLORS.expenses,
-        data: [65, 59, 80, 81, 56, 55, 40]
+        data: dashboardGeneralWithMonths.map(month => month.expenses)
       }
     ]
   };
 
   const doughnutData = {
-    labels: ["Tesouro SELIC", "Acão", "FII"],
+    labels: dashboardGeneralInvestments.map(investment => investment.name),
     datasets: [
       {
-        data: [300, 50, 100],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+        data: dashboardGeneralInvestments.map(investment => investment.value),
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
       }
     ]
   };
 
   const reportsData = [
     {
-      label: "Receita",
-      value: 0,
+      label: 'Receita',
+      value: dashboardGeneral.revenue,
       styles: {
         boxBackgroundColor: COLORS.revenue,
-        valueTextColor: "#ffffff",
-        labelTextColor: "#ffffff"
+        valueTextColor: '#ffffff',
+        labelTextColor: '#ffffff'
       }
     },
     {
-      label: "Despesas",
-      value: 0,
+      label: 'Despesas',
+      value: dashboardGeneral.expenses,
       styles: {
         boxBackgroundColor: COLORS.expenses,
-        valueTextColor: "#ffffff",
-        labelTextColor: "#ffffff"
+        valueTextColor: '#ffffff',
+        labelTextColor: '#ffffff'
       }
     },
     {
-      label: "Líquido",
-      value: 0,
+      label: 'Líquido',
+      value: dashboardGeneral.net_revenue,
       styles: {
         boxBackgroundColor: COLORS.net,
-        valueTextColor: "#ffffff",
-        labelTextColor: "#ffffff"
+        valueTextColor: '#ffffff',
+        labelTextColor: '#ffffff'
       }
     },
     {
-      label: "Investimento",
-      value: 0,
+      label: 'Investimento',
+      value: dashboardGeneral.investments,
       styles: {
         boxBackgroundColor: COLORS.investment,
-        valueTextColor: "#ffffff",
-        labelTextColor: "#ffffff"
+        valueTextColor: '#ffffff',
+        labelTextColor: '#ffffff'
       }
     }
   ];
 
   useEffect(() => {
-    SEO.changeDocumentTitle("Dashboard");
-  });
+    SEO.changeDocumentTitle('Dashboard');
+    _getDashboardGeneral();
+    _getDashboardGeneralWithMonths();
+    _getDashboardGeneralInvestments();
+  }, []);
+
+  async function _getDashboardGeneral(params: Object = {}) {
+    try {
+      const response = await Services.dashboard.getDashboardGeneral(params);
+      if (response.status === 200) {
+        setDashboardGeneral(response.data);
+      }
+    } catch (e) {
+      console.error('_getDashboardGeneral', e.message);
+    }
+  }
+
+  async function _getDashboardGeneralWithMonths(params: Object = {}) {
+    try {
+      const response = await Services.dashboard.getDashboardGeneralWithMonths(params);
+      if (response.status === 200) {
+        setDashboardGeneralWithMonths(response.data);
+      }
+    } catch (e) {
+      console.error('_getDashboardGeneral', e.message);
+    }
+  }
+
+  async function _getDashboardGeneralInvestments(params: Object = {}) {
+    try {
+      const response = await Services.dashboard.getDashboardGeneralInvestments(params);
+      if (response.status === 200) {
+        setDashboardGeneralInvestments(response.data);
+      }
+    } catch (e) {
+      console.error('_getDashboardGeneral', e.message);
+    }
+  }
 
   return (
     <Container>
-      <Breadcrumbs data={[{ label: "Dashboard" }]} />
+      <Breadcrumbs data={[{ label: 'Dashboard' }]} />
       <Title>Dashboard</Title>
       <ReportsBox data={reportsData} />
 

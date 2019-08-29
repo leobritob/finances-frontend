@@ -9,9 +9,10 @@ import { toast } from 'react-toastify';
 import Select from 'Components/Select';
 import { history } from 'Config/Store';
 
-export default function BillingCyclesCategoriesAdd() {
+export default function BillingCyclesCategoriesEdit({ match }) {
+  const billingCycleCategoryId = Number(match.params.id);
   const [name, setName] = useState('');
-  const [billing_cycles_type_id, setBillingCyclesTypeId] = useState('');
+  const [billingCyclesType, setBillingCyclesType] = useState('');
   const [billingCyclesTypes, setBillingCyclesTypes] = useState({
     total: 0,
     perPage: 20,
@@ -21,8 +22,23 @@ export default function BillingCyclesCategoriesAdd() {
   });
 
   useEffect(() => {
+    _getBillingCycleCategoryById(billingCycleCategoryId);
     _getAllBillingCyclesTypes();
-  }, []);
+  }, [billingCycleCategoryId]);
+
+  async function _getBillingCycleCategoryById(id: number) {
+    try {
+      const response = await Services.billingCyclesCategories.getBillingCyclesCategoriesById(id);
+      if (response.status === 200) {
+        const { name, billingCyclesType } = response.data;
+
+        setName(name);
+        setBillingCyclesType({ label: billingCyclesType.name, value: billingCyclesType.id });
+      }
+    } catch (e) {
+      console.log('_getBillingCycleCategoryById/ERROR', e.message);
+    }
+  }
 
   async function _getAllBillingCyclesTypes(params: Object = {}) {
     try {
@@ -37,12 +53,12 @@ export default function BillingCyclesCategoriesAdd() {
 
   async function _save() {
     try {
-      const response = await Services.billingCyclesCategories.storeBillingCyclesCategories({
-        billing_cycles_type_id,
+      const response = await Services.billingCyclesCategories.updateBillingCyclesCategories(billingCycleCategoryId, {
+        billing_cycles_type_id: billingCyclesType.value,
         name
       });
       if (response.status === 200) {
-        toast.success('Nova categoria de faturamento cadastrada com sucesso');
+        toast.success('Categoria de faturamento atualizada com sucesso');
 
         history.push('/billing-cycles-categories');
       }
@@ -60,17 +76,18 @@ export default function BillingCyclesCategoriesAdd() {
             label: 'Categorias de Faturamento',
             href: '/billing-cycles-categories'
           },
-          { label: 'Adicionar' }
+          { label: 'Alterar' }
         ]}
       />
-      <Title>Nova Categoria de Faturamento</Title>
+      <Title>Alterar Categoria de Faturamento</Title>
 
       <Select
         isSearchable
         label="Tipo"
         placeholder="Selecione um tipo de faturamento"
         options={billingCyclesTypes}
-        onChange={option => setBillingCyclesTypeId(option.value)}
+        value={billingCyclesType}
+        onChange={option => setBillingCyclesType(option)}
       />
 
       <Input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" autoComplete="off" />

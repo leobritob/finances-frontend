@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { Container, Table, THead, TH, TBody, TRow, TColumn, Input, FilterContainer } from "./styles";
-import Searchbar from "Components/Searchbar";
-import Pagination from "Components/Pagination";
-import PropTypes from "prop-types";
-import Button from "Components/Button";
-import DatePicker from "Components/DatePicker";
-import { compareAsc } from "date-fns";
+import React, { useState } from 'react';
+import { Container, Table, THead, TH, TBody, TRow, TColumn, Input, FilterContainer } from './styles';
+import Searchbar from 'Components/Searchbar';
+import Pagination from 'Components/Pagination';
+import PropTypes from 'prop-types';
+import Button from 'Components/Button';
+import DatePicker from 'Components/DatePicker';
+import { compareAsc } from 'date-fns';
 
 export default function DataTable({
+  itemOnClick,
   searchBarIsVisible,
   addButtonIsVisible,
   addButtonOnClick,
@@ -30,7 +31,7 @@ export default function DataTable({
 }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
 
-  window.addEventListener("resize", e => {
+  window.addEventListener('resize', e => {
     setIsMobile(e.target.innerWidth <= 575);
   });
 
@@ -44,8 +45,17 @@ export default function DataTable({
       {addButtonIsVisible && <Button label="Novo" icon="plus" onClick={addButtonOnClick} />}
 
       <FilterContainer>
-        {fromIsVisible && <DatePicker selected={fromValue} onChange={fromOnChange} customInput={<Input />} />}
-        {toIsVisible && <DatePicker selected={toValue} onChange={toOnChange} customInput={<Input />} />}
+        {fromIsVisible && (
+          <DatePicker
+            placeholderText="Data inicial"
+            selected={fromValue}
+            onChange={fromOnChange}
+            customInput={<Input />}
+          />
+        )}
+        {toIsVisible && (
+          <DatePicker placeholderText="Data final" selected={toValue} onChange={toOnChange} customInput={<Input />} />
+        )}
         {searchBarIsVisible && (
           <Searchbar
             value={searchBarValue}
@@ -60,7 +70,7 @@ export default function DataTable({
           <TBody>
             {data.map((data, dataIndex) => {
               return columns.map((column, columnIndex) => (
-                <TRow key={columnIndex}>
+                <TRow key={columnIndex} onClick={() => (columnIndex === columns.length - 1 ? {} : itemOnClick(data))}>
                   <TH>{column.label}</TH>
                   <TColumn>{renderItem(column.id, data)}</TColumn>
                 </TRow>
@@ -72,7 +82,7 @@ export default function DataTable({
         {!isMobile && (
           <>
             <THead>
-              <TRow>
+              <TRow noHover>
                 {columns.map((column, columnIndex) => (
                   <TH key={columnIndex} width={column.width}>
                     {column.label}
@@ -84,7 +94,11 @@ export default function DataTable({
               {data.map((item, dataIndex) => (
                 <TRow key={dataIndex}>
                   {columns.map((column, columnIndex) => (
-                    <TColumn key={columnIndex} noPadding={column.noPadding || false}>
+                    <TColumn
+                      key={columnIndex}
+                      noPadding={column.noPadding || false}
+                      onClick={() => (columnIndex === columns.length - 1 ? {} : itemOnClick(item))}
+                    >
                       {renderItem(column.id, item)}
                     </TColumn>
                   ))}
@@ -102,6 +116,7 @@ export default function DataTable({
 DataTable.prototype = {
   columns: PropTypes.array,
   data: PropTypes.array,
+  itemOnClick: PropTypes.func,
   renderItem: PropTypes.func,
   searchBarValue: PropTypes.string,
   searchBarOnChange: PropTypes.func,
@@ -124,10 +139,11 @@ DataTable.prototype = {
 DataTable.defaultProps = {
   columns: [],
   data: [],
+  itemOnClick: () => {},
   addButtonIsVisible: false,
   addButtonOnClick: () => {},
   searchBarIsVisible: false,
-  searchBarValue: "",
+  searchBarValue: '',
   searchBarOnClick: () => {},
   searchBarOnChange: () => {},
   fromIsVisible: false,

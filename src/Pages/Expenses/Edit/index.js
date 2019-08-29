@@ -11,7 +11,8 @@ import { toast } from 'react-toastify';
 import Select from 'Components/Select';
 import { history } from 'Config/Store';
 
-export default function RevenueAdd() {
+export default function ExpensesEdit({ match }) {
+  const billingCycleId = Number(match.params.id);
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [value, setValue] = useState('');
@@ -19,13 +20,30 @@ export default function RevenueAdd() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    _getBillingCyclesById(billingCycleId);
     _getAllBillingCyclesCategories();
-  }, []);
+  }, [billingCycleId]);
+
+  async function _getBillingCyclesById(id: number) {
+    try {
+      const response = await Services.billingCycles.getBillingCyclesById(id);
+      if (response.status === 200) {
+        const { description, date, value, billingCyclesCategory } = response.data;
+
+        setDescription(description);
+        setDate(new Date(date));
+        setValue(value);
+        setCategory({ label: billingCyclesCategory.name, value: billingCyclesCategory.id });
+      }
+    } catch (e) {
+      console.error('_getBillingCycleById/ERROR', e.message);
+    }
+  }
 
   async function _getAllBillingCyclesCategories(params: Object = {}) {
     try {
-      // Ciclo de pagamento do tipo receita
-      params.billing_cycles_type_id = 1;
+      // Ciclo de pagamento do tipo despesa
+      params.billing_cycles_type_id = 2;
 
       const response = await Services.billingCyclesCategories.getAllBillingCyclesCategories(params);
       if (response.status === 200) {
@@ -38,16 +56,16 @@ export default function RevenueAdd() {
 
   async function _save() {
     try {
-      const response = await Services.billingCycles.storeBillingCycles({
-        billing_cycles_category_id: category,
+      const response = await Services.billingCycles.updateBillingCycles(billingCycleId, {
+        billing_cycles_category_id: category.value,
         description,
         date,
         value
       });
       if (response.status === 200) {
-        toast.success('Nova receita cadastrada com sucesso');
+        toast.success('Despesa atualizada com sucesso');
 
-        history.push('/revenue');
+        history.push('/expenses');
       }
     } catch (e) {
       console.log('_save/ERROR', e.message);
@@ -59,18 +77,19 @@ export default function RevenueAdd() {
       <Breadcrumbs
         data={[
           { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Receitas', href: '/revenue' },
-          { label: 'Adicionar' }
+          { label: 'Despesas', href: '/expenses' },
+          { label: 'Alterar' }
         ]}
       />
-      <Title>Nova Receita</Title>
+      <Title>Alterar Despesa</Title>
 
       <Select
         isSearchable
         label="Categoria"
         placeholder="Selecione uma categoria"
         options={categories}
-        onChange={option => setCategory(option.value)}
+        value={category}
+        onChange={option => setCategory(option)}
       />
 
       <Input
