@@ -151,6 +151,10 @@ function Revenue() {
     history.push('/revenue/add');
   }
 
+  function _itemOnClick(item) {
+    history.push(`/revenue/edit/${item.id}/`);
+  }
+
   return (
     <Container>
       <Breadcrumbs data={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Receitas' }]} />
@@ -189,6 +193,7 @@ function Revenue() {
 
       <Title>Extrato</Title>
       <DataTable
+        itemOnClick={_itemOnClick}
         renderItem={renderItem}
         columns={[
           { id: 'description', label: 'Descricão' },

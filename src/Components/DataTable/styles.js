@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
@@ -27,6 +27,16 @@ export const TH = styled.th`
 export const TBody = styled.tbody``;
 
 export const TRow = styled.tr`
+  ${props =>
+    props.noHover
+      ? ''
+      : `
+    &:hover {
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+  `}
+
   @media (max-width: 575px) {
     &:nth-child(3n + 1) {
       background: #f5f5f5;
@@ -52,9 +62,9 @@ export const FilterContainer = styled.div`
   grid-template-columns: ${props => {
     const arr = props.children.filter(c => c).map(c => c);
     let fr = [];
-    arr.forEach((c, i) => (i === arr.length - 1 ? fr.push("3fr") : fr.push("1fr")));
+    arr.forEach((c, i) => (i === arr.length - 1 ? fr.push('3fr') : fr.push('1fr')));
 
-    return fr.join(" ");
+    return fr.join(' ');
   }};
   grid-gap: 10px;
 

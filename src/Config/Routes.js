@@ -17,6 +17,7 @@ import BillingCyclesCategories from 'Pages/BillingCyclesCategories';
 import BillingCyclesCategoriesAdd from 'Pages/BillingCyclesCategories/Add';
 import BillingCyclesTypes from 'Pages/BillingCyclesTypes';
 import BillingCyclesTypesAdd from 'Pages/BillingCyclesTypes/Add';
+import RevenueEdit from 'Pages/Revenue/Edit';
 
 const PrivateRoute = ({ component: Component, layout: Layout, verifyRole, ...rest }) => (
   <Route
@@ -45,6 +46,7 @@ const Routes = (
     {/* REVENUE */}
     <PrivateRoute exact path="/revenue" component={Revenue} layout={DashboardLayout} />
     <PrivateRoute exact path="/revenue/add" component={RevenueAdd} layout={DashboardLayout} />
+    <PrivateRoute exact path="/revenue/edit/:id" component={RevenueEdit} layout={DashboardLayout} />
 
     {/* EXPENSES */}
     <PrivateRoute exact path="/expenses" component={Expenses} layout={DashboardLayout} />

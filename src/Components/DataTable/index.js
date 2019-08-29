@@ -8,6 +8,7 @@ import DatePicker from 'Components/DatePicker';
 import { compareAsc } from 'date-fns';
 
 export default function DataTable({
+  itemOnClick,
   searchBarIsVisible,
   addButtonIsVisible,
   addButtonOnClick,
@@ -69,7 +70,7 @@ export default function DataTable({
           <TBody>
             {data.map((data, dataIndex) => {
               return columns.map((column, columnIndex) => (
-                <TRow key={columnIndex}>
+                <TRow key={columnIndex} onClick={() => itemOnClick(data)}>
                   <TH>{column.label}</TH>
                   <TColumn>{renderItem(column.id, data)}</TColumn>
                 </TRow>
@@ -81,7 +82,7 @@ export default function DataTable({
         {!isMobile && (
           <>
             <THead>
-              <TRow>
+              <TRow noHover>
                 {columns.map((column, columnIndex) => (
                   <TH key={columnIndex} width={column.width}>
                     {column.label}
@@ -93,7 +94,7 @@ export default function DataTable({
               {data.map((item, dataIndex) => (
                 <TRow key={dataIndex}>
                   {columns.map((column, columnIndex) => (
-                    <TColumn key={columnIndex} noPadding={column.noPadding || false}>
+                    <TColumn key={columnIndex} noPadding={column.noPadding || false} onClick={() => itemOnClick(item)}>
                       {renderItem(column.id, item)}
                     </TColumn>
                   ))}
@@ -111,6 +112,7 @@ export default function DataTable({
 DataTable.prototype = {
   columns: PropTypes.array,
   data: PropTypes.array,
+  itemOnClick: PropTypes.func,
   renderItem: PropTypes.func,
   searchBarValue: PropTypes.string,
   searchBarOnChange: PropTypes.func,
@@ -133,6 +135,7 @@ DataTable.prototype = {
 DataTable.defaultProps = {
   columns: [],
   data: [],
+  itemOnClick: () => {},
   addButtonIsVisible: false,
   addButtonOnClick: () => {},
   searchBarIsVisible: false,

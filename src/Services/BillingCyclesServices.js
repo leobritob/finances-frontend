@@ -1,7 +1,7 @@
-import apisauce from "apisauce";
-import Config from "Config";
-import { commonMonitor } from "./index";
-import { IBillingCycles } from "Interfaces";
+import apisauce from 'apisauce';
+import Config from 'Config';
+import { commonMonitor } from './index';
+import { IBillingCycles } from 'Interfaces';
 
 const create = (baseURL = Config.API_BASE_URL) => {
   const api = apisauce.create({
@@ -16,7 +16,7 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * Endpoint responsável por buscar por todos os ciclos de faturamentos
    * @param {Object} params - Query string para pesquisa
    */
-  const getAllBillingCycles = (params: Object = {}): Promise => api.get("/v1/billing-cycles/", params);
+  const getAllBillingCycles = (params: Object = {}): Promise => api.get('/v1/billing-cycles/', params);
 
   /**
    * Endpoint responsável por retornar um ciclo de faturamento
@@ -29,7 +29,7 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * @param {IBillingCycles} billingCycles - Cliente a ser cadastrado
    * @returns {Promise<ApiResponse<any>>}
    */
-  const storeBillingCycles = (billingCycles: IBillingCycles): Promise => api.post("/v1/billing-cycles/", billingCycles);
+  const storeBillingCycles = (billingCycles: IBillingCycles): Promise => api.post('/v1/billing-cycles/', billingCycles);
 
   /**
    * Endpoint responsável por atualizar um ciclo de faturamento
@@ -50,7 +50,7 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * Endpoint responsável por buscar o relatório dos ciclos de faturamentos
    * @param {Object} params - Query string para pesquisa
    */
-  const getBillingCyclesReports = (params: Object = {}): Promise => api.get("/v1/billing-cycles-reports/", params);
+  const getBillingCyclesReports = (params: Object = {}): Promise => api.get('/v1/billing-cycles-reports/', params);
 
   return {
     config: api,
