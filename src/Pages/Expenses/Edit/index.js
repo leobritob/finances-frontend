@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import Select from 'Components/Select';
 import { history } from 'Config/Store';
 
-export default function RevenueEdit({ match }) {
+export default function ExpensesEdit({ match }) {
   const billingCycleId = Number(match.params.id);
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
@@ -42,8 +42,8 @@ export default function RevenueEdit({ match }) {
 
   async function _getAllBillingCyclesCategories(params: Object = {}) {
     try {
-      // Ciclo de pagamento do tipo receita
-      params.billing_cycles_type_id = 1;
+      // Ciclo de pagamento do tipo despesa
+      params.billing_cycles_type_id = 2;
 
       const response = await Services.billingCyclesCategories.getAllBillingCyclesCategories(params);
       if (response.status === 200) {
@@ -63,9 +63,9 @@ export default function RevenueEdit({ match }) {
         value
       });
       if (response.status === 200) {
-        toast.success('Receita atualizada com sucesso');
+        toast.success('Despesa atualizada com sucesso');
 
-        history.push('/revenue');
+        history.push('/expenses');
       }
     } catch (e) {
       console.log('_save/ERROR', e.message);
@@ -77,18 +77,18 @@ export default function RevenueEdit({ match }) {
       <Breadcrumbs
         data={[
           { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Receitas', href: '/revenue' },
+          { label: 'Despesas', href: '/expenses' },
           { label: 'Alterar' }
         ]}
       />
-      <Title>Alterar Receita</Title>
+      <Title>Alterar Despesa</Title>
 
       <Select
         isSearchable
         label="Categoria"
         placeholder="Selecione uma categoria"
-        value={category}
         options={categories}
+        value={category}
         onChange={option => setCategory(option)}
       />
 

@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import Select from 'Components/Select';
 import { history } from 'Config/Store';
 
-export default function ExpenseAdd() {
+export default function ExpensesAdd() {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [value, setValue] = useState('');

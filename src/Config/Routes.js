@@ -10,6 +10,7 @@ import InvestmentsTypes from 'Pages/InvestmentsTypes';
 import InvestmentsTypesAdd from 'Pages/InvestmentsTypes/Add';
 import RevenueAdd from 'Pages/Revenue/Add';
 import ExpensesAdd from 'Pages/Expenses/Add';
+import ExpensesEdit from 'Pages/Expenses/Edit';
 import InvestmentsAdd from 'Pages/Investments/Add';
 import ForgotPassword from 'Pages/ForgotPassword';
 import { Auth } from 'Utils';
@@ -51,6 +52,7 @@ const Routes = (
     {/* EXPENSES */}
     <PrivateRoute exact path="/expenses" component={Expenses} layout={DashboardLayout} />
     <PrivateRoute exact path="/expenses/add" component={ExpensesAdd} layout={DashboardLayout} />
+    <PrivateRoute exact path="/expenses/edit/:id" component={ExpensesEdit} layout={DashboardLayout} />
 
     {/* INVESTMENTS */}
     <PrivateRoute exact path="/investments" component={Investments} layout={DashboardLayout} />
