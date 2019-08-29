@@ -12,6 +12,7 @@ import RevenueAdd from 'Pages/Revenue/Add';
 import ExpensesAdd from 'Pages/Expenses/Add';
 import ExpensesEdit from 'Pages/Expenses/Edit';
 import InvestmentsAdd from 'Pages/Investments/Add';
+import InvestmentsEdit from 'Pages/Investments/Edit';
 import ForgotPassword from 'Pages/ForgotPassword';
 import { Auth } from 'Utils';
 import BillingCyclesCategories from 'Pages/BillingCyclesCategories';
@@ -57,6 +58,7 @@ const Routes = (
     {/* INVESTMENTS */}
     <PrivateRoute exact path="/investments" component={Investments} layout={DashboardLayout} />
     <PrivateRoute exact path="/investments/add" component={InvestmentsAdd} layout={DashboardLayout} />
+    <PrivateRoute exact path="/investments/edit/:id" component={InvestmentsEdit} layout={DashboardLayout} />
 
     {/* INVESTMENTS TYPES */}
     <PrivateRoute exact path="/investments-types" component={InvestmentsTypes} layout={DashboardLayout} />

@@ -149,6 +149,10 @@ export default function Investments() {
     history.push('/investments/add');
   }
 
+  function _itemOnClick(item) {
+    history.push(`/investments/edit/${item.id}`);
+  }
+
   return (
     <Container>
       <Breadcrumbs data={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Investimentos' }]} />
@@ -188,6 +192,7 @@ export default function Investments() {
 
       <Title>Extrato</Title>
       <DataTable
+        itemOnClick={_itemOnClick}
         renderItem={renderItem}
         columns={[
           { id: 'name', label: 'Nome' },
