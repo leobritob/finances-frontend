@@ -12,10 +12,10 @@ import Select from 'Components/Select';
 import { history } from 'Config/Store';
 
 export default function ExpenseAdd() {
-  const [description, setDescription] = useState(null);
-  const [date, setDate] = useState(null);
-  const [value, setValue] = useState(null);
-  const [billing_cycles_category_id, setBillingCyclesCategoryId] = useState(null);
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+  const [value, setValue] = useState('');
+  const [billing_cycles_category_id, setBillingCyclesCategoryId] = useState('');
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {

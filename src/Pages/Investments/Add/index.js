@@ -19,12 +19,12 @@ export default function InvestmentsAdd() {
     lastPage: 0,
     data: []
   });
-  const [investments_type_id, setInvestmentTypeId] = useState(null);
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [value, setValue] = useState(null);
-  const [date, setDate] = useState(null);
-  const [due_date, setDueDate] = useState(null);
+  const [investments_type_id, setInvestmentTypeId] = useState('');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [value, setValue] = useState('');
+  const [date, setDate] = useState('');
+  const [due_date, setDueDate] = useState('');
 
   useEffect(() => {
     _getAllInvestmentsTypes();

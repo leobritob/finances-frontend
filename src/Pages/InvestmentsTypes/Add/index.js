@@ -12,9 +12,9 @@ import { history } from 'Config/Store';
 const riskOptions = [{ label: 'Baixo', value: 1 }, { label: 'Moderado', value: 2 }, { label: 'Alto', value: 3 }];
 
 export default function InvestmentsTypesAdd() {
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [risk, setRisk] = useState(null);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [risk, setRisk] = useState('');
 
   async function _save() {
     try {

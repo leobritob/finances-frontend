@@ -12,10 +12,10 @@ import Select from 'Components/Select';
 import { history } from 'Config/Store';
 
 export default function RevenueAdd() {
-  const [description, setDescription] = useState(null);
-  const [date, setDate] = useState(null);
-  const [value, setValue] = useState(null);
-  const [category, setCategory] = useState(null);
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+  const [value, setValue] = useState('');
+  const [category, setCategory] = useState('');
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {

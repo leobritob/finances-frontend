@@ -9,6 +9,7 @@ import BillingCyclesCategoriesServices from './BillingCyclesCategoriesServices';
 import InvestmentsServices from './InvestmentsServices';
 import InvestmentsTypesServices from './InvestmentsTypesServices';
 import UserActions from 'Redux/UserRedux';
+import DashboardServices from './DashboardServices';
 
 export const commonMonitor = (response: ApiResponse): void => {
   if (![200, 201, 204].includes(response.status)) {
@@ -33,7 +34,8 @@ const Services = {
   billingCyclesTypes: BillingCyclesTypesServices.create(),
   billingCyclesCategories: BillingCyclesCategoriesServices.create(),
   investments: InvestmentsServices.create(),
-  investmentsTypes: InvestmentsTypesServices.create()
+  investmentsTypes: InvestmentsTypesServices.create(),
+  dashboard: DashboardServices.create()
 };
 
 export const updateHeaderAuthToken = (token: string): void => {

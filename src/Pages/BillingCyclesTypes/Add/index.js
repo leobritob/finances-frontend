@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import { Container } from "./styles";
-import Breadcrumbs from "Components/Breadcrumbs";
-import Title from "Components/Title";
-import Input from "Components/Input";
-import Button from "Components/Button";
-import Services from "Services";
-import { toast } from "react-toastify";
-import { history } from "Config/Store";
+import React, { useState } from 'react';
+import { Container } from './styles';
+import Breadcrumbs from 'Components/Breadcrumbs';
+import Title from 'Components/Title';
+import Input from 'Components/Input';
+import Button from 'Components/Button';
+import Services from 'Services';
+import { toast } from 'react-toastify';
+import { history } from 'Config/Store';
 
 export default function BillingCyclesTypesAdd() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
 
   async function _save() {
     try {
       const response = await Services.billingCyclesTypes.storeBillingCyclesTypes({ name, description });
       if (response.status === 200) {
-        toast.success("Novo tipo de faturamento cadastrado com sucesso");
+        toast.success('Novo tipo de faturamento cadastrado com sucesso');
 
-        history.push("/billing-cycles-types");
+        history.push('/billing-cycles-types');
       }
     } catch (e) {
-      console.log("_save/ERROR", e.message);
+      console.log('_save/ERROR', e.message);
     }
   }
 
@@ -29,12 +29,12 @@ export default function BillingCyclesTypesAdd() {
     <Container>
       <Breadcrumbs
         data={[
-          { label: "Dashboard", href: "/dashboard" },
+          { label: 'Dashboard', href: '/dashboard' },
           {
-            label: "Tipo de Faturamento",
-            href: "/billing-cycles-types"
+            label: 'Tipo de Faturamento',
+            href: '/billing-cycles-types'
           },
-          { label: "Adicionar" }
+          { label: 'Adicionar' }
         ]}
       />
       <Title>Novo Tipo de Faturamento</Title>

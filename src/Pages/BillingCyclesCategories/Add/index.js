@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Container } from "./styles";
-import Breadcrumbs from "Components/Breadcrumbs";
-import Title from "Components/Title";
-import Input from "Components/Input";
-import Button from "Components/Button";
-import Services from "Services";
-import { toast } from "react-toastify";
-import Select from "Components/Select";
-import { history } from "Config/Store";
+import React, { useState, useEffect } from 'react';
+import { Container } from './styles';
+import Breadcrumbs from 'Components/Breadcrumbs';
+import Title from 'Components/Title';
+import Input from 'Components/Input';
+import Button from 'Components/Button';
+import Services from 'Services';
+import { toast } from 'react-toastify';
+import Select from 'Components/Select';
+import { history } from 'Config/Store';
 
 export default function BillingCyclesCategoriesAdd() {
-  const [name, setName] = useState("");
-  const [billing_cycles_type_id, setBillingCyclesTypeId] = useState("");
+  const [name, setName] = useState('');
+  const [billing_cycles_type_id, setBillingCyclesTypeId] = useState('');
   const [billingCyclesTypes, setBillingCyclesTypes] = useState({
     total: 0,
     perPage: 20,
@@ -31,7 +31,7 @@ export default function BillingCyclesCategoriesAdd() {
         setBillingCyclesTypes(response.data.data.map(item => ({ label: item.name, value: item.id })));
       }
     } catch (e) {
-      console.log("_getAllBillingCyclesTypes/ERROR", e.message);
+      console.log('_getAllBillingCyclesTypes/ERROR', e.message);
     }
   }
 
@@ -42,12 +42,12 @@ export default function BillingCyclesCategoriesAdd() {
         name
       });
       if (response.status === 200) {
-        toast.success("Nova categoria de faturamento cadastrada com sucesso");
+        toast.success('Nova categoria de faturamento cadastrada com sucesso');
 
-        history.push("/billing-cycles-categories");
+        history.push('/billing-cycles-categories');
       }
     } catch (e) {
-      console.log("_save/ERROR", e.message);
+      console.log('_save/ERROR', e.message);
     }
   }
 
@@ -55,12 +55,12 @@ export default function BillingCyclesCategoriesAdd() {
     <Container>
       <Breadcrumbs
         data={[
-          { label: "Dashboard", href: "/dashboard" },
+          { label: 'Dashboard', href: '/dashboard' },
           {
-            label: "Categorias de Faturamento",
-            href: "/billing-cycles-categories"
+            label: 'Categorias de Faturamento',
+            href: '/billing-cycles-categories'
           },
-          { label: "Adicionar" }
+          { label: 'Adicionar' }
         ]}
       />
       <Title>Nova Categoria de Faturamento</Title>
