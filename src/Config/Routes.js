@@ -20,6 +20,7 @@ import BillingCyclesCategoriesAdd from 'Pages/BillingCyclesCategories/Add';
 import BillingCyclesCategoriesEdit from 'Pages/BillingCyclesCategories/Edit';
 import BillingCyclesTypes from 'Pages/BillingCyclesTypes';
 import BillingCyclesTypesAdd from 'Pages/BillingCyclesTypes/Add';
+import BillingCyclesTypesEdit from 'Pages/BillingCyclesTypes/Edit';
 import RevenueEdit from 'Pages/Revenue/Edit';
 import InvestmentsTypesEdit from 'Pages/InvestmentsTypes/Edit';
 
@@ -90,6 +91,12 @@ const Routes = (
     {/* BILLING CYCLES TYPES */}
     <PrivateRoute exact path="/billing-cycles-types" component={BillingCyclesTypes} layout={DashboardLayout} />
     <PrivateRoute exact path="/billing-cycles-types/add" component={BillingCyclesTypesAdd} layout={DashboardLayout} />
+    <PrivateRoute
+      exact
+      path="/billing-cycles-types/edit/:id"
+      component={BillingCyclesTypesEdit}
+      layout={DashboardLayout}
+    />
   </Switch>
 );
 

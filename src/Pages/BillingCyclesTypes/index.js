@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import Title from "Components/Title";
-import { Container } from "./styles";
-import DataTable from "Components/DataTable";
-import Breadcrumbs from "Components/Breadcrumbs";
-import { history } from "Config/Store";
-import Services from "Services";
-import { useDebounce } from "use-debounce";
-import Button from "Components/Button";
-import Colors from "Themes/Colors";
-import { toast } from "react-toastify";
+import React, { useState, useEffect } from 'react';
+import Title from 'Components/Title';
+import { Container } from './styles';
+import DataTable from 'Components/DataTable';
+import Breadcrumbs from 'Components/Breadcrumbs';
+import { history } from 'Config/Store';
+import Services from 'Services';
+import { useDebounce } from 'use-debounce';
+import Button from 'Components/Button';
+import Colors from 'Themes/Colors';
+import { toast } from 'react-toastify';
 
 export default function BillingCyclesTypes() {
-  const [searchBarValue, setSearchBarValue] = useState("");
+  const [searchBarValue, setSearchBarValue] = useState('');
   const [filter, setFilter] = useState({
-    search: ""
+    search: ''
   });
   const [billingCyclesTypes, setBillingCyclesType] = useState({
     total: 0,
@@ -30,7 +30,7 @@ export default function BillingCyclesTypes() {
 
   function renderItem(column, item) {
     switch (column) {
-      case "-":
+      case '-':
         return (
           <Button
             onClick={() => _removeItem(item.id)}
@@ -54,22 +54,22 @@ export default function BillingCyclesTypes() {
         setBillingCyclesType(response.data);
       }
     } catch (e) {
-      console.log("_getAllBillingCyclesTypes/ERROR", e.message);
+      console.log('_getAllBillingCyclesTypes/ERROR', e.message);
     }
   }
 
   async function _deleteBillingCyclesType(id) {
     try {
-      if (typeof id === "undefined" || !id) return false;
+      if (typeof id === 'undefined' || !id) return false;
 
       const response = await Services.billingCyclesTypes.destroyBillingCyclesTypes(id);
       if (response.status === 204) {
-        toast.success("Tipo removido com sucesso");
+        toast.success('Tipo removido com sucesso');
 
         _getAllBillingCyclesTypes(filterDebounce);
       }
     } catch (e) {
-      console.log("_deleteBillingCyclesType/ERROR", e.message);
+      console.log('_deleteBillingCyclesType/ERROR', e.message);
     }
   }
 
@@ -81,7 +81,7 @@ export default function BillingCyclesTypes() {
   }
 
   function _removeItem(id) {
-    const isDelete = window.confirm("Você tem certeza que deseja remover este item ?");
+    const isDelete = window.confirm('Você tem certeza que deseja remover este item ?');
     if (isDelete) {
       _deleteBillingCyclesType(id);
     }
@@ -96,20 +96,25 @@ export default function BillingCyclesTypes() {
   }
 
   function _addButtonOnClick() {
-    history.push("/billing-cycles-types/add");
+    history.push('/billing-cycles-types/add');
+  }
+
+  function _itemOnClick(item) {
+    history.push(`/billing-cycles-types/edit/${item.id}`);
   }
 
   return (
     <Container>
-      <Breadcrumbs data={[{ label: "Dashboard", href: "/dashboard" }, { label: "Tipos de Faturamento" }]} />
+      <Breadcrumbs data={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Tipos de Faturamento' }]} />
       <Title>Tipos de Faturamento</Title>
 
       <DataTable
+        itemOnClick={_itemOnClick}
         renderItem={renderItem}
         columns={[
-          { id: "name", label: "Nome" },
-          { id: "description", label: "Descrição", width: 200 },
-          { id: "-", label: "-", width: 80, noPadding: true }
+          { id: 'name', label: 'Nome' },
+          { id: 'description', label: 'Descrição', width: 200 },
+          { id: '-', label: '-', width: 80, noPadding: true }
         ]}
         data={billingCyclesTypes.data}
         page={billingCyclesTypes.page}
