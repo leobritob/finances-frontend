@@ -44,7 +44,7 @@ export default function RevenueAdd() {
         date,
         value
       });
-      if (response.status === 200) {
+      if ([200, 201].includes(response.status)) {
         toast.success('Nova receita cadastrada com sucesso');
 
         history.push('/revenue');

@@ -15,7 +15,7 @@ export default function BillingCyclesTypesAdd() {
   async function _save() {
     try {
       const response = await Services.billingCyclesTypes.storeBillingCyclesTypes({ name, description });
-      if (response.status === 200) {
+      if ([200, 201].includes(response.status)) {
         toast.success('Novo tipo de faturamento cadastrado com sucesso');
 
         history.push('/billing-cycles-types');

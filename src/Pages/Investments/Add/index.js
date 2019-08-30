@@ -51,7 +51,7 @@ export default function InvestmentsAdd() {
         date,
         due_date
       });
-      if (response.status === 200) {
+      if ([200, 201].includes(response.status)) {
         toast.success('Novo investimento cadastrado com sucesso');
 
         history.push('/investments');

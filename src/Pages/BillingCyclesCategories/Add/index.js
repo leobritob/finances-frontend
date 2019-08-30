@@ -41,7 +41,7 @@ export default function BillingCyclesCategoriesAdd() {
         billing_cycles_type_id,
         name
       });
-      if (response.status === 200) {
+      if ([200, 201].includes(response.status)) {
         toast.success('Nova categoria de faturamento cadastrada com sucesso');
 
         history.push('/billing-cycles-categories');

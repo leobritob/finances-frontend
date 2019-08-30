@@ -44,7 +44,7 @@ export default function ExpensesAdd() {
         date,
         value
       });
-      if (response.status === 200) {
+      if ([200, 201].includes(response.status)) {
         toast.success('Nova despesa cadastrada com sucesso');
 
         history.push('/expenses');

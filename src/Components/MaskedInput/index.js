@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import MaskedInput from "react-maskedinput";
-import { COLORS } from "Themes";
+import styled from 'styled-components';
+import MaskedInput from 'react-maskedinput';
+import { COLORS } from 'Themes';
 
 export default styled(MaskedInput)`
   width: 100%;

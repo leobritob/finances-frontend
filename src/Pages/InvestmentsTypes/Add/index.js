@@ -19,13 +19,8 @@ export default function InvestmentsTypesAdd() {
 
   async function _save() {
     try {
-      const response = await Services.investmentsTypes.storeInvestmentsTypes({
-        name,
-        description,
-        color,
-        risk
-      });
-      if (response.status === 200) {
+      const response = await Services.investmentsTypes.storeInvestmentsTypes({ name, description, color, risk });
+      if ([200, 201].includes(response.status)) {
         toast.success('Novo tipo de investimento cadastrado com sucesso');
 
         history.push('/investments-types');
