@@ -65,7 +65,6 @@ export default function Investments() {
             icon="trash"
             iconSize="xs"
             noMargin
-            noPadding
           />
         );
       default:

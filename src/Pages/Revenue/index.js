@@ -65,7 +65,6 @@ function Revenue() {
             icon="trash"
             iconSize="xs"
             noMargin
-            noPadding
           />
         );
       default:

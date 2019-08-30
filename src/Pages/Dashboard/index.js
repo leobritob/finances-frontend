@@ -11,6 +11,7 @@ import Column from 'Components/Column';
 import Services from 'Services';
 import Select from 'Components/Select';
 import { format, subMonths, lastDayOfMonth } from 'date-fns';
+import Button from 'Components/Button';
 
 const today = new Date();
 
@@ -145,7 +146,15 @@ export default function Dashboard() {
         setDashboardGeneral(response.data);
       }
     } catch (e) {
-      console.error('_getDashboardGeneral', e.message);
+      console.error('_getDashboardGeneral/ERROR', e.message);
+    }
+  }
+
+  async function _getDashboardGeneralPdf(params: Object = {}) {
+    try {
+      await Services.dashboard.getDashboardGeneralPdf(params);
+    } catch (e) {
+      console.error('_getDashboardGeneralPdf/ERROR', e.message);
     }
   }
 
@@ -156,7 +165,7 @@ export default function Dashboard() {
         setDashboardGeneralWithMonths(response.data);
       }
     } catch (e) {
-      console.error('_getDashboardGeneral', e.message);
+      console.error('_getDashboardGeneral/ERROR', e.message);
     }
   }
 
@@ -167,7 +176,7 @@ export default function Dashboard() {
         setDashboardGeneralInvestments(response.data);
       }
     } catch (e) {
-      console.error('_getDashboardGeneral', e.message);
+      console.error('_getDashboardGeneral/ERROR', e.message);
     }
   }
 
@@ -188,7 +197,9 @@ export default function Dashboard() {
             onChange={option => setFilter(option)}
           />
         </Column>
-        <Column />
+        <Column>
+          <Button noMargin label="Exportar PDF" onClick={() => _getDashboardGeneralPdf(filter.value)} />
+        </Column>
         <Column />
         <Column />
       </Row>

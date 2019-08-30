@@ -1,6 +1,6 @@
 {
-  "short_name": "React App Template",
-  "name": "Create React App Sample",
+  "short_name": "FinancesApp",
+  "name": "FinancesApp",
   "icons": [
     {
       "src": "favicon.ico",

@@ -63,7 +63,6 @@ function Expense() {
             icon="trash"
             iconSize="xs"
             noMargin
-            noPadding
           />
         );
       default:

@@ -39,7 +39,6 @@ export default function BillingCyclesTypes() {
             icon="trash"
             iconSize="xs"
             noMargin
-            noPadding
           />
         );
       default:

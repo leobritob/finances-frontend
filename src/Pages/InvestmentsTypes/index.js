@@ -52,7 +52,6 @@ export default function InvestmentsTypes() {
             icon="trash"
             iconSize="xs"
             noMargin
-            noPadding
           />
         );
       default:
