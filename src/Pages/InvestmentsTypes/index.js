@@ -127,6 +127,7 @@ export default function InvestmentsTypes() {
           { id: 'name', label: 'Nome' },
           { id: 'description', label: 'Descrição' },
           { id: 'risk_label', label: 'Risco' },
+          { id: 'company_fantasy_name', label: 'Risco' },
           { id: '-', label: '-', width: 80, noPadding: true }
         ]}
         data={investmentsTypes.data}

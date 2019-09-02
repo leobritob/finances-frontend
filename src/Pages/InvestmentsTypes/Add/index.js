@@ -8,6 +8,7 @@ import Services from 'Services';
 import { toast } from 'react-toastify';
 import Select from 'Components/Select';
 import { history } from 'Config/Store';
+import InputColor from 'Components/InputColor';
 
 const riskOptions = [{ label: 'Baixo', value: 1 }, { label: 'Moderado', value: 2 }, { label: 'Alto', value: 3 }];
 
@@ -80,7 +81,7 @@ export default function InvestmentsTypesAdd() {
         placeholder="Descrição"
         autoComplete="off"
       />
-      <Input value={color} onChange={e => setColor(e.target.value)} placeholder="Cor" autoComplete="off" />
+      <InputColor value={color} onChange={color => setColor(color.hex)} />
       <Select
         isSearchable
         label="Risco"

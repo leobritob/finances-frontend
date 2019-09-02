@@ -38,7 +38,7 @@ export const TRow = styled.tr`
   `}
 
   @media (max-width: 575px) {
-    &:nth-child(3n + 1) {
+    &:nth-child(4n + 1) {
       background: #f5f5f5;
     }
   }
