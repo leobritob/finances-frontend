@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 const fromDateValue = new Date(format(new Date(), 'yyyy-MM-01 00:00:00'));
 const toDateValue = new Date(format(new Date(), 'yyyy-MM-dd 00:00:00'));
 
-function Expense() {
+export default function Expense() {
   const [searchBarValue, setSearchBarValue] = useState('');
   const [fromDate, setFromDate] = useState(fromDateValue);
   const [toDate, setToDate] = useState(toDateValue);
@@ -63,7 +63,6 @@ function Expense() {
             icon="trash"
             iconSize="xs"
             noMargin
-            noPadding
           />
         );
       default:
@@ -197,6 +196,8 @@ function Expense() {
           { id: 'description', label: 'Descricão' },
           { id: 'date', label: 'Data', width: 100 },
           { id: 'value', label: 'Valor', width: 200 },
+          { id: 'billing_cycles_category_name', label: 'Categoria', width: 250 },
+          { id: 'company_fantasy_name', label: 'Empresa', width: 250 },
           { id: '-', label: '-', width: 80, noPadding: true }
         ]}
         data={expenses.data}
@@ -220,5 +221,3 @@ function Expense() {
     </Container>
   );
 }
-
-export default Expense;

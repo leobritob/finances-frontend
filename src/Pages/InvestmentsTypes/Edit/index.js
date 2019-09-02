@@ -8,6 +8,7 @@ import Services from 'Services';
 import { toast } from 'react-toastify';
 import Select from 'Components/Select';
 import { history } from 'Config/Store';
+import InputColor from 'Components/InputColor';
 
 const riskOptions = [{ label: 'Baixo', value: 1 }, { label: 'Moderado', value: 2 }, { label: 'Alto', value: 3 }];
 
@@ -16,18 +17,37 @@ export default function InvestmentsTypesEdit({ match }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [risk, setRisk] = useState('');
+  const [color, setColor] = useState('#000000');
+  const [companies, setCompanies] = useState([]);
+  const [company_id, setCompanyId] = useState('');
 
   useEffect(() => {
     _getInvestmentTypeById(investmentTypeId);
+    _getAllCompanies();
   }, [investmentTypeId]);
+
+  async function _getAllCompanies(params: Object = {}) {
+    try {
+      params.perPage = 'total';
+
+      const response = await Services.companies.getAllCompanies(params);
+      if (response.status === 200) {
+        setCompanies(response.data.map(company => ({ label: company.fantasy_name, value: company.id })));
+      }
+    } catch (e) {
+      console.log('_getAllCompanies/ERROR', e.message);
+    }
+  }
 
   async function _getInvestmentTypeById(id) {
     try {
       const response = await Services.investmentsTypes.getInvestmentsTypesById(id);
       if (response.status === 200) {
-        const { name, description, risk, risk_label } = response.data;
+        const { company_fantasy_name, company_id, name, description, color, risk, risk_label } = response.data;
+        setCompanyId({ label: company_fantasy_name, value: company_id });
         setName(name);
         setDescription(description);
+        setColor(color);
         setRisk({ label: risk_label, value: risk });
       }
     } catch (e) {
@@ -38,8 +58,10 @@ export default function InvestmentsTypesEdit({ match }) {
   async function _save() {
     try {
       const response = await Services.investmentsTypes.updateInvestmentsTypes(investmentTypeId, {
+        company_id: company_id.value,
         name,
         description,
+        color,
         risk: risk.value
       });
       if (response.status === 200) {
@@ -63,6 +85,14 @@ export default function InvestmentsTypesEdit({ match }) {
       />
       <Title>Alterar Tipo de Investimento</Title>
 
+      <Select
+        isSearchable
+        label="Empresa"
+        placeholder="Selecione uma empresa"
+        options={companies}
+        value={company_id}
+        onChange={option => setCompanyId(option)}
+      />
       <Input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" autoComplete="off" />
       <Input
         value={description}
@@ -70,6 +100,7 @@ export default function InvestmentsTypesEdit({ match }) {
         placeholder="Descrição"
         autoComplete="off"
       />
+      <InputColor value={color} onChange={color => setColor(color.hex)} />
       <Select
         isSearchable
         label="Risco"

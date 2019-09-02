@@ -10,22 +10,21 @@ import Button from 'Components/Button';
 import Colors from 'Themes/Colors';
 import { toast } from 'react-toastify';
 
-export default function BillingCyclesCategories() {
+export default function Companies() {
   const [searchBarValue, setSearchBarValue] = useState('');
   const [filter, setFilter] = useState({
     search: ''
   });
-  const [billingCyclesCategories, setBillingCyclesCategories] = useState({
+  const [filterDebounce] = useDebounce(filter, 300);
+  const [companies, setCompanies] = useState({
     total: 0,
     page: 0,
     perPage: 20,
     data: []
   });
 
-  const [filterDebounce] = useDebounce(filter, 300);
-
   useEffect(() => {
-    _getAllBillingCyclesCategories(filterDebounce);
+    _getAllCompanies(filterDebounce);
   }, [filterDebounce]);
 
   function renderItem(column, item) {
@@ -46,29 +45,29 @@ export default function BillingCyclesCategories() {
     }
   }
 
-  async function _getAllBillingCyclesCategories(params = {}) {
+  async function _getAllCompanies(params = {}) {
     try {
-      const response = await Services.billingCyclesCategories.getAllBillingCyclesCategories(params);
+      const response = await Services.companies.getAllCompanies(params);
       if (response.status === 200) {
-        setBillingCyclesCategories(response.data);
+        setCompanies(response.data);
       }
     } catch (e) {
-      console.log('_getAllBillingCyclesCategories/ERROR', e.message);
+      console.log('_getAllCompanies/ERROR', e.message);
     }
   }
 
-  async function _deleteBillingCyclesCategory(id) {
+  async function _deleteRow(id) {
     try {
-      if (typeof id === 'undefined' || !id) return false;
+      if (!id) return false;
 
-      const response = await Services.billingCyclesCategories.destroyBillingCyclesCategories(id);
+      const response = await Services.companies.destroyCompanyById(id);
       if (response.status === 204) {
-        toast.success('Categoria removida com sucesso');
+        toast.success('Empresa removida com sucesso');
 
-        _getAllBillingCyclesCategories(filterDebounce);
+        _getAllCompanies(filterDebounce);
       }
     } catch (e) {
-      console.log('_deleteBillingCyclesCategory/ERROR', e.message);
+      console.log('_deleteRow/ERROR', e.message);
     }
   }
 
@@ -82,7 +81,7 @@ export default function BillingCyclesCategories() {
   function _removeItem(id) {
     const isDelete = window.confirm('Você tem certeza que deseja remover este item ?');
     if (isDelete) {
-      _deleteBillingCyclesCategory(id);
+      _deleteRow(id);
     }
   }
 
@@ -95,35 +94,36 @@ export default function BillingCyclesCategories() {
   }
 
   function _addButtonOnClick() {
-    history.push('/billing-cycles-categories/add');
+    history.push('/companies/add');
   }
 
   function _itemOnClick(item) {
-    history.push(`/billing-cycles-categories/edit/${item.id}`);
+    history.push(`/companies/edit/${item.id}`);
   }
 
   return (
     <Container>
-      <Breadcrumbs data={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Categorias de Faturamento' }]} />
-      <Title>Categorias de Faturamento</Title>
+      <Breadcrumbs data={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Empresas' }]} />
+      <Title>Empresas</Title>
 
       <DataTable
         itemOnClick={_itemOnClick}
         renderItem={renderItem}
         columns={[
-          { id: 'name', label: 'Descrição' },
-          { id: 'billing_cycles_type_name', label: 'Tipo', width: 200 },
-          { id: 'company_fantasy_name', label: 'Empresa', width: 350 },
+          { id: 'fantasy_name', label: 'Nome Fantasia' },
+          { id: 'social_name', label: 'Razão Social' },
+          { id: 'cnpj', label: 'CNPJ' },
           { id: '-', label: '-', width: 80, noPadding: true }
         ]}
-        data={billingCyclesCategories.data}
-        page={billingCyclesCategories.page}
-        perPage={billingCyclesCategories.perPage}
-        total={billingCyclesCategories.total}
+        data={companies.data}
+        page={companies.page}
+        perPage={companies.perPage}
+        total={companies.total}
         paginationOnChange={_handlePagination}
         addButtonIsVisible={true}
         addButtonOnClick={_addButtonOnClick}
         searchBarIsVisible={true}
+        searchBarPlaceholder="Pesquise pelo nome fantasia, razão social ou CNPJ"
         searchBarValue={searchBarValue}
         searchBarOnChange={_searchBarHandler}
         searchBarOnClick={_searchBarOnClick}

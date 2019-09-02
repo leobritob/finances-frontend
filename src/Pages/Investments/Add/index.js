@@ -12,29 +12,46 @@ import Select from 'Components/Select';
 import { history } from 'Config/Store';
 
 export default function InvestmentsAdd() {
-  const [investmentTypes, setInvestmentTypes] = useState({
-    total: 0,
-    page: 1,
-    perPage: 20,
-    lastPage: 0,
-    data: []
-  });
+  const [investmentTypes, setInvestmentTypes] = useState([]);
   const [investments_type_id, setInvestmentTypeId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
   const [date, setDate] = useState('');
   const [due_date, setDueDate] = useState('');
+  const [companies, setCompanies] = useState([]);
+  const [company_id, setCompanyId] = useState('');
 
   useEffect(() => {
-    _getAllInvestmentsTypes();
+    _getAllCompanies();
   }, []);
+
+  useEffect(() => {
+    _getAllInvestmentsTypes({ company_id });
+  }, [company_id]);
+
+  async function _getAllCompanies(params: Object = {}) {
+    try {
+      params.perPage = 'total';
+
+      const response = await Services.companies.getAllCompanies(params);
+      if (response.status === 200) {
+        setCompanies(response.data.map(company => ({ label: company.fantasy_name, value: company.id })));
+      }
+    } catch (e) {
+      console.log('_getAllCompanies/ERROR', e.message);
+    }
+  }
 
   async function _getAllInvestmentsTypes(params: Object = {}) {
     try {
+      if (!params.company_id) return false;
+
+      params.perPage = 'total';
+
       const response = await Services.investmentsTypes.getAllInvestmentsTypes(params);
       if (response.status === 200) {
-        setInvestmentTypes(response.data.data.map(item => ({ label: item.name, value: item.id })));
+        setInvestmentTypes(response.data.map(item => ({ label: item.name, value: item.id })));
       }
     } catch (e) {
       console.log('_getAllInvestmentsTypes/ERROR', e.message);
@@ -44,6 +61,7 @@ export default function InvestmentsAdd() {
   async function _save() {
     try {
       const response = await Services.investments.storeInvestments({
+        company_id,
         investments_type_id,
         name,
         description,
@@ -51,7 +69,7 @@ export default function InvestmentsAdd() {
         date,
         due_date
       });
-      if (response.status === 200) {
+      if ([200, 201].includes(response.status)) {
         toast.success('Novo investimento cadastrado com sucesso');
 
         history.push('/investments');
@@ -71,6 +89,14 @@ export default function InvestmentsAdd() {
         ]}
       />
       <Title>Novo Investimento</Title>
+
+      <Select
+        isSearchable
+        label="Empresa"
+        placeholder="Selecione uma empresa"
+        options={companies}
+        onChange={option => setCompanyId(option.value)}
+      />
 
       <Select
         isSearchable

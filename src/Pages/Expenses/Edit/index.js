@@ -18,22 +18,50 @@ export default function ExpensesEdit({ match }) {
   const [value, setValue] = useState('');
   const [category, setCategory] = useState('');
   const [categories, setCategories] = useState([]);
+  const [companies, setCompanies] = useState([]);
+  const [company_id, setCompanyId] = useState('');
 
   useEffect(() => {
     _getBillingCyclesById(billingCycleId);
-    _getAllBillingCyclesCategories();
+    _getAllCompanies();
   }, [billingCycleId]);
+
+  useEffect(() => {
+    _getAllBillingCyclesCategories({ company_id: company_id.value });
+  }, [company_id]);
+
+  async function _getAllCompanies(params: Object = {}) {
+    try {
+      params.perPage = 'total';
+
+      const response = await Services.companies.getAllCompanies(params);
+      if (response.status === 200) {
+        setCompanies(response.data.map(company => ({ label: company.fantasy_name, value: company.id })));
+      }
+    } catch (e) {
+      console.log('_getAllCompanies/ERROR', e.message);
+    }
+  }
 
   async function _getBillingCyclesById(id: number) {
     try {
       const response = await Services.billingCycles.getBillingCyclesById(id);
       if (response.status === 200) {
-        const { description, date, value, billingCyclesCategory } = response.data;
+        const {
+          description,
+          date,
+          value,
+          company_id,
+          company_fantasy_name,
+          billing_cycles_category_id,
+          billing_cycles_category_name
+        } = response.data;
 
         setDescription(description);
         setDate(new Date(date));
         setValue(value);
-        setCategory({ label: billingCyclesCategory.name, value: billingCyclesCategory.id });
+        setCategory({ label: billing_cycles_category_name, value: billing_cycles_category_id });
+        setCompanyId({ label: company_fantasy_name, value: company_id });
       }
     } catch (e) {
       console.error('_getBillingCycleById/ERROR', e.message);
@@ -42,6 +70,8 @@ export default function ExpensesEdit({ match }) {
 
   async function _getAllBillingCyclesCategories(params: Object = {}) {
     try {
+      if (!params.company_id) return false;
+
       // Ciclo de pagamento do tipo despesa
       params.billing_cycles_type_id = 2;
 
@@ -57,6 +87,7 @@ export default function ExpensesEdit({ match }) {
   async function _save() {
     try {
       const response = await Services.billingCycles.updateBillingCycles(billingCycleId, {
+        company_id: company_id.value,
         billing_cycles_category_id: category.value,
         description,
         date,
@@ -82,6 +113,15 @@ export default function ExpensesEdit({ match }) {
         ]}
       />
       <Title>Alterar Despesa</Title>
+
+      <Select
+        isSearchable
+        label="Empresa"
+        placeholder="Selecione uma empresa"
+        options={companies}
+        value={company_id}
+        onChange={option => setCompanyId(option)}
+      />
 
       <Select
         isSearchable

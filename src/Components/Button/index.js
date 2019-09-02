@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { Container, Span } from "./styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Container, Span } from './styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Button({
   height,
@@ -11,7 +11,9 @@ export default function Button({
   iconSize,
   allowSpinnerLoading,
   onClick,
-  backgroundColor
+  backgroundColor,
+  noMargin,
+  noPadding
 }) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,7 +37,9 @@ export default function Button({
       height={height}
       onClick={onClickModified}
       backgroundColor={backgroundColor}
-      disabled={typeof onClick === "undefined"}
+      disabled={typeof onClick === 'undefined'}
+      noMargin={noMargin}
+      noPadding={noPadding}
     >
       {isLoading && (
         <>
@@ -49,8 +53,8 @@ export default function Button({
           {icon && (
             <FontAwesomeIcon
               icon={icon}
-              color={iconColor || "white"}
-              size={iconSize || "sm"}
+              color={iconColor || 'white'}
+              size={iconSize || 'sm'}
               style={{ marginLeft: label ? 8 : 0 }}
             />
           )}
@@ -67,5 +71,7 @@ Button.propTypes = {
   iconColor: PropTypes.string,
   iconSize: PropTypes.string,
   allowSpinnerLoading: PropTypes.bool,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  noMargin: PropTypes.bool,
+  noPadding: PropTypes.bool
 };

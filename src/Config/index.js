@@ -1,5 +1,5 @@
 export default {
-  DEBUG: true,
-  APP_NAME: "React App Template",
-  API_BASE_URL: "http://localhost:3333/api"
+  DEBUG: process.env.NODE_ENV === 'development',
+  APP_NAME: 'FinancesApp',
+  API_BASE_URL: 'http://localhost:3333/api'
 };

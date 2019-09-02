@@ -15,6 +15,7 @@ export default function DataTable({
   columns,
   data,
   renderItem,
+  searchBarPlaceholder,
   searchBarValue,
   searchBarOnChange,
   searchBarOnClick,
@@ -59,7 +60,7 @@ export default function DataTable({
         {searchBarIsVisible && (
           <Searchbar
             value={searchBarValue}
-            placeholder="Pesquisar pela descricão"
+            placeholder={searchBarPlaceholder}
             onChange={searchBarOnChange}
             onClick={searchBarOnClick}
           />
@@ -118,6 +119,7 @@ DataTable.prototype = {
   data: PropTypes.array,
   itemOnClick: PropTypes.func,
   renderItem: PropTypes.func,
+  searchBarPlaceholder: PropTypes.string,
   searchBarValue: PropTypes.string,
   searchBarOnChange: PropTypes.func,
   searchBarOnClick: PropTypes.func,
@@ -143,6 +145,7 @@ DataTable.defaultProps = {
   addButtonIsVisible: false,
   addButtonOnClick: () => {},
   searchBarIsVisible: false,
+  searchBarPlaceholder: 'Pesquisar pela descricão',
   searchBarValue: '',
   searchBarOnClick: () => {},
   searchBarOnChange: () => {},

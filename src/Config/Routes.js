@@ -3,6 +3,9 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Dashboard from 'Pages/Dashboard';
 import Login from 'Pages/Login';
 import DashboardLayout from 'Layout/Dashboard';
+import Companies from 'Pages/Companies';
+import CompaniesAdd from 'Pages/Companies/Add';
+import CompaniesEdit from 'Pages/Companies/Edit';
 import Revenue from 'Pages/Revenue';
 import Expenses from 'Pages/Expenses';
 import Investments from 'Pages/Investments';
@@ -47,6 +50,11 @@ const Routes = (
     <Route exact path="/forgot-password" component={ForgotPassword} />
 
     <PrivateRoute exact path="/dashboard" component={Dashboard} layout={DashboardLayout} />
+
+    {/* COMPANIES */}
+    <PrivateRoute exact path="/companies" component={Companies} layout={DashboardLayout} />
+    <PrivateRoute exact path="/companies/add" component={CompaniesAdd} layout={DashboardLayout} />
+    <PrivateRoute exact path="/companies/edit/:id" component={CompaniesEdit} layout={DashboardLayout} />
 
     {/* REVENUE */}
     <PrivateRoute exact path="/revenue" component={Revenue} layout={DashboardLayout} />

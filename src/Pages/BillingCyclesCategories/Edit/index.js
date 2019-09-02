@@ -12,7 +12,7 @@ import { history } from 'Config/Store';
 export default function BillingCyclesCategoriesEdit({ match }) {
   const billingCycleCategoryId = Number(match.params.id);
   const [name, setName] = useState('');
-  const [billingCyclesType, setBillingCyclesType] = useState('');
+  const [billing_cycles_type_id, setBillingCyclesTypeId] = useState('');
   const [billingCyclesTypes, setBillingCyclesTypes] = useState({
     total: 0,
     perPage: 20,
@@ -20,20 +20,43 @@ export default function BillingCyclesCategoriesEdit({ match }) {
     lastPage: 1,
     data: []
   });
+  const [companies, setCompanies] = useState([]);
+  const [company_id, setCompanyId] = useState('');
 
   useEffect(() => {
     _getBillingCycleCategoryById(billingCycleCategoryId);
     _getAllBillingCyclesTypes();
+    _getAllCompanies();
   }, [billingCycleCategoryId]);
+
+  async function _getAllCompanies(params: Object = {}) {
+    try {
+      params.perPage = 'total';
+
+      const response = await Services.companies.getAllCompanies(params);
+      if (response.status === 200) {
+        setCompanies(response.data.map(company => ({ label: company.fantasy_name, value: company.id })));
+      }
+    } catch (e) {
+      console.log('_getAllCompanies/ERROR', e.message);
+    }
+  }
 
   async function _getBillingCycleCategoryById(id: number) {
     try {
       const response = await Services.billingCyclesCategories.getBillingCyclesCategoriesById(id);
       if (response.status === 200) {
-        const { name, billingCyclesType } = response.data;
+        const {
+          name,
+          company_id,
+          company_fantasy_name,
+          billing_cycles_type_name,
+          billing_cycles_type_id
+        } = response.data;
 
         setName(name);
-        setBillingCyclesType({ label: billingCyclesType.name, value: billingCyclesType.id });
+        setCompanyId({ label: company_fantasy_name, value: company_id });
+        setBillingCyclesTypeId({ label: billing_cycles_type_name, value: billing_cycles_type_id });
       }
     } catch (e) {
       console.log('_getBillingCycleCategoryById/ERROR', e.message);
@@ -54,7 +77,8 @@ export default function BillingCyclesCategoriesEdit({ match }) {
   async function _save() {
     try {
       const response = await Services.billingCyclesCategories.updateBillingCyclesCategories(billingCycleCategoryId, {
-        billing_cycles_type_id: billingCyclesType.value,
+        company_id: company_id.value,
+        billing_cycles_type_id: billing_cycles_type_id.value,
         name
       });
       if (response.status === 200) {
@@ -83,11 +107,19 @@ export default function BillingCyclesCategoriesEdit({ match }) {
 
       <Select
         isSearchable
+        label="Empresa"
+        placeholder="Selecione uma empresa"
+        options={companies}
+        value={company_id}
+        onChange={option => setCompanyId(option)}
+      />
+      <Select
+        isSearchable
         label="Tipo"
         placeholder="Selecione um tipo de faturamento"
         options={billingCyclesTypes}
-        value={billingCyclesType}
-        onChange={option => setBillingCyclesType(option)}
+        value={billing_cycles_type_id}
+        onChange={option => setBillingCyclesTypeId(option)}
       />
 
       <Input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" autoComplete="off" />

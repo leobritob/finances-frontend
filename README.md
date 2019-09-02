@@ -1,2 +1,2 @@
-# React App Template
+# FinancesApp
 React template for Web Projects

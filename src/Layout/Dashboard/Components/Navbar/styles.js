@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   width: 100%;
@@ -7,6 +7,10 @@ export const Container = styled.div`
   background-color: #333333;
   display: flex;
   flex-direction: row;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 999;
 `;
 
 export const MenuButton = styled.div`

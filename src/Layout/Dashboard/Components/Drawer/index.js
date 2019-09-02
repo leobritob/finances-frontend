@@ -1,8 +1,8 @@
-import React from "react";
-import { Container, Logo, List, ListItem, ListItemLink, DrawerOverlay } from "./styles";
-import { useSelector, useDispatch } from "react-redux";
-import DrawerActions from "Redux/DrawerRedux";
-import UserActions from "Redux/UserRedux";
+import React from 'react';
+import { Container, Logo, List, ListItem, ListItemLink, DrawerOverlay } from './styles';
+import { useSelector, useDispatch } from 'react-redux';
+import DrawerActions from 'Redux/DrawerRedux';
+import UserActions from 'Redux/UserRedux';
 
 function Drawer() {
   const dispatch = useDispatch();
@@ -19,6 +19,11 @@ function Drawer() {
         <Logo to="/dashboard">FinancesApp</Logo>
 
         <List>
+          <ListItem>
+            <ListItemLink to="/companies" onClick={drawerClose}>
+              Empresas
+            </ListItemLink>
+          </ListItem>
           <ListItem>
             <ListItemLink to="/revenue" onClick={drawerClose}>
               Receita

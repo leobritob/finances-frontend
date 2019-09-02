@@ -15,15 +15,36 @@ export default function RevenueAdd() {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [value, setValue] = useState('');
-  const [category, setCategory] = useState('');
+  const [billing_cycles_category_id, setBillingCyclesCategoryId] = useState('');
   const [categories, setCategories] = useState([]);
+  const [companies, setCompanies] = useState([]);
+  const [company_id, setCompanyId] = useState('');
 
   useEffect(() => {
-    _getAllBillingCyclesCategories();
+    _getAllCompanies();
   }, []);
+
+  useEffect(() => {
+    _getAllBillingCyclesCategories({ company_id });
+  }, [company_id]);
+
+  async function _getAllCompanies(params: Object = {}) {
+    try {
+      params.perPage = 'total';
+
+      const response = await Services.companies.getAllCompanies(params);
+      if (response.status === 200) {
+        setCompanies(response.data.map(company => ({ label: company.fantasy_name, value: company.id })));
+      }
+    } catch (e) {
+      console.log('_getAllCompanies/ERROR', e.message);
+    }
+  }
 
   async function _getAllBillingCyclesCategories(params: Object = {}) {
     try {
+      if (!params.company_id) return false;
+
       // Ciclo de pagamento do tipo receita
       params.billing_cycles_type_id = 1;
 
@@ -39,12 +60,13 @@ export default function RevenueAdd() {
   async function _save() {
     try {
       const response = await Services.billingCycles.storeBillingCycles({
-        billing_cycles_category_id: category,
+        company_id,
+        billing_cycles_category_id,
         description,
         date,
         value
       });
-      if (response.status === 200) {
+      if ([200, 201].includes(response.status)) {
         toast.success('Nova receita cadastrada com sucesso');
 
         history.push('/revenue');
@@ -67,10 +89,18 @@ export default function RevenueAdd() {
 
       <Select
         isSearchable
+        label="Empresa"
+        placeholder="Selecione uma empresa"
+        options={companies}
+        onChange={option => setCompanyId(option.value)}
+      />
+
+      <Select
+        isSearchable
         label="Categoria"
         placeholder="Selecione uma categoria"
         options={categories}
-        onChange={option => setCategory(option.value)}
+        onChange={option => setBillingCyclesCategoryId(option.value)}
       />
 
       <Input

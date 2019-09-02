@@ -1,7 +1,7 @@
-import apisauce from "apisauce";
-import Config from "Config";
-import { commonMonitor } from "./index";
-import { IUser } from "Interfaces";
+import apisauce from 'apisauce';
+import Config from 'Config';
+import { commonMonitor } from './index';
+import { IUser } from 'Interfaces';
 
 const create = (baseURL = Config.API_BASE_URL) => {
   const api = apisauce.create({
@@ -16,7 +16,7 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * Endpoint responsável por buscar por todos os usuários
    * @param {Object} params - Query string para pesquisa
    */
-  const getAllUsers = (params: Object = {}): Promise => api.get("/v1/users/", params);
+  const getAllUsers = (params: Object = {}): Promise => api.get('/v1/users/', params);
 
   /**
    * Endpoint responsável por retornar os dados do usuário selecionado
@@ -29,7 +29,7 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * @param {IUser} user - Cliente a ser cadastrado
    * @returns {Promise<ApiResponse<any>>}
    */
-  const storeUser = (user: IUser): Promise => api.post("/v1/users/", user);
+  const storeUser = (user: IUser): Promise => api.post('/v1/users/', user);
 
   /**
    * Endpoint responsável por atualizar os dados de um usuário

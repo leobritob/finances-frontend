@@ -54,8 +54,6 @@ function Revenue() {
           style: 'currency',
           currency: 'BRL'
         }).format(item[column]);
-      case 'billing_cycles_type_id':
-        return item.billingCyclesCategory.name;
       case '-':
         return (
           <Button
@@ -65,7 +63,6 @@ function Revenue() {
             icon="trash"
             iconSize="xs"
             noMargin
-            noPadding
           />
         );
       default:
@@ -199,7 +196,8 @@ function Revenue() {
           { id: 'description', label: 'Descricão' },
           { id: 'date', label: 'Data', width: 100 },
           { id: 'value', label: 'Valor', width: 200 },
-          { id: 'billing_cycles_type_id', label: 'Categoria', width: 200 },
+          { id: 'billing_cycles_category_name', label: 'Categoria', width: 250 },
+          { id: 'company_fantasy_name', label: 'Empresa', width: 250 },
           { id: '-', label: '-', width: 80, noPadding: true }
         ]}
         data={revenue.data}
