@@ -30,8 +30,6 @@ export default function BillingCyclesCategories() {
 
   function renderItem(column, item) {
     switch (column) {
-      case 'billing_cycles_type_id':
-        return item.billingCyclesType.name;
       case '-':
         return (
           <Button
@@ -114,7 +112,7 @@ export default function BillingCyclesCategories() {
         renderItem={renderItem}
         columns={[
           { id: 'name', label: 'Descrição' },
-          { id: 'billing_cycles_type_id', label: 'Tipo', width: 200 },
+          { id: 'billing_cycles_type_name', label: 'Tipo', width: 200 },
           { id: '-', label: '-', width: 80, noPadding: true }
         ]}
         data={billingCyclesCategories.data}

@@ -26,23 +26,50 @@ export default function InvestmentsEdit({ match }) {
   const [value, setValue] = useState('');
   const [date, setDate] = useState('');
   const [due_date, setDueDate] = useState('');
+  const [companies, setCompanies] = useState([]);
+  const [company_id, setCompanyId] = useState('');
 
   useEffect(() => {
     _getInvestmentById(investmentId);
     _getAllInvestmentsTypes();
+    _getAllCompanies();
   }, [investmentId]);
+
+  async function _getAllCompanies(params: Object = {}) {
+    try {
+      params.perPage = 'total';
+
+      const response = await Services.companies.getAllCompanies(params);
+      if (response.status === 200) {
+        setCompanies(response.data.map(company => ({ label: company.fantasy_name, value: company.id })));
+      }
+    } catch (e) {
+      console.log('_getAllCompanies/ERROR', e.message);
+    }
+  }
 
   async function _getInvestmentById(id: number) {
     try {
       const response = await Services.investments.getInvestmentsById(id);
       if (response.status === 200) {
-        const { name, description, value, date, due_date, investmentsType } = response.data;
-        setInvestmentType({ label: investmentsType.name, value: investmentsType.id });
+        const {
+          name,
+          description,
+          value,
+          date,
+          due_date,
+          investments_type_id,
+          investments_type_name,
+          company_id,
+          company_fantasy_name
+        } = response.data;
+        setInvestmentType({ label: investments_type_name, value: investments_type_id });
         setName(name);
         setDescription(description);
         setValue(value);
         setDate(new Date(date));
         setDueDate(new Date(due_date));
+        setCompanyId({ label: company_fantasy_name, value: company_id });
       }
     } catch (e) {
       console.error('_getInvestmentById/ERROR', e.message);
@@ -63,6 +90,7 @@ export default function InvestmentsEdit({ match }) {
   async function _save() {
     try {
       const response = await Services.investments.updateInvestments(investmentId, {
+        company_id: company_id.value,
         investments_type_id: investmentType.value,
         name,
         description,
@@ -90,6 +118,15 @@ export default function InvestmentsEdit({ match }) {
         ]}
       />
       <Title>Alterar Investimento</Title>
+
+      <Select
+        isSearchable
+        label="Empresa"
+        placeholder="Selecione uma empresa"
+        options={companies}
+        value={company_id}
+        onChange={option => setCompanyId(option)}
+      />
 
       <Select
         isSearchable

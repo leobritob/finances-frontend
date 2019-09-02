@@ -25,10 +25,26 @@ export default function InvestmentsAdd() {
   const [value, setValue] = useState('');
   const [date, setDate] = useState('');
   const [due_date, setDueDate] = useState('');
+  const [companies, setCompanies] = useState([]);
+  const [company_id, setCompanyId] = useState('');
 
   useEffect(() => {
     _getAllInvestmentsTypes();
+    _getAllCompanies();
   }, []);
+
+  async function _getAllCompanies(params: Object = {}) {
+    try {
+      params.perPage = 'total';
+
+      const response = await Services.companies.getAllCompanies(params);
+      if (response.status === 200) {
+        setCompanies(response.data.map(company => ({ label: company.fantasy_name, value: company.id })));
+      }
+    } catch (e) {
+      console.log('_getAllCompanies/ERROR', e.message);
+    }
+  }
 
   async function _getAllInvestmentsTypes(params: Object = {}) {
     try {
@@ -44,6 +60,7 @@ export default function InvestmentsAdd() {
   async function _save() {
     try {
       const response = await Services.investments.storeInvestments({
+        company_id,
         investments_type_id,
         name,
         description,
@@ -71,6 +88,14 @@ export default function InvestmentsAdd() {
         ]}
       />
       <Title>Novo Investimento</Title>
+
+      <Select
+        isSearchable
+        label="Empresa"
+        placeholder="Selecione uma empresa"
+        options={companies}
+        onChange={option => setCompanyId(option.value)}
+      />
 
       <Select
         isSearchable

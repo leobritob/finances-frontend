@@ -54,8 +54,6 @@ export default function Investments() {
           style: 'currency',
           currency: 'BRL'
         }).format(item[column]);
-      case 'investments_type_id':
-        return item.investmentsType.name;
       case '-':
         return (
           <Button
@@ -197,7 +195,7 @@ export default function Investments() {
         renderItem={renderItem}
         columns={[
           { id: 'name', label: 'Nome' },
-          { id: 'investments_type_id', label: 'Tipo' },
+          { id: 'investments_type_name', label: 'Tipo' },
           { id: 'date', label: 'Data', width: 100 },
           { id: 'value', label: 'Valor', width: 200 },
           { id: '-', label: '-', width: 80, noPadding: true }

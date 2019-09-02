@@ -17,10 +17,26 @@ export default function ExpensesAdd() {
   const [value, setValue] = useState('');
   const [billing_cycles_category_id, setBillingCyclesCategoryId] = useState('');
   const [categories, setCategories] = useState([]);
+  const [companies, setCompanies] = useState([]);
+  const [company_id, setCompanyId] = useState('');
 
   useEffect(() => {
     _getAllBillingCyclesCategories();
+    _getAllCompanies();
   }, []);
+
+  async function _getAllCompanies(params: Object = {}) {
+    try {
+      params.perPage = 'total';
+
+      const response = await Services.companies.getAllCompanies(params);
+      if (response.status === 200) {
+        setCompanies(response.data.map(company => ({ label: company.fantasy_name, value: company.id })));
+      }
+    } catch (e) {
+      console.log('_getAllCompanies/ERROR', e.message);
+    }
+  }
 
   async function _getAllBillingCyclesCategories(params: Object = {}) {
     try {
@@ -39,6 +55,7 @@ export default function ExpensesAdd() {
   async function _save() {
     try {
       const response = await Services.billingCycles.storeBillingCycles({
+        company_id,
         billing_cycles_category_id,
         description,
         date,
@@ -64,6 +81,14 @@ export default function ExpensesAdd() {
         ]}
       />
       <Title>Nova Despesa</Title>
+
+      <Select
+        isSearchable
+        label="Empresa"
+        placeholder="Selecione uma empresa"
+        options={companies}
+        onChange={option => setCompanyId(option.value)}
+      />
 
       <Select
         isSearchable

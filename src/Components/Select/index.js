@@ -1,23 +1,25 @@
-import React from "react";
-import ReactSelect from "react-select";
-import Colors from "Themes/Colors";
-import chroma from "chroma-js";
+import React from 'react';
+import ReactSelect from 'react-select';
+import Colors from 'Themes/Colors';
+import chroma from 'chroma-js';
 
 const customStyles = {
   control: (styles, { isFocused }) => {
-    let borderBottomColor = isFocused ? Colors.primary : "#cccccc";
+    let borderBottomColor = isFocused ? Colors.primary : '#cccccc';
 
     return {
       ...styles,
-      backgroundColor: "white",
+      backgroundColor: 'white',
       borderLeftWidth: 0,
       borderTopWidth: 0,
       borderRightWidth: 0,
       borderBottomWidth: 2,
       borderBottomColor,
       borderRadius: 0,
-      ":active": {
-        ...styles[":active"]
+      marginTop: 5,
+      marginBottom: 5,
+      ':active': {
+        ...styles[':active']
       }
     };
   },
@@ -36,11 +38,11 @@ const customStyles = {
         : isFocused
         ? color.alpha(0.1).css()
         : null,
-      color: isDisabled ? "#ccc" : isSelected ? "#000000" : "#000000",
-      cursor: isDisabled ? "not-allowed" : "default",
+      color: isDisabled ? '#ccc' : isSelected ? '#000000' : '#000000',
+      cursor: isDisabled ? 'not-allowed' : 'default',
 
-      ":active": {
-        ...styles[":active"],
+      ':active': {
+        ...styles[':active'],
         backgroundColor: !isDisabled && (isSelected ? color.alpha(0.4).css() : color.alpha(0.3).css())
       }
     };
@@ -50,7 +52,9 @@ const customStyles = {
       ...styles,
       border: 0,
       borderRadius: 0,
-      fontSize: 14
+      fontSize: 14,
+      paddingTop: 5,
+      paddingBottom: 5
     };
   },
   placeholder: styles => {

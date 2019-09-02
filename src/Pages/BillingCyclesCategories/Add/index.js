@@ -19,10 +19,26 @@ export default function BillingCyclesCategoriesAdd() {
     lastPage: 1,
     data: []
   });
+  const [companies, setCompanies] = useState([]);
+  const [company_id, setCompanyId] = useState('');
 
   useEffect(() => {
     _getAllBillingCyclesTypes();
+    _getAllCompanies();
   }, []);
+
+  async function _getAllCompanies(params: Object = {}) {
+    try {
+      params.perPage = 'total';
+
+      const response = await Services.companies.getAllCompanies(params);
+      if (response.status === 200) {
+        setCompanies(response.data.map(company => ({ label: company.fantasy_name, value: company.id })));
+      }
+    } catch (e) {
+      console.log('_getAllCompanies/ERROR', e.message);
+    }
+  }
 
   async function _getAllBillingCyclesTypes(params: Object = {}) {
     try {
@@ -38,6 +54,7 @@ export default function BillingCyclesCategoriesAdd() {
   async function _save() {
     try {
       const response = await Services.billingCyclesCategories.storeBillingCyclesCategories({
+        company_id,
         billing_cycles_type_id,
         name
       });
@@ -64,6 +81,14 @@ export default function BillingCyclesCategoriesAdd() {
         ]}
       />
       <Title>Nova Categoria de Faturamento</Title>
+
+      <Select
+        isSearchable
+        label="Empresa"
+        placeholder="Selecione uma empresa"
+        options={companies}
+        onChange={option => setCompanyId(option.value)}
+      />
 
       <Select
         isSearchable

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container } from './styles';
 import Breadcrumbs from 'Components/Breadcrumbs';
 import Title from 'Components/Title';
@@ -16,10 +16,35 @@ export default function InvestmentsTypesAdd() {
   const [description, setDescription] = useState('');
   const [risk, setRisk] = useState('');
   const [color, setColor] = useState('#000000');
+  const [companies, setCompanies] = useState([]);
+  const [company_id, setCompanyId] = useState('');
+
+  useEffect(() => {
+    _getAllCompanies();
+  }, []);
+
+  async function _getAllCompanies(params: Object = {}) {
+    try {
+      params.perPage = 'total';
+
+      const response = await Services.companies.getAllCompanies(params);
+      if (response.status === 200) {
+        setCompanies(response.data.map(company => ({ label: company.fantasy_name, value: company.id })));
+      }
+    } catch (e) {
+      console.log('_getAllCompanies/ERROR', e.message);
+    }
+  }
 
   async function _save() {
     try {
-      const response = await Services.investmentsTypes.storeInvestmentsTypes({ name, description, color, risk });
+      const response = await Services.investmentsTypes.storeInvestmentsTypes({
+        company_id,
+        name,
+        description,
+        color,
+        risk
+      });
       if ([200, 201].includes(response.status)) {
         toast.success('Novo tipo de investimento cadastrado com sucesso');
 
@@ -41,6 +66,13 @@ export default function InvestmentsTypesAdd() {
       />
       <Title>Novo Tipo de Investimento</Title>
 
+      <Select
+        isSearchable
+        label="Empresa"
+        placeholder="Selecione uma empresa"
+        options={companies}
+        onChange={option => setCompanyId(option.value)}
+      />
       <Input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" autoComplete="off" />
       <Input
         value={description}
