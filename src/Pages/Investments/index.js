@@ -23,7 +23,6 @@ export default function Investments() {
   const [filter, setFilter] = useState({
     date__gte: fromDateValue,
     date__lte: toDateValue,
-    billing_cycles_type_id: 3,
     search: ''
   });
   const [investments, setInvestments] = useState({
@@ -42,8 +41,11 @@ export default function Investments() {
 
   useEffect(() => {
     _getAllInvestments(filterDebounce);
-    _getInvestmentsReports(filterDebounce);
   }, [filterDebounce]);
+
+  useEffect(() => {
+    _getInvestmentsReports();
+  }, []);
 
   function renderItem(column, item) {
     switch (column) {
@@ -198,6 +200,7 @@ export default function Investments() {
           { id: 'investments_type_name', label: 'Tipo' },
           { id: 'date', label: 'Data', width: 100 },
           { id: 'value', label: 'Valor', width: 200 },
+          { id: 'company_fantasy_name', label: 'Empresa', width: 250 },
           { id: '-', label: '-', width: 80, noPadding: true }
         ]}
         data={investments.data}

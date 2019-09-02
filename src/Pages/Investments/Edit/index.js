@@ -31,9 +31,12 @@ export default function InvestmentsEdit({ match }) {
 
   useEffect(() => {
     _getInvestmentById(investmentId);
-    _getAllInvestmentsTypes();
     _getAllCompanies();
   }, [investmentId]);
+
+  useEffect(() => {
+    _getAllInvestmentsTypes({ company_id: company_id.value });
+  }, [company_id]);
 
   async function _getAllCompanies(params: Object = {}) {
     try {
@@ -78,9 +81,13 @@ export default function InvestmentsEdit({ match }) {
 
   async function _getAllInvestmentsTypes(params: Object = {}) {
     try {
+      if (!params.company_id) return false;
+
+      params.perPage = 'total';
+
       const response = await Services.investmentsTypes.getAllInvestmentsTypes(params);
       if (response.status === 200) {
-        setInvestmentTypes(response.data.data.map(item => ({ label: item.name, value: item.id })));
+        setInvestmentTypes(response.data.map(item => ({ label: item.name, value: item.id })));
       }
     } catch (e) {
       console.log('_getAllInvestmentsTypes/ERROR', e.message);
@@ -99,7 +106,7 @@ export default function InvestmentsEdit({ match }) {
         due_date
       });
       if (response.status === 200) {
-        toast.success('Novo investimento cadastrado com sucesso');
+        toast.success('Investimento atualizado com sucesso');
 
         history.push('/investments');
       }

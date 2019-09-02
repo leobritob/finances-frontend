@@ -21,9 +21,12 @@ export default function RevenueAdd() {
   const [company_id, setCompanyId] = useState('');
 
   useEffect(() => {
-    _getAllBillingCyclesCategories();
     _getAllCompanies();
   }, []);
+
+  useEffect(() => {
+    _getAllBillingCyclesCategories({ company_id });
+  }, [company_id]);
 
   async function _getAllCompanies(params: Object = {}) {
     try {
@@ -40,6 +43,8 @@ export default function RevenueAdd() {
 
   async function _getAllBillingCyclesCategories(params: Object = {}) {
     try {
+      if (!params.company_id) return false;
+
       // Ciclo de pagamento do tipo receita
       params.billing_cycles_type_id = 1;
 

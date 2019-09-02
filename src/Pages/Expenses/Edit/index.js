@@ -23,9 +23,12 @@ export default function ExpensesEdit({ match }) {
 
   useEffect(() => {
     _getBillingCyclesById(billingCycleId);
-    _getAllBillingCyclesCategories();
     _getAllCompanies();
   }, [billingCycleId]);
+
+  useEffect(() => {
+    _getAllBillingCyclesCategories({ company_id: company_id.value });
+  }, [company_id]);
 
   async function _getAllCompanies(params: Object = {}) {
     try {
@@ -67,6 +70,8 @@ export default function ExpensesEdit({ match }) {
 
   async function _getAllBillingCyclesCategories(params: Object = {}) {
     try {
+      if (!params.company_id) return false;
+
       // Ciclo de pagamento do tipo despesa
       params.billing_cycles_type_id = 2;
 

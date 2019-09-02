@@ -12,13 +12,7 @@ import Select from 'Components/Select';
 import { history } from 'Config/Store';
 
 export default function InvestmentsAdd() {
-  const [investmentTypes, setInvestmentTypes] = useState({
-    total: 0,
-    page: 1,
-    perPage: 20,
-    lastPage: 0,
-    data: []
-  });
+  const [investmentTypes, setInvestmentTypes] = useState([]);
   const [investments_type_id, setInvestmentTypeId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -29,9 +23,12 @@ export default function InvestmentsAdd() {
   const [company_id, setCompanyId] = useState('');
 
   useEffect(() => {
-    _getAllInvestmentsTypes();
     _getAllCompanies();
   }, []);
+
+  useEffect(() => {
+    _getAllInvestmentsTypes({ company_id });
+  }, [company_id]);
 
   async function _getAllCompanies(params: Object = {}) {
     try {
@@ -48,9 +45,13 @@ export default function InvestmentsAdd() {
 
   async function _getAllInvestmentsTypes(params: Object = {}) {
     try {
+      if (!params.company_id) return false;
+
+      params.perPage = 'total';
+
       const response = await Services.investmentsTypes.getAllInvestmentsTypes(params);
       if (response.status === 200) {
-        setInvestmentTypes(response.data.data.map(item => ({ label: item.name, value: item.id })));
+        setInvestmentTypes(response.data.map(item => ({ label: item.name, value: item.id })));
       }
     } catch (e) {
       console.log('_getAllInvestmentsTypes/ERROR', e.message);

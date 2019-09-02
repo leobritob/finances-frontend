@@ -113,6 +113,7 @@ export default function BillingCyclesCategories() {
         columns={[
           { id: 'name', label: 'Descrição' },
           { id: 'billing_cycles_type_name', label: 'Tipo', width: 200 },
+          { id: 'company_fantasy_name', label: 'Empresa', width: 350 },
           { id: '-', label: '-', width: 80, noPadding: true }
         ]}
         data={billingCyclesCategories.data}
