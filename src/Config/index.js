@@ -1,5 +1,7 @@
+const DEBUG = process.env.NODE_ENV === 'development';
+
 export default {
-  DEBUG: process.env.NODE_ENV === 'development',
+  DEBUG,
   APP_NAME: 'FinancesApp',
-  API_BASE_URL: 'http://localhost:3333/api'
+  API_BASE_URL: DEBUG ? 'http://localhost:3333/api' : 'https://finances-app-backend.herokuapp.com'
 };
