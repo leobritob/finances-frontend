@@ -1,5 +1,10 @@
 {
   "name": "finances-frontend",
+  "author": {
+    "name": "Leonardo Brito Bittencourt",
+    "email": "leonardobritobittencourt@gmail.com",
+    "url": "https://leonardobrito.com.br"
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
