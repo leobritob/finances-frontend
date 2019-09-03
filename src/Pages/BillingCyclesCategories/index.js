@@ -7,7 +7,6 @@ import { history } from 'Config/Store';
 import Services from 'Services';
 import { useDebounce } from 'use-debounce';
 import Button from 'Components/Button';
-import Colors from 'Themes/Colors';
 import { toast } from 'react-toastify';
 
 export default function BillingCyclesCategories() {
@@ -33,10 +32,11 @@ export default function BillingCyclesCategories() {
       case '-':
         return (
           <Button
+            styleButton="danger"
             onClick={() => _removeItem(item.id)}
-            backgroundColor={Colors.expenses}
             height={25}
             icon="trash"
+            iconColor="#ffffff"
             iconSize="xs"
             noMargin
           />

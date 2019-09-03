@@ -43,7 +43,7 @@ export default function DataTable({
 
   return (
     <Container>
-      {addButtonIsVisible && <Button label="Novo" icon="plus" onClick={addButtonOnClick} />}
+      {addButtonIsVisible && <Button styleButton="primary" label="Novo" icon="plus" onClick={addButtonOnClick} />}
 
       <FilterContainer>
         {fromIsVisible && (
@@ -71,7 +71,11 @@ export default function DataTable({
           <TBody>
             {data.map((data, dataIndex) => {
               return columns.map((column, columnIndex) => (
-                <TRow key={columnIndex} onClick={() => (columnIndex === columns.length - 1 ? {} : itemOnClick(data))}>
+                <TRow
+                  key={columnIndex}
+                  onClick={() => (columnIndex === columns.length - 1 ? {} : itemOnClick(data))}
+                  columnsLength={columns.length}
+                >
                   <TH>{column.label}</TH>
                   <TColumn>{renderItem(column.id, data)}</TColumn>
                 </TRow>

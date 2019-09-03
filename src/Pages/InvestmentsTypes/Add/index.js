@@ -89,7 +89,7 @@ export default function InvestmentsTypesAdd() {
         options={riskOptions}
         onChange={option => setRisk(option.value)}
       />
-      <Button label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
+      <Button styleButton="primary" label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
     </Container>
   );
 }

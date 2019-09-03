@@ -32,12 +32,14 @@ export default function Companies() {
       case '-':
         return (
           <Button
+            styleButton="danger"
             onClick={() => _removeItem(item.id)}
             backgroundColor={Colors.expenses}
             height={25}
             icon="trash"
             iconSize="xs"
             noMargin
+            noBorder
           />
         );
       default:
