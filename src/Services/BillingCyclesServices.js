@@ -1,9 +1,8 @@
 import apisauce from 'apisauce';
-import Config from 'Config';
 import { commonMonitor } from './index';
 import { IBillingCycles } from 'Interfaces';
 
-const create = (baseURL = Config.API_BASE_URL) => {
+const create = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
   const api = apisauce.create({
     baseURL,
     headers: {},

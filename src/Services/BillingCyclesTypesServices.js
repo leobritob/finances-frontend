@@ -1,9 +1,8 @@
-import apisauce from "apisauce";
-import Config from "Config";
-import { commonMonitor } from "./index";
-import { IBillingCyclesTypes } from "Interfaces";
+import apisauce from 'apisauce';
+import { commonMonitor } from './index';
+import { IBillingCyclesTypes } from 'Interfaces';
 
-const create = (baseURL = Config.API_BASE_URL) => {
+const create = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
   const api = apisauce.create({
     baseURL,
     headers: {},
@@ -17,7 +16,7 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * @param {Object} params - Query string para pesquisa
    * @returns {Promise<ApiResponse<any>>}
    */
-  const getAllBillingCyclesTypes = (params: Object = {}): Promise => api.get("/v1/billing-cycles-types/", params);
+  const getAllBillingCyclesTypes = (params: Object = {}): Promise => api.get('/v1/billing-cycles-types/', params);
 
   /**
    * Endpoint responsável por retornar um tipo de de faturamento
@@ -32,7 +31,7 @@ const create = (baseURL = Config.API_BASE_URL) => {
    * @returns {Promise<ApiResponse<any>>}
    */
   const storeBillingCyclesTypes = (billingCyclesTypes: IBillingCyclesTypes): Promise =>
-    api.post("/v1/billing-cycles-types/", billingCyclesTypes);
+    api.post('/v1/billing-cycles-types/', billingCyclesTypes);
 
   /**
    * Endpoint responsável por atualizar um tipo de ciclo de faturamento
