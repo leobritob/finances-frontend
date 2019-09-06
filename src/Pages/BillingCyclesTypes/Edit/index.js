@@ -66,7 +66,7 @@ export default function BillingCyclesTypesEdit({ match }) {
         placeholder="Descrição"
         autoComplete="off"
       />
-      <Button label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
+      <Button styleButton="primary" label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
     </Container>
   );
 }

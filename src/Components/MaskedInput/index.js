@@ -8,11 +8,16 @@ export default styled(MaskedInput)`
   padding: 0 10px;
   margin: 5px 0;
   background-color: #ffffff;
-  border: none;
-  border-bottom: 2px solid #cccccc;
+  border: 1px solid #cccccc;
   font-size: 0.9rem;
+  transition: all 120ms linear;
+
+  &:hover {
+    border-color: #999999;
+  }
 
   &:focus {
     border-color: ${COLORS.primary};
+    box-shadow: 0 0 0 1px ${COLORS.primary};
   }
 `;

@@ -120,7 +120,7 @@ export default function ExpensesAdd() {
         thousandSeparator=""
         placeholder="Valor (R$)"
       />
-      <Button label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
+      <Button styleButton="primary" label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
     </Container>
   );
 }

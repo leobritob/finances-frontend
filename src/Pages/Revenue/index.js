@@ -10,7 +10,6 @@ import { history } from 'Config/Store';
 import Services from 'Services';
 import { useDebounce } from 'use-debounce';
 import Button from 'Components/Button';
-import Colors from 'Themes/Colors';
 import { toast } from 'react-toastify';
 
 const fromDateValue = new Date(format(new Date(), 'yyyy-MM-01 00:00:00'));
@@ -57,12 +56,13 @@ function Revenue() {
       case '-':
         return (
           <Button
+            styleButton="danger"
             onClick={() => _removeItem(item.id)}
-            backgroundColor={Colors.expenses}
             height={25}
             icon="trash"
             iconSize="xs"
             noMargin
+            noBorder
           />
         );
       default:

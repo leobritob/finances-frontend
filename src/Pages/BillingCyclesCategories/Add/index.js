@@ -99,7 +99,7 @@ export default function BillingCyclesCategoriesAdd() {
       />
 
       <Input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" autoComplete="off" />
-      <Button label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
+      <Button styleButton="primary" label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
     </Container>
   );
 }

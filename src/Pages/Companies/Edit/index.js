@@ -184,7 +184,7 @@ export default function CompaniesEdit({ match }) {
           <Input value={country} onChange={e => setCountry(e.target.value)} placeholder="País" autoComplete="off" />
         </Column>
       </Row>
-      <Button label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
+      <Button styleButton="primary" label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
     </Container>
   );
 }

@@ -162,7 +162,7 @@ export default function InvestmentsEdit({ match }) {
       />
       <DatePicker placeholderText="Data de compra" selected={date} onChange={date => setDate(date)} />
       <DatePicker placeholderText="Data  de vencimento" selected={due_date} onChange={date => setDueDate(date)} />
-      <Button label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
+      <Button styleButton="primary" label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
     </Container>
   );
 }

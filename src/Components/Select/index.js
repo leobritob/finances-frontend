@@ -4,22 +4,38 @@ import Colors from 'Themes/Colors';
 import chroma from 'chroma-js';
 
 const customStyles = {
+  container: styles => ({
+    ...styles,
+    marginTop: 5,
+    marginBottom: 5
+  }),
+  menu: styles => ({
+    ...styles,
+    borderRadius: 0
+  }),
+  menuList: styles => ({
+    ...styles
+  }),
+  menuPortal: styles => ({
+    ...styles
+  }),
   control: (styles, { isFocused }) => {
-    let borderBottomColor = isFocused ? Colors.primary : '#cccccc';
+    let borderColor = isFocused ? Colors.primary : '#cccccc';
 
     return {
       ...styles,
       backgroundColor: 'white',
-      borderLeftWidth: 0,
-      borderTopWidth: 0,
-      borderRightWidth: 0,
-      borderBottomWidth: 2,
-      borderBottomColor,
+      borderWidth: 1,
+      borderColor,
       borderRadius: 0,
-      marginTop: 5,
-      marginBottom: 5,
+      margin: 0,
+      ':hover': {
+        borderWidth: 1,
+        borderColor: '#999999'
+      },
       ':active': {
-        ...styles[':active']
+        borderWidth: 1,
+        borderColor: Colors.primary
       }
     };
   },
@@ -41,34 +57,32 @@ const customStyles = {
       color: isDisabled ? '#ccc' : isSelected ? '#000000' : '#000000',
       cursor: isDisabled ? 'not-allowed' : 'default',
 
+      ':hover': {
+        ...styles[':hover']
+      },
+
       ':active': {
         ...styles[':active'],
         backgroundColor: !isDisabled && (isSelected ? color.alpha(0.4).css() : color.alpha(0.3).css())
       }
     };
   },
-  input: styles => {
-    return {
-      ...styles,
-      border: 0,
-      borderRadius: 0,
-      fontSize: 14,
-      paddingTop: 5,
-      paddingBottom: 5
-    };
-  },
-  placeholder: styles => {
-    return {
-      ...styles,
-      fontSize: 14
-    };
-  },
-  singleValue: (styles, { data }) => {
-    return {
-      ...styles,
-      fontSize: 14
-    };
-  }
+  input: styles => ({
+    ...styles,
+    border: 0,
+    borderRadius: 0,
+    fontSize: 14,
+    paddingTop: 5,
+    paddingBottom: 5
+  }),
+  placeholder: styles => ({
+    ...styles,
+    fontSize: 14
+  }),
+  singleValue: (styles, { data }) => ({
+    ...styles,
+    fontSize: 14
+  })
 };
 
 export default function Select(props) {
