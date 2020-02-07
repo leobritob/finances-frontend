@@ -18,7 +18,7 @@ import {
   faPlus,
   faSearch,
   faCheck,
-  faTrash
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { ptBR } from 'date-fns/locale';
 import { registerLocale, setDefaultLocale } from 'react-datepicker';
@@ -29,10 +29,20 @@ registerLocale('pt-BR', ptBR);
 setDefaultLocale('pt-BR');
 
 toast.configure({
-  autoClose: 8000
+  autoClose: 8000,
 });
 
-library.add(faArrowRight, faArrowLeft, faBars, faCircleNotch, faSpinner, faPlus, faSearch, faCheck, faTrash);
+library.add(
+  faArrowRight,
+  faArrowLeft,
+  faBars,
+  faCircleNotch,
+  faSpinner,
+  faPlus,
+  faSearch,
+  faCheck,
+  faTrash
+);
 
 ReactDOM.render(
   <Provider store={store}>
