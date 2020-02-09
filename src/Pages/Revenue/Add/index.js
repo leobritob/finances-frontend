@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container } from './styles';
 import Breadcrumbs from 'Components/Breadcrumbs';
 import Title from 'Components/Title';
-import Input from 'Components/Input';
+import TextArea from 'Components/TextArea';
 import NumberFormat from 'Components/NumberFormat';
 import Button from 'Components/Button';
 import DatePicker from 'Components/DatePicker';
@@ -34,7 +34,12 @@ export default function RevenueAdd() {
 
       const response = await Services.companies.getAllCompanies(params);
       if (response.status === 200) {
-        setCompanies(response.data.map(company => ({ label: company.fantasy_name, value: company.id })));
+        setCompanies(
+          response.data.map(company => ({
+            label: company.fantasy_name,
+            value: company.id,
+          }))
+        );
       }
     } catch (e) {
       console.log('_getAllCompanies/ERROR', e.message);
@@ -48,9 +53,13 @@ export default function RevenueAdd() {
       // Ciclo de pagamento do tipo receita
       params.billing_cycles_type_id = 1;
 
-      const response = await Services.billingCyclesCategories.getAllBillingCyclesCategories(params);
+      const response = await Services.billingCyclesCategories.getAllBillingCyclesCategories(
+        params
+      );
       if (response.status === 200) {
-        setCategories(response.data.data.map(item => ({ label: item.name, value: item.id })));
+        setCategories(
+          response.data.data.map(item => ({ label: item.name, value: item.id }))
+        );
       }
     } catch (e) {
       console.log('_getAllBillingCyclesCategories/ERROR', e.message);
@@ -64,7 +73,7 @@ export default function RevenueAdd() {
         billing_cycles_category_id,
         description,
         date,
-        value
+        value,
       });
       if ([200, 201].includes(response.status)) {
         toast.success('Nova receita cadastrada com sucesso');
@@ -82,7 +91,7 @@ export default function RevenueAdd() {
         data={[
           { label: 'Dashboard', href: '/dashboard' },
           { label: 'Receitas', href: '/revenue' },
-          { label: 'Adicionar' }
+          { label: 'Adicionar' },
         ]}
       />
       <Title>Nova Receita</Title>
@@ -103,13 +112,18 @@ export default function RevenueAdd() {
         onChange={option => setBillingCyclesCategoryId(option.value)}
       />
 
-      <Input
+      <TextArea
         value={description}
         onChange={e => setDescription(e.target.value)}
         placeholder="Descricão"
         autoComplete="off"
+        maxLength={255}
       />
-      <DatePicker placeholderText="Data" selected={date} onChange={date => setDate(date)} />
+      <DatePicker
+        placeholderText="Data"
+        selected={date}
+        onChange={date => setDate(date)}
+      />
       <NumberFormat
         type="tel"
         value={value}
@@ -120,7 +134,13 @@ export default function RevenueAdd() {
         thousandSeparator=""
         placeholder="Valor (R$)"
       />
-      <Button styleButton="primary" label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
+      <Button
+        styleButton="primary"
+        label="Salvar"
+        icon="check"
+        allowSpinnerLoading={true}
+        onClick={_save}
+      />
     </Container>
   );
 }

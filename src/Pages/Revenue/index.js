@@ -23,18 +23,18 @@ function Revenue() {
     date__gte: fromDateValue,
     date__lte: toDateValue,
     billing_cycles_type_id: 1,
-    search: ''
+    search: '',
   });
   const [revenue, setRevenue] = useState({
     total: 0,
     page: 0,
     perPage: 20,
-    data: []
+    data: [],
   });
   const [reports, setReports] = useState({
     today: 0,
     current_month: 0,
-    last_month: 0
+    last_month: 0,
   });
 
   const [filterDebounce] = useDebounce(filter, 300);
@@ -51,7 +51,7 @@ function Revenue() {
       case 'value':
         return Intl.NumberFormat('pt-BR', {
           style: 'currency',
-          currency: 'BRL'
+          currency: 'BRL',
         }).format(item[column]);
       case '-':
         return (
@@ -83,7 +83,9 @@ function Revenue() {
 
   async function _getRevenuesReports(params = {}) {
     try {
-      const response = await Services.billingCycles.getBillingCyclesReports(params);
+      const response = await Services.billingCycles.getBillingCyclesReports(
+        params
+      );
       if (response.status === 200) {
         setReports(response.data);
       }
@@ -130,7 +132,9 @@ function Revenue() {
   }
 
   function _removeItem(id) {
-    const isDelete = window.confirm('Você tem certeza que deseja remover este item ?');
+    const isDelete = window.confirm(
+      'Você tem certeza que deseja remover este item ?'
+    );
     if (isDelete) {
       _deleteRevenue(id);
     }
@@ -154,7 +158,12 @@ function Revenue() {
 
   return (
     <Container>
-      <Breadcrumbs data={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Receitas' }]} />
+      <Breadcrumbs
+        data={[
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Receitas' },
+        ]}
+      />
       <Title>Receitas</Title>
       <ReportsBox
         data={[
@@ -164,8 +173,8 @@ function Revenue() {
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
+              labelTextColor: '#ffffff',
+            },
           },
           {
             label: 'Mês Atual',
@@ -173,8 +182,8 @@ function Revenue() {
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
+              labelTextColor: '#ffffff',
+            },
           },
           {
             label: 'Mês Passado',
@@ -182,9 +191,9 @@ function Revenue() {
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
-          }
+              labelTextColor: '#ffffff',
+            },
+          },
         ]}
       />
 
@@ -196,9 +205,13 @@ function Revenue() {
           { id: 'description', label: 'Descricão' },
           { id: 'date', label: 'Data', width: 100 },
           { id: 'value', label: 'Valor', width: 200 },
-          { id: 'billing_cycles_category_name', label: 'Categoria', width: 250 },
+          {
+            id: 'billing_cycles_category_name',
+            label: 'Categoria',
+            width: 250,
+          },
           { id: 'company_fantasy_name', label: 'Empresa', width: 250 },
-          { id: '-', label: '-', width: 80, noPadding: true }
+          { id: '-', label: '-', width: 80, noPadding: true },
         ]}
         data={revenue.data}
         page={revenue.page}

@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
-import { Container, Table, THead, TH, TBody, TRow, TColumn, Input, FilterContainer } from './styles';
+import {
+  Container,
+  Table,
+  THead,
+  TH,
+  TBody,
+  TRow,
+  TColumn,
+  FilterContainer,
+} from './styles';
 import Searchbar from 'Components/Searchbar';
 import Pagination from 'Components/Pagination';
 import PropTypes from 'prop-types';
 import Button from 'Components/Button';
+import Input from 'Components/Input';
 import DatePicker from 'Components/DatePicker';
 import { compareAsc } from 'date-fns';
 
@@ -28,7 +38,7 @@ export default function DataTable({
   fromOnChange,
   toIsVisible,
   toValue,
-  toOnChange
+  toOnChange,
 }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
 
@@ -43,7 +53,14 @@ export default function DataTable({
 
   return (
     <Container>
-      {addButtonIsVisible && <Button styleButton="primary" label="Novo" icon="plus" onClick={addButtonOnClick} />}
+      {addButtonIsVisible && (
+        <Button
+          styleButton="primary"
+          label="Novo"
+          icon="plus"
+          onClick={addButtonOnClick}
+        />
+      )}
 
       <FilterContainer>
         {fromIsVisible && (
@@ -55,7 +72,12 @@ export default function DataTable({
           />
         )}
         {toIsVisible && (
-          <DatePicker placeholderText="Data final" selected={toValue} onChange={toOnChange} customInput={<Input />} />
+          <DatePicker
+            placeholderText="Data final"
+            selected={toValue}
+            onChange={toOnChange}
+            customInput={<Input />}
+          />
         )}
         {searchBarIsVisible && (
           <Searchbar
@@ -73,7 +95,9 @@ export default function DataTable({
               return columns.map((column, columnIndex) => (
                 <TRow
                   key={columnIndex}
-                  onClick={() => (columnIndex === columns.length - 1 ? {} : itemOnClick(data))}
+                  onClick={() =>
+                    columnIndex === columns.length - 1 ? {} : itemOnClick(data)
+                  }
                   columnsLength={columns.length}
                 >
                   <TH>{column.label}</TH>
@@ -102,9 +126,13 @@ export default function DataTable({
                     <TColumn
                       key={columnIndex}
                       noPadding={column.noPadding || false}
-                      onClick={() => (columnIndex === columns.length - 1 ? {} : itemOnClick(item))}
+                      onClick={() =>
+                        columnIndex === columns.length - 1
+                          ? {}
+                          : itemOnClick(item)
+                      }
                     >
-                      {renderItem(column.id, item)}
+                      <span>{renderItem(column.id, item)}</span>
                     </TColumn>
                   ))}
                 </TRow>
@@ -113,7 +141,12 @@ export default function DataTable({
           </>
         )}
       </Table>
-      <Pagination page={page} total={total} perPage={perPage} paginationOnChange={paginationOnChange} />
+      <Pagination
+        page={page}
+        total={total}
+        perPage={perPage}
+        paginationOnChange={paginationOnChange}
+      />
     </Container>
   );
 }
@@ -139,7 +172,7 @@ DataTable.prototype = {
   fromOnChange: PropTypes.func,
   toIsVisible: PropTypes.bool,
   toValue: PropTypes.text,
-  toOnChange: PropTypes.func
+  toOnChange: PropTypes.func,
 };
 
 DataTable.defaultProps = {
@@ -158,5 +191,5 @@ DataTable.defaultProps = {
   fromOnChange: () => {},
   toIsVisible: false,
   toValue: new Date(),
-  toOnChange: () => {}
+  toOnChange: () => {},
 };

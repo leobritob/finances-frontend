@@ -49,20 +49,14 @@ export const TColumn = styled.td`
   color: #666666;
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #efefef;
-  font-size: 0.9rem;
-  color: #333333;
-`;
-
 export const FilterContainer = styled.div`
   display: grid;
   grid-template-columns: ${props => {
     const arr = props.children.filter(c => c).map(c => c);
     let fr = [];
-    arr.forEach((c, i) => (i === arr.length - 1 ? fr.push('3fr') : fr.push('1fr')));
+    arr.forEach((c, i) =>
+      i === arr.length - 1 ? fr.push('3fr') : fr.push('1fr')
+    );
 
     return fr.join(' ');
   }};
