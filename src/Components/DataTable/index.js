@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Container,
   Table,
@@ -11,9 +12,7 @@ import {
 } from './styles';
 import Searchbar from 'Components/Searchbar';
 import Pagination from 'Components/Pagination';
-import PropTypes from 'prop-types';
 import Button from 'Components/Button';
-import Input from 'Components/Input';
 import DatePicker from 'Components/DatePicker';
 import { compareAsc } from 'date-fns';
 
@@ -68,7 +67,6 @@ export default function DataTable({
             placeholderText="Data inicial"
             selected={fromValue}
             onChange={fromOnChange}
-            customInput={<Input />}
           />
         )}
         {toIsVisible && (
@@ -76,7 +74,6 @@ export default function DataTable({
             placeholderText="Data final"
             selected={toValue}
             onChange={toOnChange}
-            customInput={<Input />}
           />
         )}
         {searchBarIsVisible && (
@@ -91,8 +88,8 @@ export default function DataTable({
       <Table border={0} cellSpacing={0} cellPadding={0}>
         {isMobile && (
           <TBody>
-            {data.map((data, dataIndex) => {
-              return columns.map((column, columnIndex) => (
+            {data.map(data =>
+              columns.map((column, columnIndex) => (
                 <TRow
                   key={columnIndex}
                   onClick={() =>
@@ -103,8 +100,8 @@ export default function DataTable({
                   <TH>{column.label}</TH>
                   <TColumn>{renderItem(column.id, data)}</TColumn>
                 </TRow>
-              ));
-            })}
+              ))
+            )}
           </TBody>
         )}
 
@@ -151,7 +148,7 @@ export default function DataTable({
   );
 }
 
-DataTable.prototype = {
+DataTable.propTypes = {
   columns: PropTypes.array,
   data: PropTypes.array,
   itemOnClick: PropTypes.func,
@@ -168,10 +165,10 @@ DataTable.prototype = {
   addButtonOnClick: PropTypes.func,
   searchBarIsVisible: PropTypes.bool,
   fromIsVisible: PropTypes.bool,
-  fromValue: PropTypes.text,
+  fromValue: PropTypes.string,
   fromOnChange: PropTypes.func,
   toIsVisible: PropTypes.bool,
-  toValue: PropTypes.text,
+  toValue: PropTypes.string,
   toOnChange: PropTypes.func,
 };
 
