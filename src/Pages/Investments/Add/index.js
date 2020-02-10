@@ -1,8 +1,10 @@
+//@flow
 import React, { useState, useEffect } from 'react';
 import { Container } from './styles';
 import Breadcrumbs from 'Components/Breadcrumbs';
 import Title from 'Components/Title';
 import Input from 'Components/Input';
+import TextArea from 'Components/TextArea';
 import NumberFormat from 'Components/NumberFormat';
 import Button from 'Components/Button';
 import DatePicker from 'Components/DatePicker';
@@ -67,7 +69,7 @@ export default function InvestmentsAdd() {
         description,
         value,
         date,
-        due_date
+        due_date,
       });
       if ([200, 201].includes(response.status)) {
         toast.success('Novo investimento cadastrado com sucesso');
@@ -85,7 +87,7 @@ export default function InvestmentsAdd() {
         data={[
           { label: 'Dashboard', href: '/dashboard' },
           { label: 'Investimentos', href: '/investments' },
-          { label: 'Adicionar' }
+          { label: 'Adicionar' },
         ]}
       />
       <Title>Novo Investimento</Title>
@@ -106,7 +108,7 @@ export default function InvestmentsAdd() {
         onChange={option => setInvestmentTypeId(option.value)}
       />
       <Input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" autoComplete="off" />
-      <Input
+      <TextArea
         value={description}
         onChange={e => setDescription(e.target.value)}
         placeholder="Descrição"

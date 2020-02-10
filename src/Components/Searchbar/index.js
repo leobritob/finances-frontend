@@ -7,8 +7,14 @@ import { Container } from './styles';
 function Searchbar({ value, buttonIsVisible, onChange, onClick, placeholder }) {
   return (
     <Container>
-      <Input value={value} placeholder={placeholder} onChange={onChange} />
-      {buttonIsVisible && <Button styleButton="default" icon="search" onClick={() => onClick(value)}></Button>}
+      <Input value={value} placeholder={placeholder} onChange={onChange} margin="0 10px 0 0" />
+      {buttonIsVisible && (
+        <Button
+          styleButton="default"
+          icon="search"
+          onClick={() => onClick(value)}
+        />
+      )}
     </Container>
   );
 }
@@ -18,7 +24,7 @@ Searchbar.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func,
   buttonIsVisible: PropTypes.bool,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
 };
 
 Searchbar.defaultProps = {
@@ -26,7 +32,7 @@ Searchbar.defaultProps = {
   onChange: () => {},
   onClick: () => {},
   buttonIsVisible: true,
-  placeholder: 'Digite aqui para pesquisar'
+  placeholder: 'Digite aqui para pesquisar',
 };
 
 export default Searchbar;

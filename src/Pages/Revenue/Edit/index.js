@@ -1,8 +1,10 @@
+//@flow
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Container } from './styles';
 import Breadcrumbs from 'Components/Breadcrumbs';
 import Title from 'Components/Title';
-import Input from 'Components/Input';
+import TextArea from 'Components/TextArea';
 import NumberFormat from 'Components/NumberFormat';
 import Button from 'Components/Button';
 import DatePicker from 'Components/DatePicker';
@@ -19,7 +21,7 @@ export default function RevenueEdit({ match }) {
   const [category, setCategory] = useState('');
   const [categories, setCategories] = useState([]);
   const [companies, setCompanies] = useState([]);
-  const [company_id, setCompanyId] = useState('');
+  const [company_id, setCompanyId] = useState({});
 
   useEffect(() => {
     _getBillingCyclesById(billingCycleId);
@@ -54,7 +56,7 @@ export default function RevenueEdit({ match }) {
           company_id,
           company_fantasy_name,
           billing_cycles_category_id,
-          billing_cycles_category_name
+          billing_cycles_category_name,
         } = response.data;
 
         setDescription(description);
@@ -91,7 +93,7 @@ export default function RevenueEdit({ match }) {
         billing_cycles_category_id: category.value,
         description,
         date,
-        value
+        value,
       });
       if (response.status === 200) {
         toast.success('Receita atualizada com sucesso');
@@ -109,7 +111,7 @@ export default function RevenueEdit({ match }) {
         data={[
           { label: 'Dashboard', href: '/dashboard' },
           { label: 'Receitas', href: '/revenue' },
-          { label: 'Alterar' }
+          { label: 'Alterar' },
         ]}
       />
       <Title>Alterar Receita</Title>
@@ -132,7 +134,7 @@ export default function RevenueEdit({ match }) {
         onChange={option => setCategory(option)}
       />
 
-      <Input
+      <TextArea
         value={description}
         onChange={e => setDescription(e.target.value)}
         placeholder="Descricão"
@@ -153,3 +155,7 @@ export default function RevenueEdit({ match }) {
     </Container>
   );
 }
+
+RevenueEdit.propTypes = {
+  match: PropTypes.object,
+};

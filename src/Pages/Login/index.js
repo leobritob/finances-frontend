@@ -1,3 +1,4 @@
+//@flow
 import React, { useState, useEffect } from 'react';
 import { SEO } from 'Utils';
 import { Container, LoginForm } from './styles';
@@ -16,6 +17,7 @@ export default function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   let _emailText = null;
   let _passwordText = null;
@@ -36,6 +38,7 @@ export default function Login() {
 
   const _login = async () => {
     try {
+      setIsButtonLoading(true);
       const response = await Services.auth.token(email, password);
       if (response.status === 200) {
         dispatch(UserActions.setId(response.data.id));
@@ -45,15 +48,16 @@ export default function Login() {
         history.push('/dashboard');
       }
     } catch (e) {
+      console.log('_login', e.message);
       toast.error(e.message);
+    } finally {
+      setIsButtonLoading(false);
     }
   };
 
   function _onKeyPress(context, e) {
-    if (context === 'email') {
-      if (e.key === 'Enter') {
-        _passwordText.focus();
-      }
+    if (_passwordText && context === 'email' && e.key === 'Enter') {
+      _passwordText.focus();
     }
 
     if (context === 'password') {
@@ -65,7 +69,7 @@ export default function Login() {
 
   return (
     <Container>
-      <LoginForm>
+      <LoginForm onSubmit={e => e.preventDefault()}>
         <Title>Painel de Autenticação</Title>
         <Input
           ref={ref => (_emailText = ref)}
@@ -73,6 +77,7 @@ export default function Login() {
           placeholder="Digite seu e-mail"
           onChange={e => setEmail(e.target.value)}
           onKeyPress={e => _onKeyPress('email', e)}
+          autoComplete="off"
         />
         <Input
           ref={ref => (_passwordText = ref)}
@@ -80,9 +85,17 @@ export default function Login() {
           placeholder="Digite sua senha"
           onChange={e => setPassword(e.target.value)}
           onKeyPress={e => _onKeyPress('password', e)}
+          autoComplete="off"
         />
         <FlatButton label="Esqueci minha senha" href="/forgot-password" />
-        <Button styleButton="primary" label="Conectar" allowSpinnerLoading={true} onClick={() => _login()} />
+        <Button
+          styleButton="primary"
+          label="Conectar"
+          allowSpinnerLoading
+          isLoading={isButtonLoading}
+          setIsLoading={setIsButtonLoading}
+          onClick={() => _login()}
+        />
       </LoginForm>
     </Container>
   );

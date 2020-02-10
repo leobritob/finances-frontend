@@ -1,3 +1,4 @@
+//@flow
 import React, { useState, useEffect } from 'react';
 import { Container } from './styles';
 import Breadcrumbs from 'Components/Breadcrumbs';
@@ -53,13 +54,9 @@ export default function RevenueAdd() {
       // Ciclo de pagamento do tipo receita
       params.billing_cycles_type_id = 1;
 
-      const response = await Services.billingCyclesCategories.getAllBillingCyclesCategories(
-        params
-      );
+      const response = await Services.billingCyclesCategories.getAllBillingCyclesCategories(params);
       if (response.status === 200) {
-        setCategories(
-          response.data.data.map(item => ({ label: item.name, value: item.id }))
-        );
+        setCategories(response.data.data.map(item => ({ label: item.name, value: item.id })));
       }
     } catch (e) {
       console.log('_getAllBillingCyclesCategories/ERROR', e.message);
@@ -119,11 +116,7 @@ export default function RevenueAdd() {
         autoComplete="off"
         maxLength={255}
       />
-      <DatePicker
-        placeholderText="Data"
-        selected={date}
-        onChange={date => setDate(date)}
-      />
+      <DatePicker placeholderText="Data" selected={date} onChange={date => setDate(date)} />
       <NumberFormat
         type="tel"
         value={value}
@@ -134,13 +127,7 @@ export default function RevenueAdd() {
         thousandSeparator=""
         placeholder="Valor (R$)"
       />
-      <Button
-        styleButton="primary"
-        label="Salvar"
-        icon="check"
-        allowSpinnerLoading={true}
-        onClick={_save}
-      />
+      <Button styleButton="primary" label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
     </Container>
   );
 }

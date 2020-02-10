@@ -3,14 +3,11 @@
     "browser": true,
     "es6": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:flowtype/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:flowtype/recommended"],
   "globals": {
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "SharedArrayBuffer": "readonly",
+    "process": "readonly"
   },
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,5 +17,14 @@
     "sourceType": "module"
   },
   "plugins": ["react", "flowtype"],
-  "rules": {}
+  "rules": {
+    "max-len": ["error", { "code": 120 }],
+    "no-console": "off",
+    "flowtype/no-types-missing-file-annotation": 2
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
+  }
 }

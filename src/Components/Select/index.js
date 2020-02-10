@@ -6,18 +6,17 @@ import chroma from 'chroma-js';
 const customStyles = {
   container: styles => ({
     ...styles,
-    marginTop: 5,
-    marginBottom: 5
+    margin: '0 0 10px 0',
   }),
   menu: styles => ({
     ...styles,
-    borderRadius: 0
+    borderRadius: 0,
   }),
   menuList: styles => ({
-    ...styles
+    ...styles,
   }),
   menuPortal: styles => ({
-    ...styles
+    ...styles,
   }),
   control: (styles, { isFocused }) => {
     let borderColor = isFocused ? Colors.primary : '#cccccc';
@@ -31,15 +30,15 @@ const customStyles = {
       margin: 0,
       ':hover': {
         borderWidth: 1,
-        borderColor: '#999999'
+        borderColor: '#999999',
       },
       ':active': {
         borderWidth: 1,
-        borderColor: Colors.primary
-      }
+        borderColor: Colors.primary,
+      },
     };
   },
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+  option: (styles, { isDisabled, isFocused, isSelected }) => {
     const color = chroma(Colors.primary);
     return {
       ...styles,
@@ -58,13 +57,15 @@ const customStyles = {
       cursor: isDisabled ? 'not-allowed' : 'default',
 
       ':hover': {
-        ...styles[':hover']
+        ...styles[':hover'],
       },
 
       ':active': {
         ...styles[':active'],
-        backgroundColor: !isDisabled && (isSelected ? color.alpha(0.4).css() : color.alpha(0.3).css())
-      }
+        backgroundColor:
+          !isDisabled &&
+          (isSelected ? color.alpha(0.4).css() : color.alpha(0.3).css()),
+      },
     };
   },
   input: styles => ({
@@ -73,18 +74,24 @@ const customStyles = {
     borderRadius: 0,
     fontSize: 14,
     paddingTop: 5,
-    paddingBottom: 5
+    paddingBottom: 5,
   }),
   placeholder: styles => ({
     ...styles,
-    fontSize: 14
+    fontSize: 14,
   }),
-  singleValue: (styles, { data }) => ({
+  singleValue: styles => ({
     ...styles,
-    fontSize: 14
-  })
+    fontSize: 14,
+  }),
 };
 
 export default function Select(props) {
-  return <ReactSelect styles={customStyles} {...props} />;
+  return (
+    <ReactSelect
+      styles={customStyles}
+      noOptionsMessage={() => 'Nenhuma opcão'}
+      {...props}
+    />
+  );
 }

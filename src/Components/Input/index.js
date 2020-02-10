@@ -4,12 +4,17 @@ import { COLORS } from 'Themes';
 export default styled.input`
   width: 100%;
   height: 45px;
+  margin: 0 0 10px 0;
   padding: 0 10px;
-  margin: 5px 0;
   background-color: #ffffff;
   border: 1px solid #cccccc;
   font-size: 0.9rem;
   transition: all 120ms linear;
+
+  ${props =>
+    !props.noMargin && props.margin ? `margin: ${props.margin};` : ''}
+
+  ${props => (props.noMargin ? 'margin: 0 !important;' : '')}
 
   &:hover {
     border-color: #999999;

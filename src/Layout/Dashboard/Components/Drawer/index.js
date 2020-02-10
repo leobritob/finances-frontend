@@ -26,7 +26,7 @@ function Drawer() {
           </ListItem>
           <ListItem>
             <ListItemLink to="/revenue" onClick={drawerClose}>
-              Receita
+              Receitas
             </ListItemLink>
           </ListItem>
           <ListItem>
