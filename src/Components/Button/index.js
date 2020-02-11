@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Span } from './styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,14 +10,14 @@ const stylesButton = {
     container: {
       backgroundColor: '#ffffff',
       borderColor: '#cccccc',
-      activeBoxShadow: COLORS.primary
+      activeBoxShadow: COLORS.primary,
     },
     spinner: {
       text: { color: 'rgba(0, 0, 0, 0.8)' },
-      icon: { color: 'rgba(0, 0, 0, 0.8)' }
+      icon: { color: 'rgba(0, 0, 0, 0.8)' },
     },
     text: { color: '#333333' },
-    icon: { color: '#333333' }
+    icon: { color: '#333333' },
   },
   primary: {
     container: {
@@ -27,14 +27,14 @@ const stylesButton = {
         .css(),
       activeBoxShadow: chroma(COLORS.primary)
         .alpha(0.8)
-        .css()
+        .css(),
     },
     spinner: {
       text: { color: 'rgba(255, 255, 255, 0.8)' },
-      icon: { color: 'rgba(255, 255, 255, 0.8)' }
+      icon: { color: 'rgba(255, 255, 255, 0.8)' },
     },
     text: { color: '#ffffff' },
-    icon: { color: '#ffffff' }
+    icon: { color: '#ffffff' },
   },
   danger: {
     container: {
@@ -44,15 +44,15 @@ const stylesButton = {
         .css(),
       activeBoxShadow: chroma(COLORS.expenses)
         .alpha(0.8)
-        .css()
+        .css(),
     },
     spinner: {
       text: { color: 'rgba(255, 255, 255, 0.8)' },
-      icon: { color: 'rgba(255, 255, 255, 0.8)' }
+      icon: { color: 'rgba(255, 255, 255, 0.8)' },
     },
     text: { color: '#ffffff' },
-    icon: { color: '#ffffff' }
-  }
+    icon: { color: '#ffffff' },
+  },
 };
 
 export default function Button({
@@ -70,16 +70,11 @@ export default function Button({
   textColor,
   noMargin,
   noPadding,
-  noBorder
+  noBorder,
+  margin,
+  isLoading,
+  setIsLoading,
 }) {
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (isLoading) {
-      setTimeout(() => setIsLoading(false), 3500);
-    }
-  }, [isLoading]);
-
   const onClickModified = e => {
     if (!isLoading) {
       onClick(e);
@@ -97,7 +92,9 @@ export default function Button({
           borderColor,
           noMargin,
           noPadding,
-          noBorder
+          noBorder,
+          activeBoxShadow,
+          margin,
         };
 
   let textStyles = styleButton !== 'custom' ? stylesButton[styleButton].text : { color: textColor };
@@ -114,7 +111,7 @@ export default function Button({
     <Container height={height} onClick={onClickModified} disabled={typeof onClick === 'undefined'} {...containerStyles}>
       {isLoading && (
         <>
-          <FontAwesomeIcon pulse icon="spinner" {...spinnerTextStyles} style={{ marginRight: 5 }} />
+          <FontAwesomeIcon pulse icon="circle-notch" {...spinnerTextStyles} style={{ marginRight: 5 }} />
           <Span {...spinnerIconStyles}>Aguarde...</Span>
         </>
       )}
@@ -146,13 +143,18 @@ Button.propTypes = {
   noMargin: PropTypes.bool,
   noPadding: PropTypes.bool,
   noBorder: PropTypes.bool,
-  styleButton: PropTypes.arrayOf(['default', 'primary', 'danger']),
+  styleButton: PropTypes.oneOf(['default', 'primary', 'danger']),
   backgroundColor: PropTypes.string,
   activeBoxShadow: PropTypes.string,
   borderColor: PropTypes.string,
-  textColor: PropTypes.string
+  textColor: PropTypes.string,
+  margin: PropTypes.string,
+  isLoading: PropTypes.bool,
+  setIsLoading: PropTypes.func,
 };
 
 Button.defaultProps = {
-  styleButton: 'default'
+  styleButton: 'default',
+  isLoading: false,
+  setIsLoading: () => {},
 };

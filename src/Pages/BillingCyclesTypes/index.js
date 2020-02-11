@@ -114,8 +114,8 @@ export default function BillingCyclesTypes() {
         itemOnClick={_itemOnClick}
         renderItem={renderItem}
         columns={[
-          { id: 'name', label: 'Nome' },
-          { id: 'description', label: 'Descrição', width: 200 },
+          { id: 'name', label: 'Nome', width: 200, },
+          { id: 'description', label: 'Descrição' },
           { id: '-', label: '-', width: 80, noPadding: true }
         ]}
         data={billingCyclesTypes.data}

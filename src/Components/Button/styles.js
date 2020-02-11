@@ -5,7 +5,7 @@ export const Container = styled.button`
   height: ${props => props.height || 45}px;
   background-color: ${props => props.backgroundColor};
   padding: 0 20px;
-  margin: 5px 0
+  margin: 0 0 10px 0;
   font-size: 1rem;
   border-width: ${props => props.boderWidth || 1}px;
   border-style: solid;
@@ -15,6 +15,10 @@ export const Container = styled.button`
   align-items: center;
   justify-content: center;
   transition: all 120ms linear;
+
+  ${props => (props.noMargin ? 'magin: 0 !important;' : '')}
+
+  ${props => (props.margin ? `margin: ${props.margin};` : '')}
 
   &:hover {
     border-color: ${props =>

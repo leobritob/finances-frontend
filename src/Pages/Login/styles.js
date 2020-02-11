@@ -7,7 +7,7 @@ export const Container = styled.div`
   background-color: #ffffff;
 `;
 
-export const LoginForm = styled.div`
+export const LoginForm = styled.form`
   max-width: 400px;
   height: 100vh;
   display: flex;

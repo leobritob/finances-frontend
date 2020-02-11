@@ -1,8 +1,10 @@
+//@flow
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Container } from './styles';
 import Breadcrumbs from 'Components/Breadcrumbs';
 import Title from 'Components/Title';
-import Input from 'Components/Input';
+import TextArea from 'Components/TextArea';
 import NumberFormat from 'Components/NumberFormat';
 import Button from 'Components/Button';
 import DatePicker from 'Components/DatePicker';
@@ -11,7 +13,7 @@ import { toast } from 'react-toastify';
 import Select from 'Components/Select';
 import { history } from 'Config/Store';
 
-export default function ExpensesEdit({ match }) {
+export default function ExpensesEdit({ match }: { match: Object }) {
   const billingCycleId = Number(match.params.id);
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
@@ -19,7 +21,7 @@ export default function ExpensesEdit({ match }) {
   const [category, setCategory] = useState('');
   const [categories, setCategories] = useState([]);
   const [companies, setCompanies] = useState([]);
-  const [company_id, setCompanyId] = useState('');
+  const [company_id, setCompanyId] = useState({});
 
   useEffect(() => {
     _getBillingCyclesById(billingCycleId);
@@ -54,7 +56,7 @@ export default function ExpensesEdit({ match }) {
           company_id,
           company_fantasy_name,
           billing_cycles_category_id,
-          billing_cycles_category_name
+          billing_cycles_category_name,
         } = response.data;
 
         setDescription(description);
@@ -91,7 +93,7 @@ export default function ExpensesEdit({ match }) {
         billing_cycles_category_id: category.value,
         description,
         date,
-        value
+        value,
       });
       if (response.status === 200) {
         toast.success('Despesa atualizada com sucesso');
@@ -109,7 +111,7 @@ export default function ExpensesEdit({ match }) {
         data={[
           { label: 'Dashboard', href: '/dashboard' },
           { label: 'Despesas', href: '/expenses' },
-          { label: 'Alterar' }
+          { label: 'Alterar' },
         ]}
       />
       <Title>Alterar Despesa</Title>
@@ -132,7 +134,7 @@ export default function ExpensesEdit({ match }) {
         onChange={option => setCategory(option)}
       />
 
-      <Input
+      <TextArea
         value={description}
         onChange={e => setDescription(e.target.value)}
         placeholder="Descricão"
@@ -153,3 +155,7 @@ export default function ExpensesEdit({ match }) {
     </Container>
   );
 }
+
+ExpensesEdit.propTypes = {
+  match: PropTypes.object,
+};

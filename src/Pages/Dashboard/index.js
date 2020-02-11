@@ -20,23 +20,23 @@ const filterOptions = [
     label: 'Ano',
     value: {
       start_date: format(today, 'yyyy-01-01'),
-      end_date: format(today, 'yyyy-12-31')
-    }
+      end_date: format(today, 'yyyy-12-31'),
+    },
   },
   {
     label: 'Mês Passado',
     value: {
       start_date: format(subMonths(today, 1), 'yyyy-MM-01'),
-      end_date: format(subMonths(lastDayOfMonth(today), 1), 'yyyy-MM-dd')
-    }
+      end_date: format(subMonths(lastDayOfMonth(today), 1), 'yyyy-MM-dd'),
+    },
   },
   {
     label: 'Mês Atual',
     value: {
       start_date: format(today, 'yyyy-MM-01'),
-      end_date: format(today, 'yyyy-MM-dd')
-    }
-  }
+      end_date: format(today, 'yyyy-MM-dd'),
+    },
+  },
 ];
 
 export default function Dashboard() {
@@ -45,10 +45,15 @@ export default function Dashboard() {
     revenue: 0,
     expenses: 0,
     net_revenue: 0,
-    investments: 0
+    investments: 0,
   });
-  const [dashboardGeneralWithMonths, setDashboardGeneralWithMonths] = useState([]);
-  const [dashboardGeneralInvestments, setDashboardGeneralInvestments] = useState([]);
+  const [dashboardGeneralWithMonths, setDashboardGeneralWithMonths] = useState(
+    []
+  );
+  const [
+    dashboardGeneralInvestments,
+    setDashboardGeneralInvestments,
+  ] = useState([]);
   const revenueData = {
     labels: dashboardGeneralWithMonths.map(dashboard => dashboard.month_label),
     datasets: [
@@ -59,9 +64,9 @@ export default function Dashboard() {
         borderWidth: 1,
         hoverBackgroundColor: COLORS.revenue,
         hoverBorderColor: COLORS.revenue,
-        data: dashboardGeneralWithMonths.map(month => month.revenue)
-      }
-    ]
+        data: dashboardGeneralWithMonths.map(month => month.revenue),
+      },
+    ],
   };
 
   const expensesData = {
@@ -74,9 +79,9 @@ export default function Dashboard() {
         borderWidth: 1,
         hoverBackgroundColor: COLORS.expenses,
         hoverBorderColor: COLORS.expenses,
-        data: dashboardGeneralWithMonths.map(month => month.expenses)
-      }
-    ]
+        data: dashboardGeneralWithMonths.map(month => month.expenses),
+      },
+    ],
   };
 
   const doughnutData = {
@@ -84,10 +89,14 @@ export default function Dashboard() {
     datasets: [
       {
         data: dashboardGeneralInvestments.map(investment => investment.value),
-        backgroundColor: dashboardGeneralInvestments.map(investment => investment.color),
-        hoverBackgroundColor: dashboardGeneralInvestments.map(investment => investment.color)
-      }
-    ]
+        backgroundColor: dashboardGeneralInvestments.map(
+          investment => investment.color
+        ),
+        hoverBackgroundColor: dashboardGeneralInvestments.map(
+          investment => investment.color
+        ),
+      },
+    ],
   };
 
   const reportsData = [
@@ -97,8 +106,8 @@ export default function Dashboard() {
       styles: {
         boxBackgroundColor: COLORS.revenue,
         valueTextColor: '#ffffff',
-        labelTextColor: '#ffffff'
-      }
+        labelTextColor: '#ffffff',
+      },
     },
     {
       label: 'Despesas',
@@ -106,8 +115,8 @@ export default function Dashboard() {
       styles: {
         boxBackgroundColor: COLORS.expenses,
         valueTextColor: '#ffffff',
-        labelTextColor: '#ffffff'
-      }
+        labelTextColor: '#ffffff',
+      },
     },
     {
       label: 'Líquido',
@@ -115,8 +124,8 @@ export default function Dashboard() {
       styles: {
         boxBackgroundColor: COLORS.net,
         valueTextColor: '#ffffff',
-        labelTextColor: '#ffffff'
-      }
+        labelTextColor: '#ffffff',
+      },
     },
     {
       label: 'Investimento',
@@ -124,9 +133,9 @@ export default function Dashboard() {
       styles: {
         boxBackgroundColor: COLORS.investment,
         valueTextColor: '#ffffff',
-        labelTextColor: '#ffffff'
-      }
-    }
+        labelTextColor: '#ffffff',
+      },
+    },
   ];
 
   useEffect(() => {
@@ -160,7 +169,9 @@ export default function Dashboard() {
 
   async function _getDashboardGeneralWithMonths(params: Object = {}) {
     try {
-      const response = await Services.dashboard.getDashboardGeneralWithMonths(params);
+      const response = await Services.dashboard.getDashboardGeneralWithMonths(
+        params
+      );
       if (response.status === 200) {
         setDashboardGeneralWithMonths(response.data);
       }
@@ -171,7 +182,9 @@ export default function Dashboard() {
 
   async function _getDashboardGeneralInvestments(params: Object = {}) {
     try {
-      const response = await Services.dashboard.getDashboardGeneralInvestments(params);
+      const response = await Services.dashboard.getDashboardGeneralInvestments(
+        params
+      );
       if (response.status === 200) {
         setDashboardGeneralInvestments(response.data);
       }
@@ -198,7 +211,11 @@ export default function Dashboard() {
           />
         </Column>
         <Column>
-          <Button noMargin label="Exportar PDF" onClick={() => _getDashboardGeneralPdf(filter.value)} />
+          <Button
+            noMargin
+            label="Exportar PDF"
+            onClick={() => _getDashboardGeneralPdf(filter.value)}
+          />
         </Column>
         <Column />
         <Column />
@@ -207,24 +224,34 @@ export default function Dashboard() {
       <ReportsBox data={reportsData} />
 
       <Row>
-        <Column>
-          <Title>Receita</Title>
-          <div>
-            <Bar data={revenueData} height={250} />
-          </div>
-        </Column>
-        <Column>
-          <Title>Despesas</Title>
-          <div>
-            <Bar data={expensesData} height={250} />
-          </div>
-        </Column>
-        <Column>
-          <Title>Investimentos</Title>
-          <div>
-            <Doughnut data={doughnutData} height={200} options={{ responsive: true }} />
-          </div>
-        </Column>
+        {revenueData && (
+          <Column>
+            <Title>Receita</Title>
+            <div>
+              <Bar data={revenueData} height={250} />
+            </div>
+          </Column>
+        )}
+        {expensesData && (
+          <Column>
+            <Title>Despesas</Title>
+            <div>
+              <Bar data={expensesData} height={250} />
+            </div>
+          </Column>
+        )}
+        {doughnutData && (
+          <Column>
+            <Title>Investimentos</Title>
+            <div>
+              <Doughnut
+                data={doughnutData}
+                height={200}
+                options={{ responsive: true }}
+              />
+            </div>
+          </Column>
+        )}
       </Row>
     </Container>
   );

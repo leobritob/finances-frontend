@@ -1,8 +1,11 @@
+//@flow
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Container } from './styles';
 import Breadcrumbs from 'Components/Breadcrumbs';
 import Title from 'Components/Title';
 import Input from 'Components/Input';
+import TextArea from 'Components/TextArea';
 import NumberFormat from 'Components/NumberFormat';
 import Button from 'Components/Button';
 import DatePicker from 'Components/DatePicker';
@@ -11,14 +14,14 @@ import { toast } from 'react-toastify';
 import Select from 'Components/Select';
 import { history } from 'Config/Store';
 
-export default function InvestmentsEdit({ match }) {
+export default function InvestmentsEdit({ match }: { match: Object }) {
   const investmentId = Number(match.params.id);
   const [investmentTypes, setInvestmentTypes] = useState({
     total: 0,
     page: 1,
     perPage: 20,
     lastPage: 0,
-    data: []
+    data: [],
   });
   const [investmentType, setInvestmentType] = useState('');
   const [name, setName] = useState('');
@@ -27,7 +30,7 @@ export default function InvestmentsEdit({ match }) {
   const [date, setDate] = useState('');
   const [due_date, setDueDate] = useState('');
   const [companies, setCompanies] = useState([]);
-  const [company_id, setCompanyId] = useState('');
+  const [company_id, setCompanyId] = useState({});
 
   useEffect(() => {
     _getInvestmentById(investmentId);
@@ -64,7 +67,7 @@ export default function InvestmentsEdit({ match }) {
           investments_type_id,
           investments_type_name,
           company_id,
-          company_fantasy_name
+          company_fantasy_name,
         } = response.data;
         setInvestmentType({ label: investments_type_name, value: investments_type_id });
         setName(name);
@@ -103,7 +106,7 @@ export default function InvestmentsEdit({ match }) {
         description,
         value,
         date,
-        due_date
+        due_date,
       });
       if (response.status === 200) {
         toast.success('Investimento atualizado com sucesso');
@@ -121,7 +124,7 @@ export default function InvestmentsEdit({ match }) {
         data={[
           { label: 'Dashboard', href: '/dashboard' },
           { label: 'Investimentos', href: '/investments' },
-          { label: 'Alterar' }
+          { label: 'Alterar' },
         ]}
       />
       <Title>Alterar Investimento</Title>
@@ -144,7 +147,7 @@ export default function InvestmentsEdit({ match }) {
         onChange={option => setInvestmentType(option)}
       />
       <Input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" autoComplete="off" />
-      <Input
+      <TextArea
         value={description}
         onChange={e => setDescription(e.target.value)}
         placeholder="Descrição"
@@ -166,3 +169,7 @@ export default function InvestmentsEdit({ match }) {
     </Container>
   );
 }
+
+InvestmentsEdit.propTypes = {
+  match: PropTypes.object,
+};

@@ -1,3 +1,4 @@
+//@flow
 import apisauce from 'apisauce';
 import { commonMonitor } from './index';
 
@@ -5,25 +6,27 @@ const create = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
   const api = apisauce.create({
     baseURL,
     headers: {},
-    timeout: 10000
+    timeout: 10000,
   });
 
   api.addMonitor(commonMonitor);
 
   /**
    * Método responsável por gerar um token de autorização ao usuário
-   * @param {String} email - E-mail do usuário
-   * @param {String} password - Senha do usuário
+   * @param {string} email - E-mail do usuário
+   * @param {string} password - Senha do usuário
    * @returns {Promise<ApiResponse<any>>}
    */
-  const token = (email: string, password: string): Promise => api.post('/auth/token', { email, password });
+  const token = (email: string, password: string): Promise =>
+    api.post('/auth/token', { email, password });
 
   /**
    * Método responsável por atualizar o token de autorização
-   * @param {String} token - Token do usuário
+   * @param {string} token - Token do usuário
    * @returns {Promise<ApiResponse<any>>}
    */
-  const refreshToken = (token: string): Promise => api.post('/auth/refresh-token', token);
+  const refreshToken = (token: string): Promise =>
+    api.post('/auth/refresh-token', token);
 
   /**
    * Método responsável por verificar se o usuário está autenticado
@@ -44,10 +47,14 @@ const create = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
    * @param {string} confirmNewPassword - Confirmação da nova senha do usuário
    * @returns {Promise<ApiResponse<any>>}
    */
-  const changePassword = (hash: string, newPassword: string, confirmNewPassword: string): Promise =>
+  const changePassword = (
+    hash: string,
+    newPassword: string,
+    confirmNewPassword: string
+  ): Promise =>
     api.post(`/auth/change-password/${hash}/`, {
       newPassword,
-      confirmNewPassword
+      confirmNewPassword,
     });
 
   /**
@@ -55,7 +62,8 @@ const create = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
    * @param {string} email - E-mail do usuário
    * @returns {Promise<ApiResponse<any>>}
    */
-  const resetPassword = (email: string): Promise => api.post('/auth/reset-password/', { email });
+  const resetPassword = (email: string): Promise =>
+    api.post('/auth/reset-password/', { email });
 
   return {
     config: api,
@@ -64,7 +72,7 @@ const create = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
     check,
     me,
     changePassword,
-    resetPassword
+    resetPassword,
   };
 };
 

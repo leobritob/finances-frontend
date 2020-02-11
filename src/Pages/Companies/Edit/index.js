@@ -49,7 +49,7 @@ export default function CompaniesEdit({ match }) {
           city,
           uf,
           country,
-          logo
+          logo,
         } = response.data;
         setSocialName(social_name);
         setFantasyName(fantasy_name);
@@ -72,7 +72,7 @@ export default function CompaniesEdit({ match }) {
 
   async function _save() {
     try {
-      const response = await Services.companies.storeCompany({
+      const response = await Services.companies.updateCompany(companyId, {
         social_name,
         fantasy_name,
         cnpj,
@@ -85,7 +85,7 @@ export default function CompaniesEdit({ match }) {
         city,
         uf,
         country,
-        logo
+        logo,
       });
       if ([200, 201].includes(response.status)) {
         toast.success('Empresa atualizada com sucesso');
@@ -103,7 +103,7 @@ export default function CompaniesEdit({ match }) {
         data={[
           { label: 'Dashboard', href: '/dashboard' },
           { label: 'Empresas', href: '/companies' },
-          { label: 'Alterar' }
+          { label: 'Alterar' },
         ]}
       />
       <Title>Alterar Empresa</Title>
@@ -127,12 +127,22 @@ export default function CompaniesEdit({ match }) {
           />
         </Column>
         <Column>
-          <Input value={cnpj} onChange={e => setCNPJ(e.target.value)} placeholder="CNPJ" autoComplete="off" />
+          <Input
+            value={cnpj}
+            onChange={e => setCNPJ(e.target.value)}
+            placeholder="CNPJ"
+            autoComplete="off"
+          />
         </Column>
       </Row>
       <Row columns="2fr 1fr 1fr">
         <Column>
-          <Input value={email} onChange={e => setEmail(e.target.value)} placeholder="E-mail" autoComplete="off" />
+          <Input
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="E-mail"
+            autoComplete="off"
+          />
         </Column>
         <Column>
           <Input
@@ -169,22 +179,48 @@ export default function CompaniesEdit({ match }) {
           />
         </Column>
         <Column>
-          <Input value={district} onChange={e => setDistrict(e.target.value)} placeholder="Bairro" autoComplete="off" />
+          <Input
+            value={district}
+            onChange={e => setDistrict(e.target.value)}
+            placeholder="Bairro"
+            autoComplete="off"
+          />
         </Column>
       </Row>
 
       <Row columns="1fr 60px 120px">
         <Column>
-          <Input value={city} onChange={e => setCity(e.target.value)} placeholder="Cidade" autoComplete="off" />
+          <Input
+            value={city}
+            onChange={e => setCity(e.target.value)}
+            placeholder="Cidade"
+            autoComplete="off"
+          />
         </Column>
         <Column>
-          <Input value={uf} onChange={e => setUF(e.target.value)} placeholder="UF" autoComplete="off" />
+          <Input
+            value={uf}
+            onChange={e => setUF(e.target.value)}
+            placeholder="UF"
+            autoComplete="off"
+          />
         </Column>
         <Column>
-          <Input value={country} onChange={e => setCountry(e.target.value)} placeholder="País" autoComplete="off" />
+          <Input
+            value={country}
+            onChange={e => setCountry(e.target.value)}
+            placeholder="País"
+            autoComplete="off"
+          />
         </Column>
       </Row>
-      <Button styleButton="primary" label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
+      <Button
+        styleButton="primary"
+        label="Salvar"
+        icon="check"
+        allowSpinnerLoading={true}
+        onClick={_save}
+      />
     </Container>
   );
 }

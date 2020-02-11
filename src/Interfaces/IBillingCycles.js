@@ -1,3 +1,4 @@
+//@flow
 export type IBillingCycles = {
   id: number,
   billing_cycles_type_id: number,

@@ -1,3 +1,4 @@
+//@flow
 import React, { useState, useEffect } from 'react';
 import Title from 'Components/Title';
 import { Container } from './styles';
@@ -23,18 +24,18 @@ export default function Investments() {
   const [filter, setFilter] = useState({
     date__gte: fromDateValue,
     date__lte: toDateValue,
-    search: ''
+    search: '',
   });
   const [investments, setInvestments] = useState({
     total: 0,
     page: 0,
     perPage: 20,
-    data: []
+    data: [],
   });
   const [reports, setReports] = useState({
     today: 0,
     current_month: 0,
-    last_month: 0
+    last_month: 0,
   });
 
   const [filterDebounce] = useDebounce(filter, 300);
@@ -54,7 +55,7 @@ export default function Investments() {
       case 'value':
         return Intl.NumberFormat('pt-BR', {
           style: 'currency',
-          currency: 'BRL'
+          currency: 'BRL',
         }).format(item[column]);
       case '-':
         return (
@@ -170,8 +171,8 @@ export default function Investments() {
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
+              labelTextColor: '#ffffff',
+            },
           },
           {
             label: 'Mês Atual',
@@ -179,8 +180,8 @@ export default function Investments() {
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
+              labelTextColor: '#ffffff',
+            },
           },
           {
             label: 'Mês Passado',
@@ -188,9 +189,9 @@ export default function Investments() {
             styles: {
               boxBackgroundColor: COLORS.revenue,
               valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
-          }
+              labelTextColor: '#ffffff',
+            },
+          },
         ]}
       />
 
@@ -204,7 +205,7 @@ export default function Investments() {
           { id: 'date', label: 'Data', width: 100 },
           { id: 'value', label: 'Valor', width: 200 },
           { id: 'company_fantasy_name', label: 'Empresa', width: 250 },
-          { id: '-', label: '-', width: 80, noPadding: true }
+          { id: '-', label: '-', width: 80, noPadding: true },
         ]}
         data={investments.data}
         page={investments.page}

@@ -1,3 +1,5 @@
+//@flow
+import { ApiResponse } from 'apisauce';
 import { history, store } from 'Config/Store';
 import UsersServices from './UsersServices';
 import AuthServices from './AuthServices';
@@ -37,7 +39,7 @@ const Services = {
   investments: InvestmentsServices.create(),
   investmentsTypes: InvestmentsTypesServices.create(),
   dashboard: DashboardServices.create(),
-  companies: CompaniesServices.create()
+  companies: CompaniesServices.create(),
 };
 
 export const updateHeaderAuthToken = (token: string): void => {
