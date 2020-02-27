@@ -1,15 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Container,
-  Table,
-  THead,
-  TH,
-  TBody,
-  TRow,
-  TColumn,
-  FilterContainer,
-} from './styles';
+import { Container, Table, THead, TH, TBody, TRow, TColumn, FilterContainer } from './styles';
 import Searchbar from 'Components/Searchbar';
 import Pagination from 'Components/Pagination';
 import Button from 'Components/Button';
@@ -50,32 +41,58 @@ export default function DataTable({
     toOnChange(fromValue);
   }
 
+  const TableBodyForMobile = useMemo(
+    () =>
+      data.map(data =>
+        columns.map((column, columnIndex) => (
+          <TRow
+            key={columnIndex}
+            onClick={() => (columnIndex === columns.length - 1 ? {} : itemOnClick(data))}
+            columnsLength={columns.length}
+          >
+            <TH>{column.label}</TH>
+            <TColumn>{renderItem(column.id, data)}</TColumn>
+          </TRow>
+        ))
+      ),
+    [data]
+  );
+
+  const TableBodyForDesktop = useMemo(
+    () =>
+      data.map((item, dataIndex) => (
+        <TRow key={dataIndex}>
+          {columns.map((column, columnIndex) => (
+            <TColumn
+              key={columnIndex}
+              noPadding={column.noPadding || false}
+              onClick={() => (columnIndex === columns.length - 1 ? {} : itemOnClick(item))}
+            >
+              <span>{renderItem(column.id, item)}</span>
+            </TColumn>
+          ))}
+        </TRow>
+      )),
+    [data]
+  );
+
+  const TableHeader = useMemo(
+    () =>
+      columns.map((column, columnIndex) => (
+        <TH key={columnIndex} width={column.width}>
+          {column.label}
+        </TH>
+      )),
+    [columns]
+  );
+
   return (
     <Container>
-      {addButtonIsVisible && (
-        <Button
-          styleButton="primary"
-          label="Novo"
-          icon="plus"
-          onClick={addButtonOnClick}
-        />
-      )}
+      {addButtonIsVisible && <Button styleButton="primary" label="Novo" icon="plus" onClick={addButtonOnClick} />}
 
       <FilterContainer>
-        {fromIsVisible && (
-          <DatePicker
-            placeholderText="Data inicial"
-            selected={fromValue}
-            onChange={fromOnChange}
-          />
-        )}
-        {toIsVisible && (
-          <DatePicker
-            placeholderText="Data final"
-            selected={toValue}
-            onChange={toOnChange}
-          />
-        )}
+        {fromIsVisible && <DatePicker placeholderText="Data inicial" selected={fromValue} onChange={fromOnChange} />}
+        {toIsVisible && <DatePicker placeholderText="Data final" selected={toValue} onChange={toOnChange} />}
         {searchBarIsVisible && (
           <Searchbar
             value={searchBarValue}
@@ -86,64 +103,18 @@ export default function DataTable({
         )}
       </FilterContainer>
       <Table border={0} cellSpacing={0} cellPadding={0}>
-        {isMobile && (
-          <TBody>
-            {data.map(data =>
-              columns.map((column, columnIndex) => (
-                <TRow
-                  key={columnIndex}
-                  onClick={() =>
-                    columnIndex === columns.length - 1 ? {} : itemOnClick(data)
-                  }
-                  columnsLength={columns.length}
-                >
-                  <TH>{column.label}</TH>
-                  <TColumn>{renderItem(column.id, data)}</TColumn>
-                </TRow>
-              ))
-            )}
-          </TBody>
-        )}
+        {isMobile && <TBody>{TableBodyForMobile}</TBody>}
 
         {!isMobile && (
           <>
             <THead>
-              <TRow noHover>
-                {columns.map((column, columnIndex) => (
-                  <TH key={columnIndex} width={column.width}>
-                    {column.label}
-                  </TH>
-                ))}
-              </TRow>
+              <TRow noHover>{TableHeader}</TRow>
             </THead>
-            <TBody>
-              {data.map((item, dataIndex) => (
-                <TRow key={dataIndex}>
-                  {columns.map((column, columnIndex) => (
-                    <TColumn
-                      key={columnIndex}
-                      noPadding={column.noPadding || false}
-                      onClick={() =>
-                        columnIndex === columns.length - 1
-                          ? {}
-                          : itemOnClick(item)
-                      }
-                    >
-                      <span>{renderItem(column.id, item)}</span>
-                    </TColumn>
-                  ))}
-                </TRow>
-              ))}
-            </TBody>
+            <TBody>{TableBodyForDesktop}</TBody>
           </>
         )}
       </Table>
-      <Pagination
-        page={page}
-        total={total}
-        perPage={perPage}
-        paginationOnChange={paginationOnChange}
-      />
+      <Pagination page={page} total={total} perPage={perPage} paginationOnChange={paginationOnChange} />
     </Container>
   );
 }
