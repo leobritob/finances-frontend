@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Span } from './styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
