@@ -5,12 +5,10 @@ import Title from 'Components/Title';
 import Input from 'Components/Input';
 import MaskedInput from 'Components/MaskedInput';
 import Button from 'Components/Button';
-import Services from 'Services';
-import { toast } from 'react-toastify';
-import { history } from 'Config/Store';
 import { SEO } from 'Utils';
 import Row from 'Components/Row';
 import Column from 'Components/Column';
+import useCompanies from 'Hooks/useCompanies';
 
 export default function CompaniesAdd() {
   const [social_name, setSocialName] = useState('');
@@ -26,37 +24,29 @@ export default function CompaniesAdd() {
   const [uf, setUF] = useState('');
   const [country, setCountry] = useState('');
   const [logo, setLogo] = useState('');
+  const { storeNewCompany } = useCompanies();
+
+  const _save = () => {
+    storeNewCompany({
+      social_name,
+      fantasy_name,
+      cnpj,
+      email,
+      cellphone,
+      telephone,
+      street_name,
+      street_number,
+      district,
+      city,
+      uf,
+      country,
+      logo,
+    });
+  };
 
   useEffect(() => {
     SEO.changeDocumentTitle('Empresas');
   }, []);
-
-  async function _save() {
-    try {
-      const response = await Services.companies.storeCompany({
-        social_name,
-        fantasy_name,
-        cnpj,
-        email,
-        cellphone,
-        telephone,
-        street_name,
-        street_number,
-        district,
-        city,
-        uf,
-        country,
-        logo
-      });
-      if ([200, 201].includes(response.status)) {
-        toast.success('Empresa cadastrada com sucesso');
-
-        history.push('/companies');
-      }
-    } catch (e) {
-      console.log('_save/ERROR', e.message);
-    }
-  }
 
   return (
     <Container>
@@ -64,7 +54,7 @@ export default function CompaniesAdd() {
         data={[
           { label: 'Dashboard', href: '/dashboard' },
           { label: 'Empresas', href: '/companies' },
-          { label: 'Adicionar' }
+          { label: 'Adicionar' },
         ]}
       />
       <Title>Nova Empresa</Title>
@@ -165,7 +155,7 @@ export default function CompaniesAdd() {
           <Input value={country} onChange={e => setCountry(e.target.value)} placeholder="País" autoComplete="off" />
         </Column>
       </Row>
-      <Button styleButton="primary" label="Salvar" icon="check" allowSpinnerLoading={true} onClick={_save} />
+      <Button styleButton="primary" label="Salvar" icon="check" allowSpinnerLoading onClick={_save} />
     </Container>
   );
 }
