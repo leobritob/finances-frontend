@@ -7,9 +7,10 @@ import Button from 'Components/Button';
 import Services from 'Services';
 import { toast } from 'react-toastify';
 import Select from 'Components/Select';
-import { history } from 'Config/Store';
+import { useHistory } from 'react-router-dom';
 
 export default function BillingCyclesCategoriesEdit({ match }) {
+  const history = useHistory();
   const billingCycleCategoryId = Number(match.params.id);
   const [name, setName] = useState('');
   const [billing_cycles_type_id, setBillingCyclesTypeId] = useState('');
@@ -18,7 +19,7 @@ export default function BillingCyclesCategoriesEdit({ match }) {
     perPage: 20,
     page: 1,
     lastPage: 1,
-    data: []
+    data: [],
   });
   const [companies, setCompanies] = useState([]);
   const [company_id, setCompanyId] = useState('');
@@ -51,7 +52,7 @@ export default function BillingCyclesCategoriesEdit({ match }) {
           company_id,
           company_fantasy_name,
           billing_cycles_type_name,
-          billing_cycles_type_id
+          billing_cycles_type_id,
         } = response.data;
 
         setName(name);
@@ -79,7 +80,7 @@ export default function BillingCyclesCategoriesEdit({ match }) {
       const response = await Services.billingCyclesCategories.updateBillingCyclesCategories(billingCycleCategoryId, {
         company_id: company_id.value,
         billing_cycles_type_id: billing_cycles_type_id.value,
-        name
+        name,
       });
       if (response.status === 200) {
         toast.success('Categoria de faturamento atualizada com sucesso');
@@ -98,9 +99,9 @@ export default function BillingCyclesCategoriesEdit({ match }) {
           { label: 'Dashboard', href: '/dashboard' },
           {
             label: 'Categorias de Faturamento',
-            href: '/billing-cycles-categories'
+            href: '/billing-cycles-categories',
           },
-          { label: 'Alterar' }
+          { label: 'Alterar' },
         ]}
       />
       <Title>Alterar Categoria de Faturamento</Title>

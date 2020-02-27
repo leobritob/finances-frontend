@@ -11,9 +11,10 @@ import DatePicker from 'Components/DatePicker';
 import Services from 'Services';
 import { toast } from 'react-toastify';
 import Select from 'Components/Select';
-import { history } from 'Config/Store';
+import { useHistory } from 'react-router-dom';
 
 export default function InvestmentsAdd() {
+  const history = useHistory();
   const [investmentTypes, setInvestmentTypes] = useState([]);
   const [investments_type_id, setInvestmentTypeId] = useState('');
   const [name, setName] = useState('');

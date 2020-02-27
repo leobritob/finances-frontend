@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ConnectedRouter } from 'connected-react-router';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import Routes from 'Config/Routes';
-import { persistor, store, history } from 'Config/Store';
+import { persistor, store } from 'Config/Store';
 import { PersistGate } from 'redux-persist/integration/react';
 import 'react-datepicker/dist/react-datepicker.css';
 import './styles.css';
@@ -32,23 +31,13 @@ toast.configure({
   autoClose: 8000,
 });
 
-library.add(
-  faArrowRight,
-  faArrowLeft,
-  faBars,
-  faCircleNotch,
-  faSpinner,
-  faPlus,
-  faSearch,
-  faCheck,
-  faTrash
-);
+library.add(faArrowRight, faArrowLeft, faBars, faCircleNotch, faSpinner, faPlus, faSearch, faCheck, faTrash);
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
       <ToastContainer />
-      <ConnectedRouter history={history}>{Routes}</ConnectedRouter>
+      <Routes />
     </PersistGate>
   </Provider>,
   document.getElementById('root')

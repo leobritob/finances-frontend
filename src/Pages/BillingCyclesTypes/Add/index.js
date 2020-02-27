@@ -6,9 +6,10 @@ import Input from 'Components/Input';
 import Button from 'Components/Button';
 import Services from 'Services';
 import { toast } from 'react-toastify';
-import { history } from 'Config/Store';
+import { useHistory } from 'react-router-dom';
 
 export default function BillingCyclesTypesAdd() {
+  const history = useHistory();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
@@ -32,9 +33,9 @@ export default function BillingCyclesTypesAdd() {
           { label: 'Dashboard', href: '/dashboard' },
           {
             label: 'Tipo de Faturamento',
-            href: '/billing-cycles-types'
+            href: '/billing-cycles-types',
           },
-          { label: 'Adicionar' }
+          { label: 'Adicionar' },
         ]}
       />
       <Title>Novo Tipo de Faturamento</Title>

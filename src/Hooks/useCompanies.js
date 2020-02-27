@@ -2,9 +2,10 @@ import { useState, useCallback } from 'react';
 import Services from 'Services';
 import { useDebounce } from 'use-debounce';
 import { toast } from 'react-toastify';
-import { history } from 'Config/Store';
+import { useHistory } from 'react-router-dom';
 
 export default () => {
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const [filter, setFilter] = useState({
     search: '',
@@ -53,18 +54,21 @@ export default () => {
     [getAllCompanies, filterDebounce]
   );
 
-  const storeNewCompany = useCallback(async data => {
-    try {
-      const response = await Services.companies.storeCompany(data);
-      if ([200, 201].includes(response.status)) {
-        toast.success('Empresa cadastrada com sucesso');
+  const storeNewCompany = useCallback(
+    async data => {
+      try {
+        const response = await Services.companies.storeCompany(data);
+        if ([200, 201].includes(response.status)) {
+          toast.success('Empresa cadastrada com sucesso');
 
-        history.push('/companies');
+          history.push('/companies');
+        }
+      } catch (e) {
+        console.log('storeNewCompany/ERROR', e.message);
       }
-    } catch (e) {
-      console.log('storeNewCompany/ERROR', e.message);
-    }
-  }, []);
+    },
+    [history]
+  );
 
   return {
     isLoading,

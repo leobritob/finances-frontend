@@ -10,9 +10,10 @@ import DatePicker from 'Components/DatePicker';
 import Services from 'Services';
 import { toast } from 'react-toastify';
 import Select from 'Components/Select';
-import { history } from 'Config/Store';
+import { useHistory } from 'react-router-dom';
 
 export default function RevenueAdd() {
+  const history = useHistory();
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [value, setValue] = useState('');

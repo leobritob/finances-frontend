@@ -1,5 +1,6 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
 import Dashboard from 'Pages/Dashboard';
 import Login from 'Pages/Login';
 import DashboardLayout from 'Layout/Dashboard';
@@ -27,7 +28,7 @@ import BillingCyclesTypesEdit from 'Pages/BillingCyclesTypes/Edit';
 import RevenueEdit from 'Pages/Revenue/Edit';
 import InvestmentsTypesEdit from 'Pages/InvestmentsTypes/Edit';
 
-const PrivateRoute = ({ component: Component, layout: Layout, verifyRole, ...rest }) => (
+const PrivateRoute = ({ component: Component, layout: Layout, ...rest }) => (
   <Route
     {...rest}
     render={props => {
@@ -43,69 +44,86 @@ const PrivateRoute = ({ component: Component, layout: Layout, verifyRole, ...res
   />
 );
 
-const Routes = (
-  <Switch>
-    <Route exact path="/" component={Login} />
-    <Route exact path="/login" component={Login} />
-    <Route exact path="/forgot-password" component={ForgotPassword} />
+PrivateRoute.propTypes = {
+  component: PropTypes.object,
+  layout: PropTypes.object,
+};
 
-    <PrivateRoute exact path="/dashboard" component={Dashboard} layout={DashboardLayout} />
+export default function Routes() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/forgot-password" component={ForgotPassword} />
 
-    {/* COMPANIES */}
-    <PrivateRoute exact path="/companies" component={Companies} layout={DashboardLayout} />
-    <PrivateRoute exact path="/companies/add" component={CompaniesAdd} layout={DashboardLayout} />
-    <PrivateRoute exact path="/companies/edit/:id" component={CompaniesEdit} layout={DashboardLayout} />
+        <PrivateRoute exact path="/dashboard" component={Dashboard} layout={DashboardLayout} />
 
-    {/* REVENUE */}
-    <PrivateRoute exact path="/revenue" component={Revenue} layout={DashboardLayout} />
-    <PrivateRoute exact path="/revenue/add" component={RevenueAdd} layout={DashboardLayout} />
-    <PrivateRoute exact path="/revenue/edit/:id" component={RevenueEdit} layout={DashboardLayout} />
+        {/* COMPANIES */}
+        <PrivateRoute exact path="/companies" component={Companies} layout={DashboardLayout} />
+        <PrivateRoute exact path="/companies/add" component={CompaniesAdd} layout={DashboardLayout} />
+        <PrivateRoute exact path="/companies/edit/:id" component={CompaniesEdit} layout={DashboardLayout} />
 
-    {/* EXPENSES */}
-    <PrivateRoute exact path="/expenses" component={Expenses} layout={DashboardLayout} />
-    <PrivateRoute exact path="/expenses/add" component={ExpensesAdd} layout={DashboardLayout} />
-    <PrivateRoute exact path="/expenses/edit/:id" component={ExpensesEdit} layout={DashboardLayout} />
+        {/* REVENUE */}
+        <PrivateRoute exact path="/revenue" component={Revenue} layout={DashboardLayout} />
+        <PrivateRoute exact path="/revenue/add" component={RevenueAdd} layout={DashboardLayout} />
+        <PrivateRoute exact path="/revenue/edit/:id" component={RevenueEdit} layout={DashboardLayout} />
 
-    {/* INVESTMENTS */}
-    <PrivateRoute exact path="/investments" component={Investments} layout={DashboardLayout} />
-    <PrivateRoute exact path="/investments/add" component={InvestmentsAdd} layout={DashboardLayout} />
-    <PrivateRoute exact path="/investments/edit/:id" component={InvestmentsEdit} layout={DashboardLayout} />
+        {/* EXPENSES */}
+        <PrivateRoute exact path="/expenses" component={Expenses} layout={DashboardLayout} />
+        <PrivateRoute exact path="/expenses/add" component={ExpensesAdd} layout={DashboardLayout} />
+        <PrivateRoute exact path="/expenses/edit/:id" component={ExpensesEdit} layout={DashboardLayout} />
 
-    {/* INVESTMENTS TYPES */}
-    <PrivateRoute exact path="/investments-types" component={InvestmentsTypes} layout={DashboardLayout} />
-    <PrivateRoute exact path="/investments-types/add" component={InvestmentsTypesAdd} layout={DashboardLayout} />
-    <PrivateRoute exact path="/investments-types/edit/:id" component={InvestmentsTypesEdit} layout={DashboardLayout} />
+        {/* INVESTMENTS */}
+        <PrivateRoute exact path="/investments" component={Investments} layout={DashboardLayout} />
+        <PrivateRoute exact path="/investments/add" component={InvestmentsAdd} layout={DashboardLayout} />
+        <PrivateRoute exact path="/investments/edit/:id" component={InvestmentsEdit} layout={DashboardLayout} />
 
-    {/* BILLING CYCLES CATEGORIES */}
-    <PrivateRoute
-      exact
-      path="/billing-cycles-categories"
-      component={BillingCyclesCategories}
-      layout={DashboardLayout}
-    />
-    <PrivateRoute
-      exact
-      path="/billing-cycles-categories/add"
-      component={BillingCyclesCategoriesAdd}
-      layout={DashboardLayout}
-    />
-    <PrivateRoute
-      exact
-      path="/billing-cycles-categories/edit/:id"
-      component={BillingCyclesCategoriesEdit}
-      layout={DashboardLayout}
-    />
+        {/* INVESTMENTS TYPES */}
+        <PrivateRoute exact path="/investments-types" component={InvestmentsTypes} layout={DashboardLayout} />
+        <PrivateRoute exact path="/investments-types/add" component={InvestmentsTypesAdd} layout={DashboardLayout} />
+        <PrivateRoute
+          exact
+          path="/investments-types/edit/:id"
+          component={InvestmentsTypesEdit}
+          layout={DashboardLayout}
+        />
 
-    {/* BILLING CYCLES TYPES */}
-    <PrivateRoute exact path="/billing-cycles-types" component={BillingCyclesTypes} layout={DashboardLayout} />
-    <PrivateRoute exact path="/billing-cycles-types/add" component={BillingCyclesTypesAdd} layout={DashboardLayout} />
-    <PrivateRoute
-      exact
-      path="/billing-cycles-types/edit/:id"
-      component={BillingCyclesTypesEdit}
-      layout={DashboardLayout}
-    />
-  </Switch>
-);
+        {/* BILLING CYCLES CATEGORIES */}
+        <PrivateRoute
+          exact
+          path="/billing-cycles-categories"
+          component={BillingCyclesCategories}
+          layout={DashboardLayout}
+        />
+        <PrivateRoute
+          exact
+          path="/billing-cycles-categories/add"
+          component={BillingCyclesCategoriesAdd}
+          layout={DashboardLayout}
+        />
+        <PrivateRoute
+          exact
+          path="/billing-cycles-categories/edit/:id"
+          component={BillingCyclesCategoriesEdit}
+          layout={DashboardLayout}
+        />
 
-export default Routes;
+        {/* BILLING CYCLES TYPES */}
+        <PrivateRoute exact path="/billing-cycles-types" component={BillingCyclesTypes} layout={DashboardLayout} />
+        <PrivateRoute
+          exact
+          path="/billing-cycles-types/add"
+          component={BillingCyclesTypesAdd}
+          layout={DashboardLayout}
+        />
+        <PrivateRoute
+          exact
+          path="/billing-cycles-types/edit/:id"
+          component={BillingCyclesTypesEdit}
+          layout={DashboardLayout}
+        />
+      </Switch>
+    </BrowserRouter>
+  );
+}

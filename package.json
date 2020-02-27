@@ -14,9 +14,7 @@
     "apisauce": "^1.0.3",
     "chart.js": "^2.8.0",
     "chroma-js": "^2.0.4",
-    "connected-react-router": "^6.5.0",
     "date-fns": "^2.0.1",
-    "history": "^4.9.0",
     "lodash.debounce": "^4.0.8",
     "react": "^16.8.6",
     "react-chartjs-2": "^2.7.6",
@@ -57,7 +55,6 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
     "eslint-plugin-flowtype": "^4.6.0",
     "eslint-plugin-react": "^7.18.3",
     "flow-bin": "^0.118.0",

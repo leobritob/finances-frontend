@@ -3,12 +3,13 @@ import Title from 'Components/Title';
 import { Container } from './styles';
 import DataTable from 'Components/DataTable';
 import Breadcrumbs from 'Components/Breadcrumbs';
-import { history } from 'Config/Store';
 import Button from 'Components/Button';
 import Colors from 'Themes/Colors';
 import useCompanies from 'Hooks/useCompanies';
+import { useHistory } from 'react-router-dom';
 
 export default function Companies() {
+  const history = useHistory();
   const [searchBarValue, setSearchBarValue] = useState('');
   const { filterDebounce, setFilter, companies, getAllCompanies, deleteCompanyById } = useCompanies();
 
@@ -75,11 +76,14 @@ export default function Companies() {
 
   const _addButtonOnClick = useCallback(() => {
     history.push('/companies/add');
-  }, []);
+  }, [history]);
 
-  const _itemOnClick = useCallback(item => {
-    history.push(`/companies/edit/${item.id}`);
-  }, []);
+  const _itemOnClick = useCallback(
+    item => {
+      history.push(`/companies/edit/${item.id}`);
+    },
+    [history]
+  );
 
   return (
     <Container>

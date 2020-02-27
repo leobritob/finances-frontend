@@ -3,22 +3,23 @@ import Title from 'Components/Title';
 import { Container } from './styles';
 import DataTable from 'Components/DataTable';
 import Breadcrumbs from 'Components/Breadcrumbs';
-import { history } from 'Config/Store';
 import Services from 'Services';
 import { useDebounce } from 'use-debounce';
 import Button from 'Components/Button';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 export default function BillingCyclesCategories() {
+  const history = useHistory();
   const [searchBarValue, setSearchBarValue] = useState('');
   const [filter, setFilter] = useState({
-    search: ''
+    search: '',
   });
   const [billingCyclesCategories, setBillingCyclesCategories] = useState({
     total: 0,
     page: 0,
     perPage: 20,
-    data: []
+    data: [],
   });
 
   const [filterDebounce] = useDebounce(filter, 300);
@@ -114,7 +115,7 @@ export default function BillingCyclesCategories() {
           { id: 'name', label: 'Descrição' },
           { id: 'billing_cycles_type_name', label: 'Tipo', width: 200 },
           { id: 'company_fantasy_name', label: 'Empresa', width: 350 },
-          { id: '-', label: '-', width: 80, noPadding: true }
+          { id: '-', label: '-', width: 80, noPadding: true },
         ]}
         data={billingCyclesCategories.data}
         page={billingCyclesCategories.page}

@@ -1,8 +1,7 @@
 //@flow
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { SEO } from 'Utils';
 import { Container, LoginForm } from './styles';
-import { history } from 'Config/Store';
 import Title from 'Components/Title';
 import Input from 'Components/Input';
 import Button from 'Components/Button';
@@ -11,8 +10,10 @@ import Services from 'Services';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import UserActions from 'Redux/UserRedux';
+import { useHistory } from 'react-router-dom';
 
 export default function Login() {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
@@ -34,9 +35,9 @@ export default function Login() {
     }
 
     if (token) history.push('/dashboard');
-  }, [_emailText, token]);
+  }, [_emailText, token, history]);
 
-  const _login = async () => {
+  const _login = useCallback(async () => {
     try {
       setIsButtonLoading(true);
       const response = await Services.auth.token(email, password);
@@ -53,7 +54,7 @@ export default function Login() {
     } finally {
       setIsButtonLoading(false);
     }
-  };
+  }, [email, password, history, dispatch]);
 
   function _onKeyPress(context, e) {
     if (_passwordText && context === 'email' && e.key === 'Enter') {

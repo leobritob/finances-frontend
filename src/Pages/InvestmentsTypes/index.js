@@ -4,29 +4,30 @@ import { Container } from './styles';
 import DataTable from 'Components/DataTable';
 import { format } from 'date-fns';
 import Breadcrumbs from 'Components/Breadcrumbs';
-import { history } from 'Config/Store';
 import Services from 'Services';
 import { useDebounce } from 'use-debounce';
 import Button from 'Components/Button';
 import Colors from 'Themes/Colors';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 const fromDateValue = new Date(format(new Date(), 'yyyy-MM-01 00:00:00'));
 const toDateValue = new Date(format(new Date(), 'yyyy-MM-dd 00:00:00'));
 
 export default function InvestmentsTypes() {
+  const history = useHistory();
   const [searchBarValue, setSearchBarValue] = useState('');
   const [filter, setFilter] = useState({
     date__gte: fromDateValue,
     date__lte: toDateValue,
     billing_cycles_type_id: 3,
-    search: ''
+    search: '',
   });
   const [investmentsTypes, setInvestmentsTypes] = useState({
     total: 0,
     page: 0,
     perPage: 20,
-    data: []
+    data: [],
   });
   const [filterDebounce] = useDebounce(filter, 300);
 
@@ -41,7 +42,7 @@ export default function InvestmentsTypes() {
       case 'value':
         return Intl.NumberFormat('pt-BR', {
           style: 'currency',
-          currency: 'BRL'
+          currency: 'BRL',
         }).format(item[column]);
       case '-':
         return (
@@ -131,7 +132,7 @@ export default function InvestmentsTypes() {
           { id: 'description', label: 'Descrição' },
           { id: 'risk_label', label: 'Risco' },
           { id: 'company_fantasy_name', label: 'Risco' },
-          { id: '-', label: '-', width: 80, noPadding: true }
+          { id: '-', label: '-', width: 80, noPadding: true },
         ]}
         data={investmentsTypes.data}
         page={investmentsTypes.page}

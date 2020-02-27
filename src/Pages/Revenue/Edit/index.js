@@ -11,9 +11,10 @@ import DatePicker from 'Components/DatePicker';
 import Services from 'Services';
 import { toast } from 'react-toastify';
 import Select from 'Components/Select';
-import { history } from 'Config/Store';
+import { useHistory } from 'react-router-dom';
 
 export default function RevenueEdit({ match }) {
+  const history = useHistory();
   const billingCycleId = Number(match.params.id);
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');

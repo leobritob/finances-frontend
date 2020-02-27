@@ -6,17 +6,18 @@ import DataTable from 'Components/DataTable';
 import { format } from 'date-fns';
 import { COLORS } from 'Themes';
 import Breadcrumbs from 'Components/Breadcrumbs';
-import { history } from 'Config/Store';
 import Services from 'Services';
 import { useDebounce } from 'use-debounce';
 import Button from 'Components/Button';
 import Colors from 'Themes/Colors';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 const fromDateValue = new Date(format(new Date(), 'yyyy-MM-01 00:00:00'));
 const toDateValue = new Date(format(new Date(), 'yyyy-MM-dd 00:00:00'));
 
 export default function Expense() {
+  const history = useHistory();
   const [searchBarValue, setSearchBarValue] = useState('');
   const [fromDate, setFromDate] = useState(fromDateValue);
   const [toDate, setToDate] = useState(toDateValue);
@@ -24,18 +25,18 @@ export default function Expense() {
     date__gte: fromDateValue,
     date__lte: toDateValue,
     billing_cycles_type_id: 2,
-    search: ''
+    search: '',
   });
   const [expenses, setExpenses] = useState({
     total: 0,
     page: 0,
     perPage: 20,
-    data: []
+    data: [],
   });
   const [reports, setReports] = useState({
     today: 0,
     current_month: 0,
-    last_month: 0
+    last_month: 0,
   });
 
   const [filterDebounce] = useDebounce(filter, 300);
@@ -52,7 +53,7 @@ export default function Expense() {
       case 'value':
         return Intl.NumberFormat('pt-BR', {
           style: 'currency',
-          currency: 'BRL'
+          currency: 'BRL',
         }).format(item[column]);
       case '-':
         return (
@@ -167,8 +168,8 @@ export default function Expense() {
             styles: {
               boxBackgroundColor: COLORS.expenses,
               valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
+              labelTextColor: '#ffffff',
+            },
           },
           {
             label: 'Mês Atual',
@@ -176,8 +177,8 @@ export default function Expense() {
             styles: {
               boxBackgroundColor: COLORS.expenses,
               valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
+              labelTextColor: '#ffffff',
+            },
           },
           {
             label: 'Mês Passado',
@@ -185,9 +186,9 @@ export default function Expense() {
             styles: {
               boxBackgroundColor: COLORS.expenses,
               valueTextColor: '#ffffff',
-              labelTextColor: '#ffffff'
-            }
-          }
+              labelTextColor: '#ffffff',
+            },
+          },
         ]}
       />
 
@@ -201,7 +202,7 @@ export default function Expense() {
           { id: 'value', label: 'Valor', width: 200 },
           { id: 'billing_cycles_category_name', label: 'Categoria', width: 250 },
           { id: 'company_fantasy_name', label: 'Empresa', width: 250 },
-          { id: '-', label: '-', width: 80, noPadding: true }
+          { id: '-', label: '-', width: 80, noPadding: true },
         ]}
         data={expenses.data}
         page={expenses.page}

@@ -6,9 +6,10 @@ import Input from 'Components/Input';
 import Button from 'Components/Button';
 import Services from 'Services';
 import { toast } from 'react-toastify';
-import { history } from 'Config/Store';
+import { useHistory } from 'react-router-dom';
 
 export default function BillingCyclesTypesEdit({ match }) {
+  const history = useHistory();
   const billingCyclesTypeId = Number(match.params.id);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -34,7 +35,7 @@ export default function BillingCyclesTypesEdit({ match }) {
     try {
       const response = await Services.billingCyclesTypes.updateBillingCyclesTypes(billingCyclesTypeId, {
         name,
-        description
+        description,
       });
       if (response.status === 200) {
         toast.success('Tipo de faturamento atualizado com sucesso');
@@ -53,9 +54,9 @@ export default function BillingCyclesTypesEdit({ match }) {
           { label: 'Dashboard', href: '/dashboard' },
           {
             label: 'Tipo de Faturamento',
-            href: '/billing-cycles-types'
+            href: '/billing-cycles-types',
           },
-          { label: 'Adicionar' }
+          { label: 'Adicionar' },
         ]}
       />
       <Title>Novo Tipo de Faturamento</Title>

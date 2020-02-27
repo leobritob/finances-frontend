@@ -7,9 +7,10 @@ import Button from 'Components/Button';
 import Services from 'Services';
 import { toast } from 'react-toastify';
 import Select from 'Components/Select';
-import { history } from 'Config/Store';
+import { useHistory } from 'react-router-dom';
 
 export default function BillingCyclesCategoriesAdd() {
+  const history = useHistory();
   const [name, setName] = useState('');
   const [billing_cycles_type_id, setBillingCyclesTypeId] = useState('');
   const [billingCyclesTypes, setBillingCyclesTypes] = useState({
@@ -17,7 +18,7 @@ export default function BillingCyclesCategoriesAdd() {
     perPage: 20,
     page: 1,
     lastPage: 1,
-    data: []
+    data: [],
   });
   const [companies, setCompanies] = useState([]);
   const [company_id, setCompanyId] = useState('');
@@ -56,7 +57,7 @@ export default function BillingCyclesCategoriesAdd() {
       const response = await Services.billingCyclesCategories.storeBillingCyclesCategories({
         company_id,
         billing_cycles_type_id,
-        name
+        name,
       });
       if ([200, 201].includes(response.status)) {
         toast.success('Nova categoria de faturamento cadastrada com sucesso');
@@ -75,9 +76,9 @@ export default function BillingCyclesCategoriesAdd() {
           { label: 'Dashboard', href: '/dashboard' },
           {
             label: 'Categorias de Faturamento',
-            href: '/billing-cycles-categories'
+            href: '/billing-cycles-categories',
           },
-          { label: 'Adicionar' }
+          { label: 'Adicionar' },
         ]}
       />
       <Title>Nova Categoria de Faturamento</Title>

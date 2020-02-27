@@ -12,9 +12,10 @@ import DatePicker from 'Components/DatePicker';
 import Services from 'Services';
 import { toast } from 'react-toastify';
 import Select from 'Components/Select';
-import { history } from 'Config/Store';
+import { useHistory } from 'react-router-dom';
 
 export default function InvestmentsEdit({ match }: { match: Object }) {
+  const history = useHistory();
   const investmentId = Number(match.params.id);
   const [investmentTypes, setInvestmentTypes] = useState({
     total: 0,

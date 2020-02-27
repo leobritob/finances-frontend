@@ -7,12 +7,17 @@ import Button from 'Components/Button';
 import Services from 'Services';
 import { toast } from 'react-toastify';
 import Select from 'Components/Select';
-import { history } from 'Config/Store';
 import InputColor from 'Components/InputColor';
+import { useHistory } from 'react-router-dom';
 
-const riskOptions = [{ label: 'Baixo', value: 1 }, { label: 'Moderado', value: 2 }, { label: 'Alto', value: 3 }];
+const riskOptions = [
+  { label: 'Baixo', value: 1 },
+  { label: 'Moderado', value: 2 },
+  { label: 'Alto', value: 3 },
+];
 
 export default function InvestmentsTypesAdd() {
+  const history = useHistory();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [risk, setRisk] = useState('');
@@ -44,7 +49,7 @@ export default function InvestmentsTypesAdd() {
         name,
         description,
         color,
-        risk
+        risk,
       });
       if ([200, 201].includes(response.status)) {
         toast.success('Novo tipo de investimento cadastrado com sucesso');
@@ -62,7 +67,7 @@ export default function InvestmentsTypesAdd() {
         data={[
           { label: 'Dashboard', href: '/dashboard' },
           { label: 'Tipos de Investimentos', href: '/investments-types' },
-          { label: 'Adicionar' }
+          { label: 'Adicionar' },
         ]}
       />
       <Title>Novo Tipo de Investimento</Title>

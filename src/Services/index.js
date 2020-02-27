@@ -1,6 +1,6 @@
 //@flow
 import { ApiResponse } from 'apisauce';
-import { history, store } from 'Config/Store';
+import { store } from 'Config/Store';
 import UsersServices from './UsersServices';
 import AuthServices from './AuthServices';
 import { toast } from 'react-toastify';
@@ -22,11 +22,12 @@ export const commonMonitor = (response: ApiResponse): void => {
   }
 
   if (response.status === 401) {
-    history.push('/login');
+    // history.push('/login');
     store.dispatch(UserActions.logout());
   }
 
   if (response.status === 500) {
+    // history.push('/error-500');
   }
 };
 

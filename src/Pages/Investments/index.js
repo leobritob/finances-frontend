@@ -7,17 +7,18 @@ import DataTable from 'Components/DataTable';
 import { format } from 'date-fns';
 import { COLORS } from 'Themes';
 import Breadcrumbs from 'Components/Breadcrumbs';
-import { history } from 'Config/Store';
 import Services from 'Services';
 import { useDebounce } from 'use-debounce';
 import Button from 'Components/Button';
 import Colors from 'Themes/Colors';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 const fromDateValue = new Date(format(new Date(), 'yyyy-MM-01 00:00:00'));
 const toDateValue = new Date(format(new Date(), 'yyyy-MM-dd 00:00:00'));
 
 export default function Investments() {
+  const history = useHistory();
   const [searchBarValue, setSearchBarValue] = useState('');
   const [fromDate, setFromDate] = useState(fromDateValue);
   const [toDate, setToDate] = useState(toDateValue);
