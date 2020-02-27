@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import Services from 'Services';
 import { useDebounce } from 'use-debounce';
 import { toast } from 'react-toastify';
+import { history } from 'Config/Store';
 
 export default () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,24 +31,40 @@ export default () => {
     }
   }, []);
 
-  const deleteCompanyById = useCallback(async id => {
+  const deleteCompanyById = useCallback(
+    async id => {
+      try {
+        if (!id) throw new Error('id is required');
+
+        setIsLoading(true);
+
+        const response = await Services.companies.destroyCompanyById(id);
+        if (response.status === 204) {
+          toast.success('Empresa removida com sucesso');
+
+          getAllCompanies(filterDebounce);
+        }
+      } catch (e) {
+        console.log('_deleteRow/ERROR', e.message);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [getAllCompanies, filterDebounce]
+  );
+
+  const storeNewCompany = useCallback(async data => {
     try {
-      if (!id) throw new Error('id is required');
+      const response = await Services.companies.storeCompany(data);
+      if ([200, 201].includes(response.status)) {
+        toast.success('Empresa cadastrada com sucesso');
 
-      setIsLoading(true);
-
-      const response = await Services.companies.destroyCompanyById(id);
-      if (response.status === 204) {
-        toast.success('Empresa removida com sucesso');
-
-        getAllCompanies(filterDebounce);
+        history.push('/companies');
       }
     } catch (e) {
-      console.log('_deleteRow/ERROR', e.message);
-    } finally {
-      setIsLoading(false);
+      console.log('storeNewCompany/ERROR', e.message);
     }
-  }, [getAllCompanies, filterDebounce]);
+  }, []);
 
   return {
     isLoading,
@@ -56,5 +73,6 @@ export default () => {
     companies,
     getAllCompanies,
     deleteCompanyById,
+    storeNewCompany,
   };
 };
