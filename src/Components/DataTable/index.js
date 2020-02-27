@@ -55,7 +55,7 @@ export default function DataTable({
           </TRow>
         ))
       ),
-    [data]
+    [data, columns, renderItem, itemOnClick]
   );
 
   const TableBodyForDesktop = useMemo(
@@ -73,7 +73,7 @@ export default function DataTable({
           ))}
         </TRow>
       )),
-    [data]
+    [data, columns, renderItem, itemOnClick]
   );
 
   const TableHeader = useMemo(
