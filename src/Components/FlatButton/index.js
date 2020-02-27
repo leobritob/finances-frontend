@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Container } from "./styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Container } from './styles';
 
 export default function FlatButton({ label, href, onClick }) {
   return (
@@ -13,9 +13,9 @@ export default function FlatButton({ label, href, onClick }) {
 FlatButton.propTypes = {
   label: PropTypes.string.isRequired,
   href: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 FlatButton.defaultProps = {
-  onClick: () => {}
+  onClick: () => {},
 };
